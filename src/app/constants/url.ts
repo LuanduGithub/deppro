@@ -1,0 +1,1 @@
+export const urlBase:string = 'designaciones.elemsoft.net/api/'

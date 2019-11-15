@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "254836761712",
+    "firebase_url": "https://app-deppro.firebaseio.com",
+    "project_id": "app-deppro",
+    "storage_bucket": "app-deppro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254836761712:android:e8d7d3595beb49c7af00b5",
+        "android_client_info": {
+          "package_name": "com.deppro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "254836761712-rvdiqnno4ljvfn8ivr8nnbgf1irv5ht3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIqFEemEH_q0d7kPhA_e2-vMXRg_gc-fo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "254836761712-rvdiqnno4ljvfn8ivr8nnbgf1irv5ht3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

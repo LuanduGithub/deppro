@@ -1,0 +1,23 @@
+.text-align-center{
+    text-align: center;
+  }
+
+  .warning-alert{
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+    position: relative;
+    padding: .75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px dashed;
+    border-radius: .25rem;
+    box-sizing: border-box;
+  }
+
+
+ion-content{
+  --ion-background-color:#214d9b;
+}
+ion-card-content{
+ background-color: #fbfcff;
+}

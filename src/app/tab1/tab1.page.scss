@@ -1,4 +1,238 @@
-.welcome-card img {
-  max-height: 35vh;
-  overflow: hidden;
+ion-card.card-color{
+  --background: #d3e3ff;
+
+}
+ion-content{
+  --ion-background-color:#214d9b;
+}
+ion-card-content{
+ background-color: #fbfcff;
+}
+ion-header{
+  .custom-header-color{
+    --background: #3880ff;
+    color: #fff;
+    height: 8rem;
+    display:flex;
+    align-items: center;
+    .header{
+      text-align: center;
+      &__first-p{
+        padding-bottom: 0;
+        margin-bottom: 3px;
+        text-transform: uppercase;
+        margin-top: 5px;
+      }
+      &__second-p{
+        padding-top: 0;
+        margin-top: 3px;
+        margin-bottom: 0;
+        small span{
+          text-transform: uppercase;
+        }
+      }
+      &__img{
+        width:4.5rem;
+        height: 2rem;
+        display: inline-block;
+      }
+    }
+  }
+}
+.label-toggle{
+  font-size:11px;position:relative; top:-14px;
+}
+.icon-checked{
+  position:relative; 
+  top:2px;
+  color:rgba($color: #10dc60, $alpha: 1.0)
+}
+
+
+ion-col{
+  font-size: .8rem!important;
+
+}
+.text-align-right{
+  text-align: right;
+}
+.text-align-center{
+  text-align: center;
+}
+.card-title{
+  text-transform: uppercase;
+  color:#4c8dff;
+  ion-col{
+    font-size: 0.75rem!important;
+    margin: 5px 0;
+
+  }
+}
+.card-title-top{
+  text-transform: uppercase;
+  color:#4c8dff;
+  ion-col{
+    font-size: 0.75rem!important;
+    margin: 5px 0;
+    ion-icon{
+      font-size: 1.2rem!important;
+    }
+  }
+}
+.rotate-element-180{
+  transform: rotate( 180deg );
+  transition-timing-function: ease-in-out;
+  transition: 0.6s;
+}
+.rotate-element-0{
+  transform: rotate( 0deg );
+  transition-timing-function: ease-in-out;
+  transition: 0.4s;
+}
+ion-card{
+  -webkit-animation: fadein 0.8s;
+   animation: fadein 0.5s;
+}
+
+
+.card-content-md{
+  padding-top: 5px!important;
+  padding-bottom: 5px!important;
+}
+
+.card-aceptado{
+  background-color:#EFFFEF;
+}
+
+
+
+.animacion-entrada{
+    -webkit-animation: card-animation .5s;
+    animation: card-animation .5s;
+    animation-fill-mode: forwards; 
+}
+
+
+@keyframes card-animation {
+  from { 
+      transform: translateX(-200px);
+      transition-timing-function: ease-in;
+  }
+  to   { 
+    transform: translateX(0);
+  }
+}
+@-webkit-keyframes card-animation {
+  from { 
+    transform: translateX(-200px);
+      transition-timing-function: ease-in;
+  }
+  to   { 
+    transform: translateX(0);
+  }
+}
+
+
+.animacion-entrada-fadeIn{
+  -webkit-animation: card-fadeIn 2s;
+  animation: card-fadeIn 2s;
+  animation-fill-mode: forwards; 
+}
+
+
+@keyframes card-fadeIn {
+  from { 
+      opacity: 0;
+  }
+  to   { 
+    opacity: 1;
+  }
+}
+@-webkit-keyframes card-fadeIn {
+  from { 
+    opacity: 0;
+    }
+    to   { 
+      opacity: 1;
+    }
+}
+
+
+.card-content{
+  border:1px solid #a3c5ff;
+  border-top:0;
+  border-radius:0 0 2px 2px;
+
+  ion-col{
+    border-left:1px solid #a3c5ff;
+    text-align: center;
+    ion-icon{
+      font-size: 1.1rem;
+      position: relative;
+      top: 4px;
+      left: 5px;
+      color:#4c8dff;
+    }
+  }
+  ion-col:first-child{
+    border-left:none;
+  }
+  &.linea-arriba{
+    border-top:1px solid #a3c5ff;
+    margin: 0;
+    border-radius: 2px 2px 0 0;
+    ion-col{
+      font-size: 1rem;
+      text-align: left;
+      text-transform: capitalize;
+    }
+  }
+  &.linea-abajo{
+    ion-col{
+      font-size: 1rem;
+      text-align: left;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.info-alert{
+  color: #4c8dff;
+  background-color: #f5f9ff;
+  border-color: #4c8dff;
+  position: relative;
+  padding: .75rem 1.25rem;
+  border: 1px dashed;
+  border-radius: .25rem;
+  box-sizing: border-box;
+  margin: 0 5px -6px;
+  ion-icon{
+    font-size: 1.1rem;
+    position: relative;
+    top: 4px;
+    color:#4c8dff;
+  }
+  &.in{
+    margin:0 -5px;
+  }
+  p{
+    margin:5px 0;
+    font-size:.75rem;
+  }
+}
+
+.warning-alert{
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+  position: relative;
+  padding: .75rem 1.25rem;
+  margin: 0 5px -6px;
+  border: 1px dashed;
+  border-radius: .25rem;
+  box-sizing: border-box;
+}
+ion-item{
+  --ion-background-color: #fbfcff;
+  font-size: .9rem;
 }

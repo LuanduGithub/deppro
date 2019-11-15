@@ -1,0 +1,67 @@
+<ion-card *ngIf="agregar">
+    <ion-card-header>
+       <ion-card-subtitle>Agregar una Novedad</ion-card-subtitle>
+    </ion-card-header>
+  
+    <ion-card-content >
+      <form [formGroup]="agregarNovedadFormGroup" (ngSubmit)="onSubmitAgregar(agregarNovedadFormGroup)">
+        <section>
+          <ion-item>
+              <ion-label position="floating" >Novedad</ion-label>
+              <ion-input clearInput formControlName="novedadTitulo"></ion-input>
+          </ion-item>
+        </section>
+        
+        <section style="margin-bottom: 10px;">
+            <ion-item>
+                <ion-textarea rows="6" cols="20" placeholder="Cuerpo novedad..." formControlName="novedadCuerpo"></ion-textarea>
+            </ion-item>
+            
+        </section>
+
+        <ion-button 
+        color="danger"
+        style="margin: 0;" 
+        type="submit" 
+        expand="block"
+        size="small" 
+        class="ion-text-uppercase"
+        [disabled]="agregarNovedadFormGroup.invalid"
+        >Agregar</ion-button>
+      </form>
+    </ion-card-content>
+</ion-card>
+
+<ion-card *ngIf="editar">
+    <ion-card-header>
+       <ion-card-subtitle>Editar Novedad de la lista</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content >
+      <form [formGroup]="editarNovedadFormGroup" (ngSubmit)="onSubmitEditar(editarNovedadFormGroup)">
+        <section>
+            <ion-label>Nombre a editar</ion-label>
+            <ion-select placeholder="Novedad" formControlName="editarSeleccionarNovedadNombre" (ionChange)="editNovedadNombreSelected($event.detail.value)">
+                <ion-select-option value="{{novedad.id}}" *ngFor="let novedad of novedadList">{{novedad.nombre}}</ion-select-option>
+            </ion-select>
+        </section>
+        <section *ngIf="editarNovedadFormGroup.controls.editarSeleccionarNovedadNombre.valid">
+            <section>
+                <ion-input placeholder="Titulo" clearInput  formControlName="editarNovedadTitulo"></ion-input>
+            </section>
+
+            <section>
+                <ion-textarea rows="6" cols="20" placeholder="Cuerpo novedad..." formControlName="editarNovedadCuerpo"></ion-textarea>
+            </section>
+        </section>
+        <ion-button 
+        color="danger"
+        style="margin: 0;" 
+        type="submit" 
+        expand="block"
+        size="small" 
+        class="ion-text-uppercase"
+        [disabled]="editarNovedadFormGroup.invalid"
+        >editar</ion-button>
+      </form>
+    </ion-card-content>
+</ion-card>

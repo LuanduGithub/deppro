@@ -1,0 +1,32 @@
+.card-content-ios{
+    padding-top: 0;
+}
+ion-card{
+    -webkit-animation: fadein 0.8s;
+    animation: fadein 0.5s;
+    background-color: #fbfcff;
+}
+ion-item{
+    --ion-background-color: #fbfcff;
+    font-size: .9rem;
+}
+ion-list{
+    background-color: #fbfcff;
+}
+
+@keyframes fadein {
+    from { 
+        opacity: 0;
+        transform: translateY(50%);
+        transition-timing-function: ease-in;
+        transition: 0.2s;
+    }
+    to   { 
+        opacity: 1;
+        transform: translateY(0%);
+    }
+}
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}

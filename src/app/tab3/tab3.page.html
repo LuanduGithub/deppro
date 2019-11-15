@@ -1,9 +1,67 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Tab Three
+<ion-header >
+ <ion-toolbar class="custom-header-color">
+    
+    <ion-title class="header animacion-entrada-fadeIn">
+      <ion-img class="header__img" src="../assets/img/deppro_blanco.png"></ion-img>
+      <p class="header__first-p">Alta</p>
+      <p class="header__second-p"><small><span>{{user?.nombre}}</span>, da de alta los parametros.</small></p>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content></ion-content>
+<ion-content>
+  <ion-grid class="ion-padding item-novedades">
+    <ion-row>
+      <ion-col size="7">
+          <ion-label>Usuario</ion-label>
+      </ion-col>
+      <ion-col size="5" class="ion-text-end">
+          <ion-button color="danger" (click)="editarUsuario()" ><ion-icon name="create"></ion-icon></ion-button>
+          <ion-button color="danger" (click)="agregarUsuario()" ><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="7">
+          <ion-label> Cancha</ion-label>
+      </ion-col>
+      <ion-col size="5" class="ion-text-end">
+          <ion-button color="danger" (click)="editarCancha()" ><ion-icon name="create"></ion-icon></ion-button>
+          <ion-button color="danger" (click)="agregarCancha()" ><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="7">
+          <ion-label>Equipo</ion-label>
+      </ion-col>
+      <ion-col size="5" class="ion-text-end">
+          <ion-button color="danger" (click)="editarEquipo()" ><ion-icon name="create"></ion-icon></ion-button>
+          <ion-button color="danger" (click)="agregarEquipo()"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="7">
+          <ion-label>Categorías</ion-label>
+      </ion-col>
+      <ion-col size="5" class="ion-text-end">
+          <ion-button color="danger" (click)="editarCategoria()" ><ion-icon name="create"></ion-icon></ion-button>
+          <ion-button color="danger" (click)="agregarCategoria()"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="7">
+          <ion-label>Novedades</ion-label>
+      </ion-col>
+      <ion-col size="5" class="ion-text-end">
+          <!-- <ion-button color="danger" (click)="editarNovedades()"><ion-icon name="create" ></ion-icon></ion-button> -->
+          <ion-button color="danger" (click)="agregarNovedades()"><ion-icon name="add-circle-outline"></ion-icon></ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+   <app-canchas *ngIf="views?.canchaView.status" [agregar]="views?.canchaView.agregar" [editar]="views?.canchaView.editar"></app-canchas>
+   <app-equipos *ngIf="views?.equipoView.status" [agregar]="views?.equipoView.agregar" [editar]="views?.equipoView.editar" ></app-equipos>
+   <app-categorias *ngIf="views?.categoriaView.status" [agregar]="views?.categoriaView.agregar" [editar]="views?.categoriaView.editar" ></app-categorias>
+   <app-usuario *ngIf="views?.usuarioView.status" [agregar]="views?.usuarioView.agregar" [editar]="views?.usuarioView.editar" ></app-usuario>
+   <app-novedades *ngIf="views?.novedadView.status" [agregar]="views?.novedadView.agregar" [editar]="views?.novedadView.editar" ></app-novedades>
+  
+</ion-content>
+

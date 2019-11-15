@@ -1,0 +1,43 @@
+<ion-content>
+    <ion-card >
+      <ion-card-content>
+        <ion-grid>
+          <ion-row style="border-bottom: 1px dashed #cecece;">
+            <ion-col size="12" class="text-align-center ion-text-uppercase">
+                Aceptar Partido 
+            </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col size="12" class="text-align-center ion-text-uppercase">
+                    {{data.equipoA}} vs {{data.equipoB}}
+              </ion-col>
+            </ion-row>
+          <ion-row class="text-align-center">
+              <ion-col size="12" style="margin:20px 0">
+                 ¿<strong class="ion-text-capitalize">{{user.nombre}}</strong> aceptás la designación?
+
+              </ion-col>
+            </ion-row>
+           
+          <ion-row>
+              <ion-col>
+                  <ion-button color="secondary" expand="block" (click)="cancelar()" size="small">Cancelar</ion-button>
+              </ion-col>
+              <ion-col>
+                  <ion-button (click)="onSubmitAceptar()" expand="block" size="small">ACEPTAR</ion-button>
+              </ion-col>
+              
+            </ion-row>
+            <ion-row>
+                <ion-col size="12">
+                  <section class="warning-alert">
+                      <strong class="ion-text-capitalize">Aviso Importante:</strong>
+                      Si la designación no es aceptada en 24hs después de emitida se tomará como no aceptada
+                  </section>
+                    
+                </ion-col>
+              </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+</ion-content>

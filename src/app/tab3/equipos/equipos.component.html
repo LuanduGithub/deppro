@@ -1,0 +1,62 @@
+<ion-card *ngIf="agregar">
+  <ion-card-header>
+     <ion-card-subtitle>Agregar Equipo a la lista</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content >
+    <form [formGroup]="agregarEquipoFormGroup" (ngSubmit)="onSubmitAgregar(agregarEquipoFormGroup)">
+      <section style="margin-bottom: 10px;">
+          <ion-item>
+            <ion-label position="floating" >Agregar Nombre</ion-label>
+            <ion-input clearInput formControlName="equipoNombre"></ion-input>
+          </ion-item>
+      </section>
+      <ion-button 
+      color="danger"
+      style="margin: 0;" 
+      type="submit" 
+      expand="block"
+      size="small" 
+      class="ion-text-uppercase"
+      [disabled]="agregarEquipoFormGroup.controls.equipoNombre.invalid"
+      >Agregar</ion-button>
+    </form>
+  </ion-card-content>
+</ion-card>
+
+
+<ion-card *ngIf="editar">
+    <ion-card-header>
+       <ion-card-subtitle>Editar Equipo de la lista</ion-card-subtitle>
+    </ion-card-header>
+  
+    <ion-card-content >
+      <form [formGroup]="editarEquipoFormGroup" (ngSubmit)="onSubmitEditar(editarEquipoFormGroup)">
+        <section>
+          <ion-list>
+            <ion-item>
+              <ion-label>Equipo a editar</ion-label>
+              <ion-select placeholder="Equipo" formControlName="editarEquipoNombre" (ionChange)="editEquipoNombreSelected($event.detail.value)">
+                <ion-select-option value="{{equipo.id}}" *ngFor="let equipo of equiposList">{{equipo.nombre}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label position="floating" >Editar Nombre</ion-label>
+                <ion-input clearInput formControlName="editarEquipoNombreNuevo" [disabled]="editarEquipoFormGroup.controls.editarEquipoNombre.invalid"></ion-input>
+            </ion-item>
+          </ion-list>
+          
+        </section>
+       <section>
+        <ion-button 
+        color="danger"
+        style="margin: 0;" 
+        type="submit" 
+        expand="block"
+        size="small" 
+        class="ion-text-uppercase"
+        [disabled]="editarEquipoFormGroup.controls.editarEquipoNombre.invalid || editarEquipoFormGroup.controls.editarEquipoNombreNuevo.invalid"
+        >Editar</ion-button>
+      </section>
+      </form>
+    </ion-card-content>
+  </ion-card>

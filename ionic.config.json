@@ -1,5 +1,7 @@
 {
-  "name": "arbitros-programacion",
-  "integrations": {},
+  "name": "ProgDep",
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
