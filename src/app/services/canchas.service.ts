@@ -13,20 +13,20 @@ export class CanchasService {
     private http: HttpClient
   ) { }
 
-  getCancha(id:number): Observable<Comun>{
-    let url = environment.DBBaseURl +  `canchas/get/${id}`;
+  getCancha(id: number): Observable<Comun> {
+    const url = environment.DBBaseURl +  `canchas/get/${id}`;
     return this.http.get<Comun>(url);
   }
-  getCanchas(): Observable<ComunList>{
-    let url = environment.DBBaseURl +  `canchas/getList`;
+  getCanchas(): Observable<ComunList> {
+    const url = environment.DBBaseURl +  `canchas/getList`;
     return this.http.get<ComunList>(url);
   }
-  postCancha(id: number, nombre: string): Observable<CanchaPost>{
-    let url = environment.DBBaseURl +  `canchas/InsertOrUpdate`;
-    let obj = {
+  postCancha(id: number, nombre: string): Observable<CanchaPost> {
+    const url = environment.DBBaseURl +  `canchas/InsertOrUpdate`;
+    const obj = {
       Can_Id : id,
       Can_Nom : nombre
-    }
+    };
     return this.http.post<CanchaPost>(url, obj);
   }
 

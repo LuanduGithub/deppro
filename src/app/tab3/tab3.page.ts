@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Storage } from '@ionic/storage'
+import { Storage } from '@ionic/storage';
+import { HeaderComponent } from './../shared/components/header/header.component';
 
 @Component({
   selector: 'app-tab3',
@@ -7,50 +8,50 @@ import { Storage } from '@ionic/storage'
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
-  user:any;
-  views:any;
+  user: any;
+  views: any;
   constructor(
     private storage: Storage
-  ) {  }
+  ) { }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.viewsEstadoFalse();
     this.loadUser();
   }
 
-  loadUser(){
+  loadUser() {
     this.storage.get('user').then((user) => {
       this.user = user;
     });
   }
 
-  viewsEstadoFalse(){
+  viewsEstadoFalse() {
     return this.views = {
       canchaView:
       {
         status: false,
-        agregar : false,
-        editar : false
+        agregar: false,
+        editar: false
       },
-      equipoView : {
+      equipoView: {
         status: false,
-        agregar : false,
-        editar : false
+        agregar: false,
+        editar: false
       },
-      usuarioView : {
+      usuarioView: {
         status: false,
-        agregar : false,
-        editar : false
+        agregar: false,
+        editar: false
       },
-      categoriaView : {
+      categoriaView: {
         status: false,
-        agregar : false,
-        editar : false
+        agregar: false,
+        editar: false
       },
-      novedadView : {
+      novedadView: {
         status: false,
-        agregar : false,
-        editar : false
+        agregar: false,
+        editar: false
       }
     };
   }
@@ -58,91 +59,91 @@ export class Tab3Page {
   /**
    * // fn : promesa --> funcion para retornar todos los valores a False
    */
-  cargarView(){
-    let promise = new Promise((resolve, reject) => {
+  cargarView() {
+    const promise = new Promise((resolve, reject) => {
       this.viewsEstadoFalse();
       resolve();
     });
-    return promise
+    return promise;
   }
-  
-/** 
- * fn : funciones para cargar vistas de canchas
-*/
-  agregarCancha(){
+
+  /**
+   * fn : funciones para cargar vistas de canchas
+   */
+  agregarCancha() {
     this.cargarView().then(() => {
-        this.views.canchaView.status = true;
-        this.views.canchaView.agregar = true;
-    })
+      this.views.canchaView.status = true;
+      this.views.canchaView.agregar = true;
+    });
   }
-  editarCancha(){
+  editarCancha() {
     this.cargarView().then(() => {
       this.views.canchaView.status = true;
       this.views.canchaView.editar = true;
-    })
+    });
   }
 
-/**
- * fn: Funciones para cargar vistas de Equipos
- */
-  agregarEquipo(){
+  /**
+   * fn: Funciones para cargar vistas de Equipos
+   */
+  agregarEquipo() {
     this.cargarView().then(() => {
       this.views.equipoView.status = true;
       this.views.equipoView.agregar = true;
-    })
+    });
   }
-  editarEquipo(){
+  editarEquipo() {
     this.cargarView().then(() => {
       this.views.equipoView.status = true;
       this.views.equipoView.editar = true;
-    })
+    });
   }
 
   /**
- * fn: Funciones para cargar vistas de Categorias
- */
-agregarCategoria(){
-  this.cargarView().then(() => {
-    this.views.categoriaView.status = true;
-    this.views.categoriaView.agregar = true;
-  })
-}
-editarCategoria(){
-  this.cargarView().then(() => {
-    this.views.categoriaView.status = true;
-    this.views.categoriaView.editar = true;
-  })
-}
+   * fn: Funciones para cargar vistas de Categorias
+   */
+  agregarCategoria() {
+    this.cargarView().then(() => {
+      this.views.categoriaView.status = true;
+      this.views.categoriaView.agregar = true;
+    });
+  }
+  editarCategoria() {
+    this.cargarView().then(() => {
+      this.views.categoriaView.status = true;
+      this.views.categoriaView.editar = true;
+    });
+  }
 
   /**
- * fn: Funciones para cargar vistas de Usuario
- */
-agregarUsuario(){
-  this.cargarView().then(() => {
-    this.views.usuarioView.status = true;
-    this.views.usuarioView.agregar = true;
-  })
-}
-editarUsuario(){
-  this.cargarView().then(() => {
-    this.views.usuarioView.status = true;
-    this.views.usuarioView.editar = true;
-  })
-}
+   * fn: Funciones para cargar vistas de Usuario
+   */
+  agregarUsuario() {
+    this.cargarView().then(() => {
+      this.views.usuarioView.status = true;
+      this.views.usuarioView.agregar = true;
+    });
+  }
+  editarUsuario() {
+    this.cargarView().then(() => {
+      this.views.usuarioView.status = true;
+      this.views.usuarioView.editar = true;
+    });
+  }
 
   /**
- * fn: Funciones para cargar vistas de Novedades
- */
-agregarNovedades(){
-  this.cargarView().then(() => {
-    this.views.novedadView.status = true;
-    this.views.novedadView.agregar = true;
-  })
-}
-editarNovedades(){
-  this.cargarView().then(() => {
-    this.views.novedadView.status = true;
-    this.views.novedadView.editar = true;
-  })
-}
+   * fn: Funciones para cargar vistas de Novedades
+   */
+  agregarNovedades() {
+    this.cargarView().then(() => {
+      this.views.novedadView.status = true;
+      this.views.novedadView.agregar = true;
+    });
+  }
+  editarNovedades() {
+    this.cargarView().then(() => {
+      this.views.novedadView.status = true;
+      this.views.novedadView.editar = true;
+    });
+  }
 }

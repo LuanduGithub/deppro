@@ -39,7 +39,8 @@ import { InterceptorService } from './services/interceptor.service';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    ,{
+    ,
+    {
     provide: HTTP_INTERCEPTORS,
     useClass: InterceptorService,
     multi: true

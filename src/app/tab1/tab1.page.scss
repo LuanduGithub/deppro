@@ -12,7 +12,7 @@ ion-header{
   .custom-header-color{
     --background: #3880ff;
     color: #fff;
-    height: 8rem;
+    height: 4rem;
     display:flex;
     align-items: center;
     .header{
@@ -208,8 +208,15 @@ ion-card{
   margin: 0 5px -6px;
   ion-icon{
     font-size: 1.1rem;
+    position:absolute;
+    top:3px!important;
+    right:5px;
+  }
+  p ion-icon{
+    font-size: 1.1rem;
     position: relative;
-    top: 4px;
+    top: 5px;
+    left:0px;
     color:#4c8dff;
   }
   &.in{

@@ -3,6 +3,7 @@ import { IonInfiniteScroll } from '@ionic/angular';
 import { NovedadesService } from '../services/novedades.service';
 import { Novedades } from '../models/modelsComunes';
 import { Storage } from '@ionic/storage';
+import { HeaderComponent } from './../shared/components/header/header.component';
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -10,10 +11,10 @@ import { Storage } from '@ionic/storage';
 })
 export class Tab2Page {
   novedadesList: Array<Novedades>;
-  data :Array<Novedades>;
-  user:any;
-  cantNovedades = 4 
-  cantNovedadesInicial: number = 0;
+  data: Array<Novedades>;
+  user: any;
+  cantNovedades = 4;
+  cantNovedadesInicial = 0;
   cantNovedadesFinal: number = this.cantNovedades;
 
   @ViewChild(IonInfiniteScroll, null) infiniteScroll: IonInfiniteScroll;
@@ -22,25 +23,25 @@ export class Tab2Page {
     private noveService: NovedadesService,
     private storage: Storage,
   ) {}
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.getNovedades();
     this.loadUser();
-  } 
-  loadUser(){
+  }
+  loadUser() {
     this.storage.get('user').then((user) => {
       this.user = user;
     });
   }
-  getNovedades(){
+  getNovedades() {
     this.noveService.getNovedades().subscribe(novedades => {
       let dateArray = novedades.msg;
       dateArray = dateArray.sort(this.getSortOrder('fecha'));
       dateArray = dateArray.reverse();
-      this.data = dateArray; 
+      this.data = dateArray;
       this.novedadesList = dateArray.slice(this.cantNovedadesInicial, this.cantNovedadesFinal).map( n => {
           return n;
       });
-    })
+    });
   }
 
   loadData(event) {
@@ -48,18 +49,18 @@ export class Tab2Page {
     this.cantNovedadesInicial = this.cantNovedadesFinal;
     this.cantNovedadesFinal = this.cantNovedadesFinal + this.cantNovedades;
 
-    console.log(this.cantNovedadesInicial +' '+ this.cantNovedadesFinal);
+    console.log(this.cantNovedadesInicial + ' ' + this.cantNovedadesFinal);
 
     dateArray = dateArray.slice(this.cantNovedadesInicial, this.cantNovedadesFinal).map( n => {
         return n;
     });
- 
+
     this.novedadesList.push(...dateArray);
- 
+
     setTimeout(() => {
       event.target.complete();
-      if (this.novedadesList.length == this.data.length) {
-        console.log('disabled')
+      if (this.novedadesList.length === this.data.length) {
+        console.log('disabled');
         event.target.disabled = true;
       }
     }, 500);
@@ -69,14 +70,14 @@ export class Tab2Page {
     this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
 
-  getSortOrder(prop) {  
-    return (a, b) => {  
-        if (a[prop] > b[prop]) {  
-            return 1;  
-        } else if (a[prop] < b[prop]) {  
-            return -1;  
-        }  
-        return 0;  
-    }  
+  getSortOrder(prop) {
+    return (a, b) => {
+        if (a[prop] > b[prop]) {
+            return 1;
+        } else if (a[prop] < b[prop]) {
+            return -1;
+        }
+        return 0;
+    };
   }
 }

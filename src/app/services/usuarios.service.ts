@@ -13,24 +13,24 @@ export class UsuariosService {
   constructor(
     public http: HttpClient
   ) { }
-  getUsuario(id:number): Observable<Usuario>{
-    let url = environment.DBBaseURl +  `usuarios/get/${id}`;
+  getUsuario(id: number): Observable<Usuario> {
+    const url = environment.DBBaseURl +  `usuarios/get/${id}`;
     return this.http.get<Usuario>(url);
   }
-  getUsuarios(): Observable<UsuarioList>{
-    let url = environment.DBBaseURl +  `usuarios/getList`;
+  getUsuarios(): Observable<UsuarioList> {
+    const url = environment.DBBaseURl +  `usuarios/getList`;
     return this.http.get<UsuarioList>(url);
   }
-  postUsuario(obj:any): Observable<UsuarioPost>{
-    let url = environment.DBBaseURl +  `usuarios/InsertOrUpdate`;
+  postUsuario(obj: any): Observable<UsuarioPost> {
+    const url = environment.DBBaseURl +  `usuarios/InsertOrUpdate`;
     return this.http.post<UsuarioPost>(url, obj);
   }
-  postUsuarioLogin(obj:any): Observable<UsuarioLoginPost>{
+  postUsuarioLogin(obj: any): Observable<UsuarioLoginPost> {
 
-    let url = environment.DBBaseURl +  `usuarios/Login`;
+    const url = environment.DBBaseURl +  `usuarios/Login`;
 
     return this.http.post<UsuarioLoginPost>(
-      url, 
+      url,
       obj
       );
   }

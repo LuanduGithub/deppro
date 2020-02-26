@@ -1,17 +1,7 @@
-<ion-header >
-  <ion-toolbar class="custom-header-color">
-        <ion-title class="header animacion-entrada-fadeIn">
-                <ion-img class="header__img" src="../assets/img/deppro_blanco.png"></ion-img>
-      <p class="header__first-p">Partidos</p>
-      <p class="header__second-p" *ngIf="user?.usuarioId !== 'invitado'"><small><span>{{user?.nombre}}</span>, sus desiganciones.</small></p>
-      <p class="header__second-p" *ngIf="user?.usuarioId === 'invitado'"><small><span>{{user?.nombre}}</span>, programación de esta semana.</small></p>
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header></app-header>
 
 <ion-content>
-
-    <ion-card-content *ngIf="user?.admin">
+    <section *ngIf="user?.admin">
         <ion-grid>
             <ion-row  class="card-title-top">
                 <ion-col size="12">
@@ -22,17 +12,23 @@
                             <ion-select-option value="{{category.nombre}}" *ngFor="let category of categoriasList">{{category.nombre}}</ion-select-option>
                         </ion-select>
                     </ion-item>
+                    <ion-item *ngIf="showBtnPosiciones">
+                        <ion-label>Posiciones</ion-label>
+                        <ion-toggle slot="end" name="posiciones" (ionChange)="mostrarTabla()"></ion-toggle>
+                    </ion-item>
+                    
                 </ion-col>      
             </ion-row>
         </ion-grid>
-    </ion-card-content>
+    </section>
 
     <ion-row *ngIf="user?.admin">
         <ion-col size="12">
             <section class="info-alert">
-                <strong>Aviso:</strong>
-                <p>Si un arbitro u Ofi. de Mesa acepta aparecera con un check (<ion-icon name="checkbox"></ion-icon>)</p>
-                <p>Si todos los arbitros u Ofi. de Mesa aceptan aparecera con un check (<ion-icon name="checkmark"></ion-icon>)</p>
+                <ion-icon name="remove-circle-outline" (click)="toggleAviso()"></ion-icon>
+                <strong *ngIf="avisoEstado">Aviso:</strong>
+                <p *ngIf="avisoEstado">Si un arbitro u Ofi. de Mesa acepta aparecera con un check (<ion-icon name="checkbox"></ion-icon>)</p>
+                <p *ngIf="avisoEstado">Si todos los arbitros u Ofi. de Mesa aceptan aparecera con un check (<ion-icon name="checkmark"></ion-icon>)</p>
             </section>
         </ion-col>
     </ion-row>

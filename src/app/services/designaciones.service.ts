@@ -13,24 +13,24 @@ export class DesignacionesService {
   constructor(
     private http: HttpClient
   ) { }
-  getUsuario(id:number): Observable<Designaciones>{
-    let url = environment.DBBaseURl +  `designaciones/get/${id}`;
+  getUsuario(id: number): Observable<Designaciones> {
+    const url = environment.DBBaseURl +  `designaciones/get/${id}`;
     return this.http.get<Designaciones>(url);
   }
-  getDesignaciones(): Observable<DesignacionesList>{
-    let url = environment.DBBaseURl +  `designaciones/getList`;
+  getDesignaciones(): Observable<DesignacionesList> {
+    const url = environment.DBBaseURl +  `designaciones/getList`;
     return this.http.get<DesignacionesList>(url);
   }
-  getDesignacionesPorUsuario(id:number): Observable<DesignacionesList>{
-    let url = environment.DBBaseURl +  `designaciones/getListByUsuario/${id}`;
+  getDesignacionesPorUsuario(id: number): Observable<DesignacionesList> {
+    const url = environment.DBBaseURl +  `designaciones/getListByUsuario/${id}`;
     return this.http.get<DesignacionesList>(url);
   }
-  postDesignaciones(obj:any): Observable<DesignacionesPost>{
-    let url = environment.DBBaseURl +  `designaciones/InsertOrUpdate`;
+  postDesignaciones(obj: any): Observable<DesignacionesPost> {
+    const url = environment.DBBaseURl +  `designaciones/InsertOrUpdate`;
     return this.http.post<DesignacionesPost>(url, obj);
   }
-  postDesignacionesConfirmar(obj:any): Observable<DesignacionesConfirmar>{
-    let url = environment.DBBaseURl +  `designaciones/confirmar`;
+  postDesignacionesConfirmar(obj: any): Observable<DesignacionesConfirmar> {
+    const url = environment.DBBaseURl +  `designaciones/confirmar`;
     return this.http.post<DesignacionesConfirmar>(url, obj);
   }
 }

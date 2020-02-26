@@ -13,21 +13,21 @@ export class EquipoService {
     private http: HttpClient
   ) { }
 
-  getEquipo(id:number): Observable<Comun>{
-    let url = environment.DBBaseURl +  `equipos/get/${id}`;
+  getEquipo(id: number): Observable<Comun> {
+    const url = environment.DBBaseURl +  `equipos/get/${id}`;
     return this.http.get<Comun>(url);
   }
-  getEquipos(): Observable<ComunList>{
-    let url = environment.DBBaseURl +  `equipos/getList`;
+  getEquipos(): Observable<ComunList> {
+    const url = environment.DBBaseURl +  `equipos/getList`;
     return this.http.get<ComunList>(url);
   }
-  postEquipo(id: number, nombre: string): Observable<EquipoPost>{
-    let url = environment.DBBaseURl +  `equipos/InsertOrUpdate`;
-    let obj = {
+  postEquipo(id: number, nombre: string): Observable<EquipoPost> {
+    const url = environment.DBBaseURl +  `equipos/InsertOrUpdate`;
+    const obj = {
       Equ_Id : id,
       Equ_Nombre : nombre
-    }
-    console.log(obj)
+    };
+    console.log(obj);
     return this.http.post<EquipoPost>(url, obj);
   }
 }

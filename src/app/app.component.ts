@@ -5,13 +5,14 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { timer } from 'rxjs/internal/observable/timer';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  showSplash:boolean = true;
+  showSplash = true;
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -27,4 +28,6 @@ export class AppComponent {
       timer(3000).subscribe(() => this.showSplash = false);
     });
   }
+
+
 }
