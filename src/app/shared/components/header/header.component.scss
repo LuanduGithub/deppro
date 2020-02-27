@@ -1,0 +1,33 @@
+ion-header{
+    .custom-header-color{
+      --background: #3880ff;
+      color: #fff;
+      height: 3rem;
+      display:flex;
+      align-items: center;
+      .header{
+        text-align: center;
+        &__first-p{
+          padding-bottom: 0;
+          margin-bottom: 3px;
+          text-transform: uppercase;
+          margin-top: 5px;
+        }
+        &__second-p{
+          padding-top: 0;
+          margin-top: 3px;
+          margin-bottom: 0;
+          small span{
+            text-transform: uppercase;
+          }
+        }
+        &__img{
+          width:4.5rem;
+          height: 2rem;
+          display: inline-block;
+          position: relative;
+          top:5px;
+        }
+      }
+    }
+  }

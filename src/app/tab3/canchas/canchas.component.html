@@ -1,65 +1,42 @@
 <ion-card *ngIf="agregar">
-    <ion-card-header>
-       <ion-card-subtitle>Agregar Cancha a la lista</ion-card-subtitle>
-    </ion-card-header>
-  
-    <ion-card-content >
-      <form [formGroup]="agregarCanchaFormGroup" (ngSubmit)="onSubmitAgregar(agregarCanchaFormGroup)">
-        <section style="margin-bottom: 10px;">
-            <ion-item>
-                <ion-label position="floating" >Agregar Cancha</ion-label>
-                <ion-input clearInput formControlName="canchaNombre"></ion-input>
-            </ion-item>
-        </section>
-        <ion-button 
-        color="danger"
-        style="margin: 0;" 
-        type="submit" 
-        expand="block"
-        size="small" 
-        class="ion-text-uppercase"
-        [disabled]="agregarCanchaFormGroup.controls.canchaNombre.invalid"
-        *ngIf="agregar"
-        >Agregar</ion-button>
-      </form>
-      <p>{{result | json}}</p>
-      <em>{{token}}</em>
-    </ion-card-content>
+  <ion-card-content>
+    <div class="custom-form-title">Agregar Cancha a la lista</div>
+    <form [formGroup]="agregarCanchaFormGroup" (ngSubmit)="onSubmitAgregar(agregarCanchaFormGroup)">
+      <div class="custom-form">
+        <ion-label>Agregar Cancha</ion-label>
+        <ion-input clearInput formControlName="canchaNombre"></ion-input>
+      </div>
+      <div class="custom-form-button">
+        <ion-button color="primary" style="margin: 0;" type="submit" expand="block" size="small"
+          class="ion-text-uppercase" [disabled]="agregarCanchaFormGroup.controls.canchaNombre.invalid" *ngIf="agregar">
+          Agregar</ion-button>
+      </div>
+    </form>
+  </ion-card-content>
 </ion-card>
 
 <ion-card *ngIf="editar">
-    <ion-card-header>
-       <ion-card-subtitle>Editar Cancha de la lista</ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content >
-      <form [formGroup]="editarCanchaFormGroup" (ngSubmit)="onSubmitEditar(editarCanchaFormGroup)">
-        <section *ngIf="editar">
-          <ion-list>
-            <ion-item>
-              <ion-label>Cancha a editar</ion-label>
-              <ion-select placeholder="Cancha" formControlName="editarCanchaNombre" (ionChange)="editCanchaNombreSelected($event.detail.value)" ok-text="Elegir" cancel-text="Cancelar">
-                <ion-select-option value="{{cancha.id}}" *ngFor="let cancha of canchasList">{{cancha.nombre}}</ion-select-option>
-              </ion-select>
-            </ion-item>
-                <ion-item>
-                    <ion-label position="floating" >Editar Nombre</ion-label>
-                    <ion-input clearInput formControlName="editarCanchaNombreNuevo" [disabled]="editarCanchaFormGroup.controls.editarCanchaNombre.invalid"></ion-input>
-                </ion-item>
-          </ion-list>
-          
-        </section>
-       <section>
-        <ion-button 
-        color="danger"
-        style="margin: 0;" 
-        type="submit" 
-        expand="block"
-        size="small" 
-        class="ion-text-uppercase"
-        [disabled]="editarCanchaFormGroup.controls.editarCanchaNombre.invalid || editarCanchaFormGroup.controls.editarCanchaNombreNuevo.invalid"
-        *ngIf="editar"
-        >editar</ion-button>
-      </section>
-      </form>
-    </ion-card-content>
+  <ion-card-content>
+    <div class="custom-form-title">Editar Cancha de la lista</div>
+    <form [formGroup]="editarCanchaFormGroup" (ngSubmit)="onSubmitEditar(editarCanchaFormGroup)">
+      <div class="custom-form">
+        <ion-label>Cancha a editar</ion-label>
+        <ion-select placeholder="Cancha" formControlName="editarCanchaNombre"
+          (ionChange)="editCanchaNombreSelected($event.detail.value)" ok-text="Elegir" cancel-text="Cancelar">
+          <ion-select-option value="{{cancha.id}}" *ngFor="let cancha of canchasList">{{cancha.nombre}}
+          </ion-select-option>
+        </ion-select>
+      </div>
+      <div class="custom-form">
+        <ion-label>Editar Nombre</ion-label>
+        <ion-input clearInput formControlName="editarCanchaNombreNuevo"></ion-input>
+      </div>
+      <div class="custom-form-button">
+        <ion-button color="primary" style="margin: 0;" type="submit" expand="block" size="small"
+          class="ion-text-uppercase"
+          [disabled]="editarCanchaFormGroup.controls.editarCanchaNombre.invalid || editarCanchaFormGroup.controls.editarCanchaNombreNuevo.invalid"
+          *ngIf="editar">editar</ion-button>
+      </div>
+    </form>
+  </ion-card-content>
 </ion-card>

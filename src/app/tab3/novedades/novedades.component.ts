@@ -17,6 +17,7 @@ export class NovedadesComponent implements OnInit {
   @Input() agregar = false;
   @Input() editar = false;
   fecha: string;
+  novedades: any;
   constructor(
     private noveService: NovedadesService
   ) { }
@@ -39,10 +40,14 @@ export class NovedadesComponent implements OnInit {
   }
 
   getNovedades() {
-    this.noveService.getNovedades().subscribe(novedades => {
+    this.novedades = this.noveService.getNovedades().subscribe(novedades => {
       const novedadesList = novedades.msg;
       this.novedadesList = novedadesList.sort(this.getSortOrder('nombre'));
     });
+  }
+
+  ionViewWillLeave() {
+    this.novedades.unsubscribe();
   }
   onSubmitAgregar(formGroup) {
     const id = 0;

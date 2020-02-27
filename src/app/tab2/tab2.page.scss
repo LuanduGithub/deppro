@@ -1,85 +1,17 @@
 ion-content{
-  --ion-background-color:#09606a;
+  --ion-background-color:#214d9b;
 }
-ion-grid{
- background-color: #fbfcff;
+ion-card-content{
+  background-color: #fbfcff;
+  padding: 5px!important;
 }
-.item-novedades{
-  margin:5px 20px;
-  border: 1px solid rgba(#0bb8cc, 0.05);
-  border-radius: 4px;
-  &__header{
-    background-color: rgba(#0bb8cc, 0.05);
-    border:2px solid rgba(#0bb8cc, 0.05);
-    border-radius:2px 2px  0 0;
-    ion-col ion-icon{
-      position: relative;
-      top:3px;
-    }
-  }
-
-  &__footer{
-    padding:4px;
-    background-color: rgba(#d8d8d8, 0.05);
-    border-top:1px solid rgba(#0bb8cc, 0.05);
-    ion-col ion-icon{
-      position: relative;
-      top:3px;
-    }
-  }
-  &:first-child{
-    margin-top:20px;
-  }
+ion-card{
+  -webkit-animation: fadein 0.8s;
+   animation: fadein 0.5s;
+   border-radius: 2px;
+   margin: 5px;
+   position: relative;
 }
-
-.item__cuerpo{
-  margin-top: 10px;
-  font-size:.8rem;
-  line-height: 1.15rem;
-  color:#0d292c;
-  text-align : justify;
-}
-.item__title{
-  padding: 5px 3px;
-  color:#0bb8cc;
-  font-size:.9rem;
-  span{
-    text-transform: uppercase;
-  }
-}
-
-ion-header{
-  .custom-header-color{
-    --background: #0cd1e8;
-    color: #000;
-    height: 8rem;
-    display:flex;
-    align-items: center;
-    .header{
-      text-align: center;
-      &__first-p{
-        padding-bottom: 0;
-        margin-bottom: 3px;
-        text-transform: uppercase;
-        margin-top: 5px;
-      }
-      &__second-p{
-        padding-top: 0;
-        margin-top: 3px;
-        margin-bottom: 0;
-        small span{
-          text-transform: uppercase;
-        }
-      }
-      &__img{
-        width:4.5rem;
-        height: 2rem;
-        display: inline-block;
-      }
-    }
-  }
-}
-
 .animacion-entrada-fadeIn{
   -webkit-animation: card-fadeIn 2s;
   animation: card-fadeIn 2s;
@@ -103,9 +35,7 @@ ion-header{
       opacity: 1;
     }
 }
-
-  
-.item-novedades{
+.animacion-entrada{
   -webkit-animation: card-animation .5s;
   animation: card-animation .5s;
   animation-fill-mode: forwards; 
@@ -113,20 +43,56 @@ ion-header{
 
 
 @keyframes card-animation {
-  from { 
+from { 
     transform: translateX(-200px);
-      transition-timing-function: ease-in;
-  }
-  to   { 
-    transform: translateX(0);
-  }
+    transition-timing-function: ease-in;
+}
+to   { 
+  transform: translateX(0);
+}
 }
 @-webkit-keyframes card-animation {
-  from { 
-    transform: translateX(-200px);
-      transition-timing-function: ease-in;
+from { 
+  transform: translateX(-200px);
+    transition-timing-function: ease-in;
+}
+to   { 
+  transform: translateX(0);
+}
+}
+
+
+.custom-border{
+  position: absolute;
+  left:0;
+  top:0;
+  width: 3px;
+  height: 100%;
+  background-color: #10dc60;
+  z-index: 2;
+}
+.novedad{
+  
+  font-size: .8rem;
+  div:first-child{
+    color:#4c8dff;
+    padding: .8rem;
+    border:1px solid #edf4ff;
+    background-color: #f5f9ff;
+    border-bottom-color:#d9e8ff;
+    font-weight: bold;
+    text-transform: uppercase;
   }
-  to   { 
-    transform: translateX(0);
+  div:nth-child(2){
+    margin: 10px 5px;
+  }
+  div:last-child{
+    color:#4c8dff;
+    padding: .8rem;
+    border:1px solid #edf4ff;
+    background-color: #f5f9ff;
+    border-bottom-color:#d9e8ff;
+    font-weight: bold;
+    text-transform: uppercase;
   }
 }

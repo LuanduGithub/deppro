@@ -1,43 +1,37 @@
-<ion-content class="ion-padding" >
+<ion-content>
   <section>
-      <ion-grid class="ion-padding" style="margin-top: 20px;">
-          <ion-row class="header">
-            <ion-col>
-                <ion-img class="header__img" src="../assets/img/deppro_blanco.png"></ion-img>
-            </ion-col>
-          </ion-row>
-      </ion-grid>
+    <ion-grid class="ion-padding" style="margin-top: 20px;">
+      <ion-row class="header">
+        <ion-col>
+          <ion-img class="header__img" src="../assets/img/deppro_blanco.png"></ion-img>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </section>
-        <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmitLogin(loginFormGroup)" >
-          <ion-grid class="ion-padding item-novedades ">
-            <ion-row class="ion-justify-content-center">
-              <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
-                <div class="ion-padding">
-                  <ion-item>
-                    <ion-input type="text" placeholder="Usuario" formControlName="usuarioLogin"></ion-input>
-                  </ion-item>
-                  <ion-item>
-                    <ion-input type="password" placeholder="Password"  formControlName="passwordLogin"></ion-input>
-                  </ion-item>
-                </div>
-                <div class="ion-padding" *ngIf="mostrarMensajeError">
-                  <ion-label>Usuario o Contraseña inexistente</ion-label>
-                </div>
-                <div class="ion-padding">
-                  <ion-button type="submit" [disabled]="loginFormGroup.invalid" expand="block"><ion-icon name="log-in" style="margin-right: 10px;"></ion-icon> Acceder</ion-button>
-                </div>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                  <div class="ion-padding">
-                      <ion-button type="button" expand="block" color="secondary" (click)="accesoNoUsario()"><ion-icon name="redo" style="margin-right: 10px;"></ion-icon> Acceder Sin Usuario</ion-button>
-                    </div>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </form>
-        
+  <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmitLogin(loginFormGroup)">
+    <div class="card">
+      <div>
+        <input type="text" placeholder="Usuario" formControlName="usuarioLogin"/>
+      </div>
+      <div>
+        <input type="password" placeholder="Password" formControlName="passwordLogin"/>
+      </div>
+      <div *ngIf="mostrarMensajeError">
+        <ion-label>Usuario o Contraseña inexistente</ion-label>
+      </div>
+      <div>
+        <ion-button type="submit" [disabled]="loginFormGroup.invalid" expand="block">
+          <ion-icon name="log-in" style="margin-right: 10px;"></ion-icon> Acceder
+        </ion-button>
+      </div>
+      <div>
+        <ion-button type="button" expand="block" color="secondary" (click)="accesoNoUsario()">
+          <ion-icon name="redo" style="margin-right: 10px;"></ion-icon> Acceder Sin Usuario
+        </ion-button>
+      </div>
+    </div>
+  </form>
 
-  
+
+
 </ion-content>

@@ -17,7 +17,7 @@ import { UsuariosService } from './../services/usuarios.service';
 import { EquipoService } from './../services/equipo.service';
 import { CategoriaService } from './../services/categoria.service';
 import { NovedadesService } from './../services/novedades.service';
-
+import { ComponentsModule } from './../shared/components/components.module';
 /**
  * no hay necesidad de importar los providers, por costumbre lo hice.
  */
@@ -27,7 +27,8 @@ import { NovedadesService } from './../services/novedades.service';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild([{ path: '', component: Tab3Page }])
+    RouterModule.forChild([{ path: '', component: Tab3Page }]),
+    ComponentsModule
   ],
   declarations: [
     Tab3Page,

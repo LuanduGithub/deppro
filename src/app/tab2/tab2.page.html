@@ -1,32 +1,28 @@
 <app-header></app-header>
 
 <ion-content>
-    <!-- <ion-button (click)="toggleInfiniteScroll()" expand="block">
+  <!-- <ion-button (click)="toggleInfiniteScroll()" expand="block">
       Toggle Infinite Scroll
     </ion-button> -->
-    <ion-grid *ngFor="let novedad of novedadesList" class="ion-padding item-novedades">
-      <ion-row class="item-novedades__header">
-        <ion-col size="12" class="item__title">
-            <ion-icon name="chatbubbles"></ion-icon> <span>{{novedad.titulo}}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row class="item-novedades__body">
-        <ion-col>
-            <p class="ion-text-capitalize item__cuerpo">{{novedad.cuerpo}}</p>
-        </ion-col>
-      </ion-row>
-      <ion-row class="item-novedades__footer">
-          <ion-col size="12">
-              <ion-icon name="calendar"></ion-icon> <small>{{novedad.fecha}}</small>
-          </ion-col>
-      </ion-row>
-    </ion-grid>
+  <ion-card class="animacion-entrada" *ngFor="let novedad of novedadesList">
+    <section class="custom-border"></section>
+    <ion-card-content>
+      <section class="novedad">
+        <div>
+          <ion-icon name="chatbubbles"></ion-icon><span> {{novedad.titulo}}</span>
+        </div>
+        <div>
+          <p class="ion-text-capitalize item__cuerpo">{{novedad.cuerpo}}</p>
+        </div>
+        <div>
+          <ion-icon name="calendar"></ion-icon> {{novedad.fecha}}
+        </div>
+      </section>
+    </ion-card-content>
+  </ion-card>
 
-  
-    <ion-infinite-scroll threshold="150px" (ionInfinite)="loadData($event)">
-      <ion-infinite-scroll-content
-        loadingSpinner="crecent"
-        loadingText="cargando...">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-  </ion-content>
+  <ion-infinite-scroll threshold="150px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="crecent" loadingText="cargando...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

@@ -1,63 +1,43 @@
 <ion-card *ngIf="agregar">
-    <ion-card-header>
-       <ion-card-subtitle>Agregar Categoría la lista</ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content >
-      <form [formGroup]="agregarCategoriaFormGroup" (ngSubmit)="onSubmitAgregar(agregarCategoriaFormGroup)">
-        <section style="margin-bottom: 10px;">
-            <ion-item>
-              <ion-label position="floating" >Agregar Categoria</ion-label>
-              <ion-input clearInput formControlName="categoriaNombre"></ion-input>
-            </ion-item>
-        </section>
-        <ion-button
-        color="danger" 
-        style="margin: 0;" 
-        type="submit" 
-        expand="block"
-        size="small" 
-        class="ion-text-uppercase"
-        [disabled]="agregarCategoriaFormGroup.controls.categoriaNombre.invalid"
-        >Agregar</ion-button>
-      </form>
-    </ion-card-content>
-  </ion-card>
-  
-  
-  <ion-card *ngIf="editar">
-      <ion-card-header>
-         <ion-card-subtitle>Editar Categoríade la lista</ion-card-subtitle>
-      </ion-card-header>
-    
-      <ion-card-content >
-        <form [formGroup]="editarCategoriaFormGroup" (ngSubmit)="onSubmitEditar(editarCategoriaFormGroup)">
-          <section>
-            <ion-list>
-              <ion-item>
-                <ion-label>Categoríaa editar</ion-label>
-                <ion-select placeholder="Categoria" formControlName="editarCategoriaNombre" (ionChange)="editCategoriaNombreSelected($event.detail.value)" ok-text="Elegir" cancel-text="Cancelar">
-                  <ion-select-option value="{{categoria.id}}" *ngFor="let categoria of categoriasList">{{categoria.nombre}}</ion-select-option>
-                </ion-select>
-              </ion-item>
-              <ion-item>
-                  <ion-label position="floating" >Editar Categoría</ion-label>
-                  <ion-input clearInput formControlName="editarCategoriaNombreNuevo" [disabled]="editarCategoriaFormGroup.controls.editarCategoriaNombre.invalid"></ion-input>
-              </ion-item>
-            </ion-list>
-            
-          </section>
-         <section>
-          <ion-button 
-          color="danger"
-          style="margin: 0;" 
-          type="submit" 
-          expand="block"
-          size="small" 
+  <ion-card-content>
+    <div class="custom-form-title">Agregar Categoria</div>
+    <form [formGroup]="agregarCategoriaFormGroup" (ngSubmit)="onSubmitAgregar(agregarCategoriaFormGroup)">
+      <div class="custom-form">
+        <ion-label position="floating">Agregar Categoria</ion-label>
+        <ion-input clearInput formControlName="categoriaNombre"></ion-input>
+      </div>
+      <div class="custom-form-button">
+        <ion-button color="primary" style="margin: 0;" type="submit" expand="block" size="small"
+          class="ion-text-uppercase" [disabled]="agregarCategoriaFormGroup.controls.categoriaNombre.invalid">Agregar
+        </ion-button>
+      </div>
+    </form>
+  </ion-card-content>
+</ion-card>
+
+
+<ion-card *ngIf="editar">
+  <ion-card-content>
+    <div class="custom-form-title">Agregar Categoria</div>
+    <form [formGroup]="editarCategoriaFormGroup" (ngSubmit)="onSubmitEditar(editarCategoriaFormGroup)">
+      <div class="custom-form">
+        <ion-label>Categoríaa editar</ion-label>
+        <ion-select placeholder="Categoria" formControlName="editarCategoriaNombre"
+          (ionChange)="editCategoriaNombreSelected($event.detail.value)" ok-text="Elegir" cancel-text="Cancelar">
+          <ion-select-option value="{{categoria.id}}" *ngFor="let categoria of categoriasList">{{categoria.nombre}}
+          </ion-select-option>
+        </ion-select>
+      </div>
+      <div class="custom-form">
+        <ion-label>Editar Categoría</ion-label>
+        <ion-input clearInput formControlName="editarCategoriaNombreNuevo"></ion-input>
+      </div>
+      <div class="custom-form-button">
+        <ion-button color="primary" style="margin: 0;" type="submit" expand="block" size="small"
           class="ion-text-uppercase"
-          [disabled]="editarCategoriaFormGroup.controls.editarCategoriaNombre.invalid || editarCategoriaFormGroup.controls.editarCategoriaNombreNuevo.invalid"
-          >Editar</ion-button>
-        </section>
-        </form>
-      </ion-card-content>
-    </ion-card>
-  
+          [disabled]="editarCategoriaFormGroup.controls.editarCategoriaNombre.invalid || editarCategoriaFormGroup.controls.editarCategoriaNombreNuevo.invalid">
+          Editar</ion-button>
+      </div>
+    </form>
+  </ion-card-content>
+</ion-card>

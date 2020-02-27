@@ -16,6 +16,7 @@ export class EquiposComponent implements OnInit {
 
   @Input() agregar = false;
   @Input() editar = false;
+  equipos: any;
   constructor(
     private equipoService: EquipoService
   ) {
@@ -29,15 +30,18 @@ export class EquiposComponent implements OnInit {
     });
     this.editarEquipoFormGroup = new FormGroup({
       editarEquipoNombre: new FormControl('', [ Validators.required ]),
-      editarEquipoNombreNuevo: new FormControl('', [ Validators.required ]),
+      editarEquipoNombreNuevo: new FormControl({value : '', disabled: true}, Validators.required),
     });
 
  }
   getEquipoList() {
-    this.equipoService.getEquipos().subscribe(equipo => {
+    this.equipos = this.equipoService.getEquipos().subscribe(equipo => {
       const equiposList = equipo.msg;
       this.equiposList = equiposList.sort(this.getSortOrder('nombre'));
     });
+  }
+  ionViewWillLeave() {
+    this.equipos.unsubscribe();
   }
 
 /**
@@ -79,7 +83,8 @@ export class EquiposComponent implements OnInit {
 
   editEquipoNombreSelected(val) {
     if (val) {
-      this.equipoSeleccionado = this.equiposList.filter(n => n.id === val);
+      const valNumber = parseInt(val, 10);
+      this.equipoSeleccionado = this.equiposList.filter(n => n.id === valNumber);
       const nombre = this.equipoSeleccionado[0].nombre;
       this.editarEquipoFormGroup.controls.editarEquipoNombreNuevo.setValue(nombre);
       this.editarEquipoFormGroup.controls.editarEquipoNombreNuevo.enable();

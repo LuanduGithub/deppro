@@ -1,17 +1,13 @@
-.card-content-ios{
-    padding-top: 0;
-}
 ion-card{
     -webkit-animation: fadein 0.8s;
-    animation: fadein 0.5s;
-    background-color: #fbfcff;
+     animation: fadein 0.5s;
+     border-radius: 2px;
+     margin: 5px;
+     position: relative;
 }
-ion-item{
-    --ion-background-color: #fbfcff;
-    font-size: .9rem;
-}
-ion-list{
+ion-card-content{
     background-color: #fbfcff;
+    padding: 5px!important;
 }
 
 .form-list{
@@ -48,15 +44,44 @@ ion-list{
     border: 1px dashed;
     border-radius: .25rem;
     box-sizing: border-box;
-    margin:5px 16px;
+    margin:5px;
     ion-icon{
-      font-size: 1.1rem;
+      font-size: .9rem;
       position: relative;
       top: 4px;
       color:#4c8dff;
     }
     p{
       margin:5px 0;
-      font-size:.75rem;
+      font-size:.8rem;
     }
+  }
+
+  ion-item{
+    --ion-background-color: #fbfcff;
+    font-size: .8rem;
+}
+
+  .custom-form{
+    padding:10px 5px;
+    
+    ion-label{
+        font-size: .8rem;
+        color:#000;
+    }
+    ion-input{
+        border-bottom:1px solid #edf4ff;
+        font-size: .8rem;
+        color:#a0a0a0;
+    }
+  }
+
+  .custom-form-title{
+    color:#000;
+    padding:10px 5px;
+    font-size: .9rem;
+  }
+
+  .ion-select {
+      font-size: .8rem;
   }

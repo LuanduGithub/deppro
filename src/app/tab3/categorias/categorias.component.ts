@@ -16,6 +16,7 @@ export class CategoriasComponent implements OnInit {
 
   @Input() agregar = false;
   @Input() editar = false;
+  categorias: any;
   constructor(
     private categoriaService: CategoriaService
   ) {
@@ -29,15 +30,19 @@ export class CategoriasComponent implements OnInit {
     });
     this.editarCategoriaFormGroup = new FormGroup({
       editarCategoriaNombre: new FormControl('', [ Validators.required ]),
-      editarCategoriaNombreNuevo: new FormControl('', [ Validators.required ]),
+      editarCategoriaNombreNuevo: new FormControl({value : '', disabled: true}, Validators.required ),
     });
 
  }
   getCategoriaList() {
-    this.categoriaService.getCategorias().subscribe(categoria => {
+    this.categorias = this.categoriaService.getCategorias().subscribe(categoria => {
       const categoriasList = categoria.msg;
       this.categoriasList = categoriasList.sort(this.getSortOrder('nombre'));
     });
+  }
+
+  ionViewWillLeave() {
+    this.categorias.unsubscribe();
   }
 
 /**
@@ -79,7 +84,8 @@ export class CategoriasComponent implements OnInit {
 
   editCategoriaNombreSelected(val) {
     if (val) {
-      this.categoriaSeleccionada = this.categoriasList.filter( n => n.id === val);
+      const valNumber = parseInt(val, 10);
+      this.categoriaSeleccionada = this.categoriasList.filter( n => n.id === valNumber);
       const nombre = this.categoriaSeleccionada[0].nombre;
       this.editarCategoriaFormGroup.controls.editarCategoriaNombreNuevo.setValue(nombre);
       this.editarCategoriaFormGroup.controls.editarCategoriaNombreNuevo.enable();

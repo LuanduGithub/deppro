@@ -1,28 +1,26 @@
 <app-header></app-header>
 
 <ion-content>
-    <section *ngIf="user?.admin">
-        <ion-grid>
-            <ion-row  class="card-title-top">
-                <ion-col size="12">
-                    <ion-item>
-                        <ion-label>Elegir Categoría</ion-label>
-                        <ion-select placeholder="Categoria" ok-text="Elegir" cancel-text="Cancelar" (ionChange)="filtradoPorCategoria($event)">
-                                <ion-select-option value="todas">Todas las Categorías</ion-select-option>
-                            <ion-select-option value="{{category.nombre}}" *ngFor="let category of categoriasList">{{category.nombre}}</ion-select-option>
-                        </ion-select>
-                    </ion-item>
-                    <ion-item *ngIf="showBtnPosiciones">
-                        <ion-label>Posiciones</ion-label>
-                        <ion-toggle slot="end" name="posiciones" (ionChange)="mostrarTabla()"></ion-toggle>
-                    </ion-item>
-                    
-                </ion-col>      
-            </ion-row>
-        </ion-grid>
-    </section>
+    <ion-card class="animacion-entrada" *ngIf="user?.admin">
+        <ion-card-content>
+            <ion-item>
+                <ion-label>Elegir Categoría</ion-label>
+                <ion-select placeholder="Categoria" ok-text="Elegir" cancel-text="Cancelar"
+                    (ionChange)="filtradoPorCategoria($event)">
+                    <ion-select-option value="todas">Todas las Categorías</ion-select-option>
+                    <ion-select-option value="{{category.nombre}}" *ngFor="let category of categoriasList">
+                        {{category.nombre}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-item *ngIf="showBtnPosiciones">
+                <ion-label>Posiciones</ion-label>
+                <ion-toggle slot="end" name="posiciones" (ionChange)="mostrarTabla()"></ion-toggle>
+            </ion-item>
 
-    <ion-row *ngIf="user?.admin">
+        </ion-card-content>
+    </ion-card>
+
+    <!--     <ion-row *ngIf="user?.admin">
         <ion-col size="12">
             <section class="info-alert">
                 <ion-icon name="remove-circle-outline" (click)="toggleAviso()"></ion-icon>
@@ -31,125 +29,126 @@
                 <p *ngIf="avisoEstado">Si todos los arbitros u Ofi. de Mesa aceptan aparecera con un check (<ion-icon name="checkmark"></ion-icon>)</p>
             </section>
         </ion-col>
-    </ion-row>
+    </ion-row> -->
 
     <ion-row *ngIf="noTieneDesignaciones">
-            <ion-col size="12">
-                <section class="warning-alert">
-                    <strong>Aviso:</strong>
-                    <p *ngIf="noHayPartidos">No hay partidos Programados para esta semana</p>
-                    <p *ngIf="noHayDesignacion">No tiene Designación por el momento</p>
-                </section>
-            </ion-col>
+        <ion-col size="12">
+            <section class="warning-alert">
+                <strong>Aviso:</strong>
+                <p *ngIf="noHayPartidos">No hay partidos Programados para esta semana</p>
+                <p *ngIf="noHayDesignacion">No tiene Designación por el momento</p>
+            </section>
+        </ion-col>
     </ion-row>
     <ion-card class="animacion-entrada" *ngFor="let designacion of designaciones; let i = index">
-      <ion-card-content>
-        <ion-grid>
-          <ion-row  class="card-title-top">
-            <ion-col size="11">
-              Lugar y hora
-            </ion-col>
-            <ion-col size="1">
-                <ion-icon name="calendar"></ion-icon>
-            </ion-col>
-          </ion-row>
-          <ion-row class="card-content linea-arriba">
-            <ion-col size="6">
-                {{designacion.cancha}}
-            </ion-col>
-            <ion-col size="6" class="text-align-right">
-                {{designacion.fecha}} - {{designacion.hora}}hs
-            </ion-col>
-          </ion-row>
-          <ion-row class="card-content linea-abajo">
-              <ion-col size="10">
-                  {{designacion.equipoA}} vs {{designacion.equipoB}}
-              </ion-col>
-              <ion-col size="2" class="text-align-right">
-                  {{designacion.categoria}}
-              </ion-col>
-          </ion-row>
-        <section *ngIf="user?.usuarioId !== 'invitado'">
-            <ion-row class="card-title" (click)="showJueces(i)" >
-                <ion-col size="11" >
-                    Jueces
-                    <span *ngIf="designacion.arbitro1_confirmado || designacion.arbitro2_confirmado || designacion.arbitro3_confirmado">*</span>
-                    <span *ngIf="designacion.arbitro1_confirmado && designacion.arbitro2_confirmado && designacion.arbitro3_confirmado"><ion-icon name="checkmark"></ion-icon></span>
-                </ion-col>
-                <ion-col size="1">
-                    <ion-icon name="arrow-dropdown" [ngClass]="{'rotate-element-180': showJuecesIndex === i,'rotate-element-0': showJuecesIndex !== i}"></ion-icon>
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="showJuecesIndex === i" class="card-content  linea-arriba">
-                <ion-col size="4" >
-                    <small>1er Juez <ion-icon name="checkbox" *ngIf="designacion.arbitro1_confirmado"></ion-icon></small>
-                </ion-col >
-                <ion-col size="4" >
-                    <small>2do Juez <ion-icon name="checkbox" *ngIf="designacion.arbitro2_confirmado"></ion-icon></small>
-                </ion-col >
-                <ion-col size="4" >
-                    <small>3er Juez <ion-icon name="checkbox" *ngIf="designacion.arbitro3_confirmado"></ion-icon></small>
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="showJuecesIndex === i" class="card-content  linea-abajo">
+        <section class="custom-border"></section>
+        <ion-card-content>
+            <section class="grid-partido">
+                <div>{{designacion.cancha}}</div>
+                <div>{{designacion.fecha}} | </div>
+                <div>{{designacion.hora}}hs</div>
+            </section>
+            <section class="grid-partido-data">
+                <div>{{designacion.equipoA}} <small>vs.</small> </div>
+                <div>{{designacion.equipoB}}</div>
+                <div>
+                    <div>{{designacion.categoria}}</div>
+                </div>
+            </section>
+            <section *ngIf="user?.usuarioId !== 'invitado'">
+                <section class="grid-card-title" (click)="showJueces(i)">
+                    <div>Jueces</div>
+                    <div>
+                        <span
+                            *ngIf="designacion.arbitro1_confirmado || designacion.arbitro2_confirmado || designacion.arbitro3_confirmado">*</span>
+                        <span
+                            *ngIf="designacion.arbitro1_confirmado && designacion.arbitro2_confirmado && designacion.arbitro3_confirmado">
+                            <ion-icon name="checkmark"></ion-icon>
+                        </span></div>
+                    <div>
+                        <ion-icon name="arrow-dropdown"
+                            [ngClass]="{'rotate-element-180': showJuecesIndex === i,'rotate-element-0': showJuecesIndex !== i}">
+                        </ion-icon>
+                    </div>
+                </section>
 
-                <ion-col size="4">
-                    {{designacion.arbitro1}}
-                </ion-col>
-                <ion-col size="4">
-                    {{designacion.arbitro2}}
-                </ion-col>
-                <ion-col size="4">
-                    {{designacion.arbitro3}}
-                </ion-col>
-            </ion-row>
-            <ion-row class="card-title"(click)="showOfMesa(i)">
-                <ion-col size="11" >
-                    Oficiales de Mesa
-                    <span *ngIf="(designacion.anotador_confirmado || designacion.cronometro_confirmado) && !(designacion.anotador_confirmado && designacion.cronometro_confirmado)">*</span>
-                    <span *ngIf="designacion.anotador_confirmado && designacion.cronometro_confirmado"><ion-icon name="checkmark"></ion-icon></span>
-                </ion-col>
-                <ion-col size="1">
-                    <ion-icon name="arrow-dropdown" [ngClass]="{'rotate-element-180': showOfMesaIndex === i,'rotate-element-0': showOfMesaIndex !== i}"></ion-icon>
-                </ion-col>
-                </ion-row>
-                <ion-row *ngIf="showOfMesaIndex === i" class="card-content  linea-arriba">
-                    <ion-col size="4" >
-                        <small>Anotador</small> <ion-icon name="checkbox" *ngIf="designacion.anotador_confirmado"></ion-icon>
-                    </ion-col >
-                    <ion-col size="4" >
-                        <small>Tablero</small> <ion-icon  name="checkbox" *ngIf="designacion.cronometro_confirmado"></ion-icon>
-                    </ion-col >
-                    <ion-col size="4" >
-                        <small>24"</small> <ion-icon  name="checkbox" *ngIf="designacion.cronometro2_confirmado"></ion-icon>
+                <section class="grid-oficiales" *ngIf="showJuecesIndex === i">
+                    <div>
+                        1er Juez <ion-icon name="checkbox" *ngIf="designacion.arbitro1_confirmado">
+                        </ion-icon>
+                    </div>
+                    <div>
+                        2do Juez <ion-icon name="checkbox" *ngIf="designacion.arbitro2_confirmado">
+                        </ion-icon>
+                    </div>
+                    <div>
+                        3er Juez <ion-icon name="checkbox" *ngIf="designacion.arbitro3_confirmado">
+                        </ion-icon>
+                    </div>
+                    <div class="custom-name">
+                        {{designacion.arbitro1}}
+                    </div>
+                    <div class="custom-name">
+                        {{designacion.arbitro2}}
+                    </div>
+                    <div class="custom-name">
+                        {{designacion.arbitro3}}
+                    </div>
+                </section>
+
+                <section class="grid-card-title" (click)="showOfMesa(i)">
+                    <div>Oficiales de Mesa</div>
+                    <div>
+                        <span
+                            *ngIf="(designacion.anotador_confirmado || designacion.cronometro_confirmado) && !(designacion.anotador_confirmado && designacion.cronometro_confirmado)">*</span>
+                        <span *ngIf="designacion.anotador_confirmado && designacion.cronometro_confirmado">
+                            <ion-icon name="checkmark"></ion-icon>
+                        </span>
+                    </div>
+                    <div>
+                        <ion-icon name="arrow-dropdown"
+                            [ngClass]="{'rotate-element-180': showOfMesaIndex === i,'rotate-element-0': showOfMesaIndex !== i}">
+                        </ion-icon>
+                    </div>
+                </section>
+                <section class="grid-oficiales" *ngIf="showOfMesaIndex === i">
+                    <div>
+                        Anotador <ion-icon name="checkbox" *ngIf="designacion.anotador_confirmado">
+                        </ion-icon>
+                    </div>
+                    <div>
+                        Tablero <ion-icon name="checkbox" *ngIf="designacion.cronometro_confirmado">
+                        </ion-icon>
+                    </div>
+                    <div>
+                        24" <ion-icon name="checkbox" *ngIf="designacion.cronometro2_confirmado">
+                        </ion-icon>
+                    </div>
+                    <div class="custom-name">
+                        {{designacion.anotador}}
+                    </div>
+                    <div class="custom-name">
+                        {{designacion.cronometro}}
+                    </div>
+                    <div class="custom-name">
+                        {{designacion.cronometro2}}
+                    </div>
+                </section>
+                <ion-row *ngIf="!user?.admin">
+                    <ion-col size="12" class="text-align-right" style="margin-top:10px; position: relative;"
+                        *ngIf="!designacion.anotador_confirmado && !designacion.arbitro1_confirmado && !designacion.arbitro2_confirmado && !designacion.arbitro3_confirmado && !designacion.cronometro_confirmado">
+                        <ion-button size="small" (click)="aceptarPartidoModal(designacion, i)">ACEPTAR PARTIDO
+                        </ion-button>
+                    </ion-col>
+                    <ion-col size="12"
+                        *ngIf="!(!designacion.anotador_confirmado && !designacion.arbitro1_confirmado && !designacion.arbitro2_confirmado && !designacion.arbitro3_confirmado && !designacion.cronometro_confirmado)">
+                        <section class="info-alert in">
+                            <strong class="ion-text-capitalize">Designación aceptada</strong>
+                            <p>recuerde estar 20' antes de la hora de inicio</p>
+                        </section>
                     </ion-col>
                 </ion-row>
-            <ion-row *ngIf="showOfMesaIndex === i" class="card-content  linea-abajo">
-                <ion-col size="4">
-                    {{designacion.anotador}}
-                </ion-col>
-                <ion-col size="4">
-                    {{designacion.cronometro}}
-                </ion-col>
-                <ion-col size="4">
-                    {{designacion.cronometro2}}
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="!user?.admin">
-                <ion-col size="12" class="text-align-right" style="margin-top:10px; position: relative;" 
-                *ngIf="!designacion.anotador_confirmado && !designacion.arbitro1_confirmado && !designacion.arbitro2_confirmado && !designacion.arbitro3_confirmado && !designacion.cronometro_confirmado">
-                    <ion-button size="small" (click)="aceptarPartidoModal(designacion, i)">ACEPTAR PARTIDO</ion-button>
-                </ion-col>
-                <ion-col size="12"
-                *ngIf="!(!designacion.anotador_confirmado && !designacion.arbitro1_confirmado && !designacion.arbitro2_confirmado && !designacion.arbitro3_confirmado && !designacion.cronometro_confirmado)">
-                    <section class="info-alert in">
-                        <strong class="ion-text-capitalize">Designación aceptada</strong>
-                        <p>recuerde estar 20' antes de la hora de inicio</p>
-                    </section>
-                </ion-col>
-            </ion-row>
-        </section>
-        </ion-grid>
-      </ion-card-content>
+            </section>
+        </ion-card-content>
     </ion-card>
 </ion-content>

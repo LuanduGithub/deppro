@@ -7,8 +7,6 @@ import { Storage } from '@ionic/storage';
 import { Designaciones, Comun } from './../models/modelsComunes';
 import { CategoriaService } from './../services/categoria.service';
 
-import { HeaderComponent } from './../shared/components/header/header.component';
-
 
 import * as moment from 'moment';
 
@@ -34,6 +32,7 @@ export class Tab1Page {
   categoriasList: Array<Comun>;
   showBtnPosiciones = false;
   avisoEstado = true;
+  categorias: any;
   constructor(
     private storage: Storage,
     public modalController: ModalController,
@@ -62,7 +61,7 @@ export class Tab1Page {
   getDesignacionesList() {
     this.designacionesService.getDesignaciones().subscribe(designaciones => {
       if (designaciones) {
-        this.designaciones =  this.filtradoPorFecha(designaciones.msg);
+        this.designaciones = this.filtradoPorFecha(designaciones.msg);
         this.designacionesTodas = this.designaciones;
       } else {
         this.noTieneDesignaciones = true;
@@ -74,7 +73,7 @@ export class Tab1Page {
   getDesignacionesListPorUsuario(id) {
     this.designacionesService.getDesignacionesPorUsuario(id).subscribe(designaciones => {
       if (designaciones) {
-        this.designaciones =  this.filtradoPorFecha(designaciones.msg);
+        this.designaciones = this.filtradoPorFecha(designaciones.msg);
       } else {
         this.noTieneDesignaciones = true;
         this.noHayDesignacion = true;
@@ -82,8 +81,7 @@ export class Tab1Page {
     });
   }
   filtradoPorCategoria(e) {
-    console.log(e.detail.value);
-    if (e.detail.value === 'todas' ) {
+    if (e.detail.value === 'todas') {
       this.designaciones = this.designacionesTodas;
       this.showBtnPosiciones = false;
       return;
@@ -108,24 +106,28 @@ export class Tab1Page {
 
 
   filtradoPorFecha(arr) {
-      return arr.filter(f => {
-        const fechaDateHoy = new Date(); // establezco la fecha
-        const lunes = fechaDateHoy.getDate() - fechaDateHoy.getDay(); // primer dia del mes menos primer dia de la semana
-        const lunesDate = new Date(fechaDateHoy.setDate(lunes));
-        const domingo = lunes + 6;
-        const domingoDate = new Date(fechaDateHoy.setDate(domingo));
-        const fecha = f.fecha.split('/');
-        const dateFormatted = `${fecha[1]}/${fecha[0]}/${fecha[2]}`;
-        const mydate = new Date(dateFormatted);
-        return mydate > lunesDate && mydate < domingoDate;
-      });
+    return arr.filter(f => {
+      const fechaDateHoy = new Date(); // establezco la fecha
+      const lunes = fechaDateHoy.getDate() - fechaDateHoy.getDay(); // primer dia del mes menos primer dia de la semana
+      const lunesDate = new Date(fechaDateHoy.setDate(lunes));
+      const domingo = lunes + 6;
+      const domingoDate = new Date(fechaDateHoy.setDate(domingo));
+      const fecha = f.fecha.split('/');
+      const dateFormatted = `${fecha[1]}/${fecha[0]}/${fecha[2]}`;
+      const mydate = new Date(dateFormatted);
+      return mydate > lunesDate && mydate < domingoDate;
+    });
   }
 
   getCategoriasList() {
-    this.categoriaService.getCategorias().subscribe( categoriasList => {
+   this.categorias =  this.categoriaService.getCategorias().subscribe(categoriasList => {
       this.categoriasList = categoriasList.msg;
       this.mostrarDesignacionesSegunRol();
     });
+  }
+
+  ionViewWillLeave() {
+    this.categorias.unsubscribe();
   }
 
   loadUser() {

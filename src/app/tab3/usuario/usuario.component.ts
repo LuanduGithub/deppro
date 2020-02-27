@@ -17,6 +17,7 @@ export class UsuarioComponent implements OnInit {
 
   @Input() agregar = false;
   @Input() editar = false;
+  usuarios: any;
 
   constructor(
     private usuService: UsuariosService
@@ -47,10 +48,14 @@ export class UsuarioComponent implements OnInit {
     });
   }
   getUsuarios() {
-    this.usuService.getUsuarios().subscribe(usuarios => {
+    this.usuarios = this.usuService.getUsuarios().subscribe(usuarios => {
       const usuarioList = usuarios.msg;
       this.usuarioList = usuarioList.sort(this.getSortOrder('nombre'));
     });
+  }
+
+  ionViewWillLeave() {
+    this.usuarios.unsubscribe();
   }
   onSubmitAgregar(formGroup) {
     const id = 0;
@@ -125,7 +130,8 @@ getSortOrder(prop) {
 
 editUsuarioNombreSelected(val) {
     if (val) {
-      this.usuarioSeleccionado = this.usuarioList.filter(usuario => usuario.id === val);
+      const valNumber = parseInt(val, 10);
+      this.usuarioSeleccionado = this.usuarioList.filter(u => u.id === valNumber);
       this.editarUsuarioFormGroup.controls.editarUsuarioNombre.setValue(this.usuarioSeleccionado[0].nombre);
       this.editarUsuarioFormGroup.controls.editarUsuarioTelefono.setValue(this.usuarioSeleccionado[0].telefono);
       this.editarUsuarioFormGroup.controls.editarUsuarioMail.setValue(this.usuarioSeleccionado[0].mail);
@@ -133,7 +139,6 @@ editUsuarioNombreSelected(val) {
       this.editarUsuarioFormGroup.controls.editarUsuarioRol.setValue(this.usuarioSeleccionado[0].admin);
       this.editarUsuarioFormGroup.controls.editarUsuarioAliasNombre.setValue(this.usuarioSeleccionado[0].usuario);
       this.editarUsuarioFormGroup.controls.editarUsuarioEstado.setValue(this.usuarioSeleccionado[0].activo);
-      console.log(this.usuarioSeleccionado );
    }
   }
 

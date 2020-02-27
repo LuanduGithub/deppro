@@ -1,238 +1,165 @@
 <ion-card *ngIf="agregar">
-    <ion-card-header>
-       <ion-card-subtitle>Agregar Usuario a la lista</ion-card-subtitle>
-    </ion-card-header>
-  
-    <ion-card-content >
-      <form [formGroup]="agregarUsuarioFormGroup" (ngSubmit)="onSubmitAgregar(agregarUsuarioFormGroup)">
-        <section>
-            <ion-item>
-                <ion-label position="floating" >Nombre</ion-label>
-                <ion-input clearInput formControlName="usuarioNombre"></ion-input>
-            </ion-item>
-        </section>
-        <section>
-            <ion-item>
-                <ion-label position="floating" >TeléFono</ion-label>
-                <ion-input clearInput formControlName="usuarioTelefono"></ion-input>
-            </ion-item>
-        </section>
-        <section>
-            <ion-item>
-                <ion-label position="floating" >Mail</ion-label>
-                <ion-input clearInput formControlName="usuarioMail"></ion-input>
-            </ion-item>
-        </section>
-        <section>
-            <ion-item>
-                <ion-label position="floating" >Nombre de Usuario</ion-label>
-                <ion-input clearInput formControlName="usuarioAliasNombre"></ion-input>
-            </ion-item>
-        </section>
-        <section>
-            <ion-item>
-                <ion-label position="floating" >Contraseña</ion-label>
-                <ion-input clearInput formControlName="usuarioContrasena"></ion-input>
-            </ion-item>
-        </section>
-        <section>
-                <ion-list>
-                  <ion-radio-group formControlName="usuarioTipo">
-                    <ion-list-header translucent>
-                      <ion-label>Tipo</ion-label>
-                    </ion-list-header>
-                
-                    <ion-item>
-                      <ion-label>Arbitro</ion-label>
-                      <ion-radio slot="start" value="arbitro"></ion-radio>
-                    </ion-item>
-                
-                    <ion-item>
-                      <ion-label>Of. Mesa</ion-label>
-                      <ion-radio slot="start" value="mesa"></ion-radio>
-                    </ion-item>
-                
-                  </ion-radio-group>
-                </ion-list>
-        </section>
-        <section>
-                <ion-list>
-                  <ion-radio-group formControlName="usuarioRol">
-                    <ion-list-header>
-                      <ion-label>Rol</ion-label>
-                    </ion-list-header>
-                
-                    <ion-item>
-                      <ion-label>Usuario</ion-label>
-                      <ion-radio slot="start" value="SI"></ion-radio>
-                    </ion-item>
-                
-                    <ion-item>
-                      <ion-label>Admin</ion-label>
-                      <ion-radio slot="start" value="NO"></ion-radio>
-                    </ion-item>
-                
-                  </ion-radio-group>
-                </ion-list>
-        </section>
+  <ion-card-content>
+    <div class="custom-form-title">Agregar Usuario de la lista</div>
+    <form [formGroup]="agregarUsuarioFormGroup" (ngSubmit)="onSubmitAgregar(agregarUsuarioFormGroup)">
+      <div class="custom-form">
+        <ion-label>Nombre</ion-label>
+        <ion-input clearInput formControlName="usuarioNombre"></ion-input>
+      </div>
+      <div class="custom-form">
+        <ion-label>TeléFono</ion-label>
+        <ion-input clearInput formControlName="usuarioTelefono"></ion-input>
+      </div>
+      <div class="custom-form">
+        <ion-label>Mail</ion-label>
+        <ion-input clearInput formControlName="usuarioMail"></ion-input>
+      </div>
+      <div class="custom-form">
+        <ion-label>Nombre de Usuario</ion-label>
+        <ion-input clearInput formControlName="usuarioAliasNombre"></ion-input>
+      </div>
+      <div class="custom-form">
+        <ion-label>Contraseña</ion-label>
+        <ion-input clearInput formControlName="usuarioContrasena"></ion-input>
+      </div>
+      <div class="custom-form">
+        <ion-label>Tipo</ion-label>
+        <ion-radio-group formControlName="usuarioTipo">
+          <ion-item>
+            <ion-label>Arbitro</ion-label>
+            <ion-radio slot="start" value="arbitro"></ion-radio>
+          </ion-item>
 
-        <section>
-                <ion-list>
-                  <ion-radio-group  formControlName="usuarioEstado">
-                    <ion-list-header>
-                      <ion-label>Estado</ion-label>
-                    </ion-list-header>
-                
-                    <ion-item>
-                      <ion-label>Activo</ion-label>
-                      <ion-radio slot="start" value="SI"></ion-radio>
-                    </ion-item>
-                
-                    <ion-item>
-                      <ion-label>Inactivo</ion-label>
-                      <ion-radio slot="start" value="NO"></ion-radio>
-                    </ion-item>
-                
-                  </ion-radio-group>
-                </ion-list>
-        </section>
+          <ion-item>
+            <ion-label>Of. Mesa</ion-label>
+            <ion-radio slot="start" value="mesa"></ion-radio>
+          </ion-item>
 
-        <ion-button
-        color="danger" 
-        style="margin: 0;" 
-        type="submit" 
-        expand="block"
-        size="small" 
-        class="ion-text-uppercase"
+        </ion-radio-group>
+      </div>
+      <div class="custom-form">
+        <ion-label>Rol</ion-label>
+        <ion-radio-group formControlName="usuarioRol">
+          <ion-item>
+            <ion-label>Usuario</ion-label>
+            <ion-radio slot="start" value="SI"></ion-radio>
+          </ion-item>
 
-        >Agregar</ion-button>
-      </form>
-    </ion-card-content>
+          <ion-item>
+            <ion-label>Admin</ion-label>
+            <ion-radio slot="start" value="NO"></ion-radio>
+          </ion-item>
+
+        </ion-radio-group>
+      </div>
+      <div class="custom-form">
+        <ion-label>Estado</ion-label>
+        <ion-radio-group formControlName="usuarioEstado">
+          <ion-item>
+            <ion-label>Activo</ion-label>
+            <ion-radio slot="start" value="SI"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Inactivo</ion-label>
+            <ion-radio slot="start" value="NO"></ion-radio>
+          </ion-item>
+
+        </ion-radio-group>
+      </div>
+      <div class="custom-form-button">
+        <ion-button color="primary" style="margin: 0;" type="submit" expand="block" size="small"
+          class="ion-text-uppercase">Agregar</ion-button>
+      </div>
+    </form>
+  </ion-card-content>
 </ion-card>
 
+
 <ion-card *ngIf="editar">
-    <ion-card-header>
-       <ion-card-subtitle>Editar Usuario de la lista</ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content >
-      <form [formGroup]="editarUsuarioFormGroup" (ngSubmit)="onSubmitEditar(editarUsuarioFormGroup)">
-        <section>
-            <ion-select placeholder="Usuario" formControlName="editarSeleccionarUsuarioNombre" (ionChange)="editUsuarioNombreSelected($event.detail.value)" ok-text="Elegir" cancel-text="Cancelar">
-                    <ion-select-option value="{{usuario.id}}" *ngFor="let usuario of usuarioList">{{usuario.nombre}}</ion-select-option>
-                  </ion-select>
 
-        </section>
-        <section class="form-list" *ngIf="editarUsuarioFormGroup.controls.editarSeleccionarUsuarioNombre.valid">
-            <section>
-                <ion-item>
-                    <ion-label position="floating" >Usuario</ion-label>
-                    <ion-input clearInput  formControlName="editarUsuarioNombre"></ion-input>
-                </ion-item>
-            </section>
+  <ion-card-content>
+    <div class="custom-form-title">Editar Usuario de la lista</div>
+    <form [formGroup]="editarUsuarioFormGroup" (ngSubmit)="onSubmitEditar(editarUsuarioFormGroup)">
+      <div class="custom-form">
+        <ion-select placeholder="Usuario" formControlName="editarSeleccionarUsuarioNombre"
+          (ionChange)="editUsuarioNombreSelected($event.detail.value)" ok-text="Elegir" cancel-text="Cancelar">
+          <ion-select-option value="{{usuario.id}}" *ngFor="let usuario of usuarioList">{{usuario.nombre}}
+          </ion-select-option>
+        </ion-select>
+      </div>
+      <div class="custom-form">
+        <ion-label>Usuario</ion-label>
+        <ion-input clearInput formControlName="editarUsuarioNombre"></ion-input>
+      </div>
+      <div class="custom-form">
+        <ion-label>TeléFono</ion-label>
+        <ion-input clearInput formControlName="editarUsuarioTelefono"></ion-input>
+      </div>
+      <div class="custom-form">
+        <ion-label>Mail</ion-label>
+        <ion-input clearInput formControlName="editarUsuarioMail"></ion-input>
+      </div>
+      <div class="custom-form">
+        <ion-label>Nombre de Usuario</ion-label>
+        <ion-input clearInput formControlName="editarUsuarioAliasNombre"></ion-input>
+      </div>
+      <div class="custom-form">
+        <ion-label>Contraseña</ion-label>
+        <ion-input clearInput type="password" formControlName="editarUsuarioContrasena"></ion-input>
+      </div>
 
-            <section>
-                <ion-item>
-                    <ion-label position="floating" >TeléFono</ion-label>
-                    <ion-input clearInput  formControlName="editarUsuarioTelefono"></ion-input>
-                </ion-item>
-            </section>
+      <section class="info-alert">
+        <strong>Aviso:</strong>
+        <p>Si no actualiza la contraseña queda la anterior configurada.</p>
+      </section>
 
-            <section>
-                <ion-item>
-                    <ion-label position="floating" >Mail</ion-label>
-                    <ion-input clearInput  formControlName="editarUsuarioMail"></ion-input>
-                </ion-item>
-            </section>
-            <section>
-                <ion-item>
-                    <ion-label position="floating" >Nombre de Usuario</ion-label>
-                    <ion-input clearInput  formControlName="editarUsuarioAliasNombre"></ion-input>
-                </ion-item>
-            </section>
-           <section>
-              <ion-item>
-                  <ion-label position="floating" >Contraseña</ion-label>
-                  <ion-input clearInput type="password"  formControlName="editarUsuarioContrasena"></ion-input>
-              </ion-item>
-              <section class="info-alert">
-                  <strong>Aviso:</strong>
-                  <p>Si no actualiza la contraseña queda la anterior configurada, sie scribe una nueva esa seria la que deberia usar en adelante el usuario</p>
-              </section>
-              </section>
-            <section>
-                <ion-list>
-                <ion-radio-group formControlName="editarUsuarioTipo">
-                    <ion-list-header>
-                    <ion-label>Tipo</ion-label>
-                    </ion-list-header>
-                
-                    <ion-item>
-                    <ion-label>Arbitro</ion-label>
-                    <ion-radio color="danger" slot="start" value="arbitro"></ion-radio>
-                    </ion-item>
-                
-                    <ion-item>
-                    <ion-label>Of. Mesa</ion-label>
-                    <ion-radio color="danger" slot="start" value="mesa"></ion-radio>
-                    </ion-item>
-                
-                </ion-radio-group>
-                </ion-list>
-            </section>
-            <section>
-                <ion-list>
-                <ion-radio-group formControlName="editarUsuarioRol">
-                    <ion-list-header>
-                    <ion-label>Rol</ion-label>
-                    </ion-list-header>
-                
-                    <ion-item>
-                    <ion-label>Usuario</ion-label>
-                    <ion-radio color="danger" slot="start" value="NO"></ion-radio>
-                    </ion-item>
-                
-                    <ion-item>
-                    <ion-label>Admin</ion-label>
-                    <ion-radio color="danger" slot="start" value="SI"></ion-radio>
-                    </ion-item>
-                
-                </ion-radio-group>
-                </ion-list>
-            </section>
+      <div class="custom-form">
+        <ion-label>Tipo</ion-label>
+        <ion-radio-group formControlName="editarUsuarioTipo">
+          <ion-item>
+            <ion-label>Arbitro</ion-label>
+            <ion-radio color="danger" slot="start" value="arbitro"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Of. Mesa</ion-label>
+            <ion-radio color="danger" slot="start" value="mesa"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </div>
+      <div class="custom-form">
+        <ion-label>Rol</ion-label>
+        <ion-radio-group formControlName="editarUsuarioRol">
+          <ion-item>
+            <ion-label>Usuario</ion-label>
+            <ion-radio color="danger" slot="start" value="NO"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Admin</ion-label>
+            <ion-radio color="danger" slot="start" value="SI"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </div>
+      <div class="custom-form">
+        <ion-label>Estado</ion-label>
+        <ion-radio-group formControlName="editarUsuarioEstado">
+          <ion-item>
+            <ion-label>Activo</ion-label>
+            <ion-radio color="danger" slot="start" value="SI"></ion-radio>
+          </ion-item>
 
+          <ion-item>
+            <ion-label>Inactivo</ion-label>
+            <ion-radio color="danger" slot="start" value="NO"></ion-radio>
+          </ion-item>
 
-            <section>
-                <ion-list>
-                <ion-radio-group  formControlName="editarUsuarioEstado">
-                    <ion-list-header>
-                    <ion-label>Estado</ion-label>
-                    </ion-list-header>
-                
-                    <ion-item>
-                    <ion-label>Activo</ion-label>
-                    <ion-radio color="danger" slot="start" value="SI"></ion-radio>
-                    </ion-item>
-                
-                    <ion-item>
-                    <ion-label>Inactivo</ion-label>
-                    <ion-radio color="danger" slot="start" value="NO"></ion-radio>
-                    </ion-item>
-                
-                </ion-radio-group>
-                </ion-list>
-            </section>
-        </section>
+        </ion-radio-group>
+      </div>
+      <div class="custom-form-button">
+        <ion-button color="primary" style="margin: 0;" type="submit" expand="block" size="small"
+          class="ion-text-uppercase" [disabled]="editarUsuarioFormGroup.invalid">editar</ion-button>
+      </div>
 
-
-        <ion-button 
-        color="danger"
-        style="margin: 0;" 
-        type="submit" 
-        expand="block"
-        size="small" 
-        class="ion-text-uppercase"
-        [disabled]="editarUsuarioFormGroup.invalid"
-        >editar</ion-button>
-      </form>
-    </ion-card-content>
+    </form>
+  </ion-card-content>
 </ion-card>

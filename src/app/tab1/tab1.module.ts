@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
 import { ModalPage } from './modal/modal.page';
 import { ModalPageModule } from './modal/modal.module';
-
+import { ComponentsModule } from './../shared/components/components.module';
 
 @NgModule({
   imports: [
@@ -14,7 +14,8 @@ import { ModalPageModule } from './modal/modal.module';
     CommonModule,
     FormsModule,
     RouterModule.forChild([{ path: '', component: Tab1Page }]),
-    ModalPageModule
+    ModalPageModule,
+    ComponentsModule
   ],
   declarations: [Tab1Page],
   entryComponents: [ModalPage],

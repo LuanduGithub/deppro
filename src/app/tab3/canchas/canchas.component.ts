@@ -18,8 +18,9 @@ export class CanchasComponent implements OnInit {
   token: any;
   result: any;
 
-  @Input() agregar = false;
-  @Input() editar = false;
+  @Input() agregar: boolean;
+  @Input() editar: boolean;
+  canchas: any;
   constructor(
     private fcm: FCM,
     private canchasService: CanchasService
@@ -34,7 +35,7 @@ export class CanchasComponent implements OnInit {
     });
     this.editarCanchaFormGroup = new FormGroup({
       editarCanchaNombre: new FormControl('', [ Validators.required ]),
-      editarCanchaNombreNuevo: new FormControl('', [ Validators.required ]),
+      editarCanchaNombreNuevo: new FormControl({value : '', disabled: true}, Validators.required),
     });
     this.fcm.getToken().then(token => {
       console.log(token);
@@ -45,10 +46,14 @@ export class CanchasComponent implements OnInit {
 
 
   getCanchas() {
-    this.canchasService.getCanchas().subscribe(canchas => {
+    this.canchas = this.canchasService.getCanchas().subscribe(canchas => {
       const canchasList = canchas.msg;
       this.canchasList = canchasList.sort(this.getSortOrder('nombre'));
     });
+  }
+
+  ionViewWillLeave() {
+    this.canchas.unsubscribe();
   }
 
 /**
@@ -68,7 +73,6 @@ export class CanchasComponent implements OnInit {
 
 
   onSubmitAgregar(formGroup) {
-
     const id = 0;
     const nombre = this.agregarCanchaFormGroup.value.canchaNombre;
     this.canchasService.postCancha(id, nombre).subscribe(() => {
@@ -91,7 +95,8 @@ export class CanchasComponent implements OnInit {
 
   editCanchaNombreSelected(val) {
     if (val) {
-      this.canchaSeleccionada = this.canchasList.filter(n => n.id === val);
+      const valNumber = parseInt(val, 10);
+      this.canchaSeleccionada = this.canchasList.filter(n => n.id === valNumber);
       const nombre = this.canchaSeleccionada[0].nombre;
       this.editarCanchaFormGroup.controls.editarCanchaNombreNuevo.setValue(nombre);
       this.editarCanchaFormGroup.controls.editarCanchaNombreNuevo.enable();

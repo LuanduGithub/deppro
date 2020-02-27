@@ -1,44 +1,22 @@
 ion-card.card-color{
   --background: #d3e3ff;
-
+}
+ion-card{
+  -webkit-animation: fadein 0.8s;
+   animation: fadein 0.5s;
+   border-radius: 2px;
+   margin: 5px;
+   position: relative;
 }
 ion-content{
   --ion-background-color:#214d9b;
+
 }
 ion-card-content{
  background-color: #fbfcff;
+ padding: 5px!important;
 }
-ion-header{
-  .custom-header-color{
-    --background: #3880ff;
-    color: #fff;
-    height: 4rem;
-    display:flex;
-    align-items: center;
-    .header{
-      text-align: center;
-      &__first-p{
-        padding-bottom: 0;
-        margin-bottom: 3px;
-        text-transform: uppercase;
-        margin-top: 5px;
-      }
-      &__second-p{
-        padding-top: 0;
-        margin-top: 3px;
-        margin-bottom: 0;
-        small span{
-          text-transform: uppercase;
-        }
-      }
-      &__img{
-        width:4.5rem;
-        height: 2rem;
-        display: inline-block;
-      }
-    }
-  }
-}
+
 .label-toggle{
   font-size:11px;position:relative; top:-14px;
 }
@@ -51,7 +29,6 @@ ion-header{
 
 ion-col{
   font-size: .8rem!important;
-
 }
 .text-align-right{
   text-align: right;
@@ -59,15 +36,7 @@ ion-col{
 .text-align-center{
   text-align: center;
 }
-.card-title{
-  text-transform: uppercase;
-  color:#4c8dff;
-  ion-col{
-    font-size: 0.75rem!important;
-    margin: 5px 0;
 
-  }
-}
 .card-title-top{
   text-transform: uppercase;
   color:#4c8dff;
@@ -89,9 +58,15 @@ ion-col{
   transition-timing-function: ease-in-out;
   transition: 0.4s;
 }
-ion-card{
-  -webkit-animation: fadein 0.8s;
-   animation: fadein 0.5s;
+
+.custom-border{
+  position: absolute;
+  left:0;
+  top:0;
+  width: 3px;
+  height: 100%;
+  background-color: #10dc60;
+  z-index: 2;
 }
 
 
@@ -158,44 +133,6 @@ ion-card{
 }
 
 
-.card-content{
-  border:1px solid #a3c5ff;
-  border-top:0;
-  border-radius:0 0 2px 2px;
-
-  ion-col{
-    border-left:1px solid #a3c5ff;
-    text-align: center;
-    ion-icon{
-      font-size: 1.1rem;
-      position: relative;
-      top: 4px;
-      left: 5px;
-      color:#4c8dff;
-    }
-  }
-  ion-col:first-child{
-    border-left:none;
-  }
-  &.linea-arriba{
-    border-top:1px solid #a3c5ff;
-    margin: 0;
-    border-radius: 2px 2px 0 0;
-    ion-col{
-      font-size: 1rem;
-      text-align: left;
-      text-transform: capitalize;
-    }
-  }
-  &.linea-abajo{
-    ion-col{
-      font-size: 1rem;
-      text-align: left;
-      text-transform: uppercase;
-    }
-  }
-}
-
 .info-alert{
   color: #4c8dff;
   background-color: #f5f9ff;
@@ -242,4 +179,86 @@ ion-card{
 ion-item{
   --ion-background-color: #fbfcff;
   font-size: .9rem;
+}
+
+.grid-oficiales{
+  display:grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-radius: 2px;
+ 
+  div{
+    font-size: .8rem;
+    padding: 5px;
+    border:1px solid #edf4ff;
+    background-color: #d9e8ff;
+    border-top: none;
+  }
+}
+.grid-partido{
+  display: grid;
+  grid-template-columns: 4fr 3fr 1fr;
+  align-items: baseline;
+  border:1px solid #edf4ff;
+  background-color: #f5f9ff;
+  border-bottom-color:#d9e8ff;
+  padding: .8rem;
+  font-size: .8rem;
+  div:first-child{
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  div:nth-child(2){
+    justify-self: right;
+  }
+  div:last-child{
+    justify-self: right;
+  }
+}
+
+.grid-partido-data{
+  margin-top: 5px;
+  display: grid;
+  grid-template-columns: 4fr 4fr 2fr;
+  align-items: baseline;
+  border:1px solid #edf4ff;
+  border-bottom-color:#d9e8ff;
+  background-color: #f5f9ff;
+  font-size: .8rem;
+  padding: .8rem;
+  div:first-child{
+    text-transform: uppercase;
+    small{
+      text-transform: lowercase;
+      font-weight: normal;
+    }
+  }
+  div:nth-child(2){
+    text-transform: uppercase;
+  }
+  div:last-child{
+    justify-self: right;
+    div{
+      font-size: .7rem;
+      background-color: #a5bbe6;
+      border-radius: 50px;
+      padding: 10px;
+      color: #fff;
+      text-shadow: 1px 1px 2px rgba(60, 60, 60, 0.8);
+    }
+  }
+}
+
+.grid-card-title{
+  margin-top: 5px;
+  display: grid;
+  grid-template-columns: 5fr 1fr 1fr;
+  align-items: baseline;
+  border:1px solid #edf4ff;
+  border-bottom-color:#d9e8ff;
+  background-color: #f5f9ff;
+  font-size: .8rem;
+  padding: .8rem;
+  div:last-child{
+    justify-self: right;
+  }
 }
