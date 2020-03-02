@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { urlBase } from './../constants/url';
 import { Observable } from 'rxjs';
-import { Designaciones, DesignacionesList, DesignacionesPost, DesignacionesConfirmar } from '../models/modelsComunes';
+import { Designaciones, DesignacionesList, DesignacionesPost, DesignacionesConfirmar, DesignacionesScore } from '../models/modelsComunes';
 import { environment } from './../../environments/environment';
 
 @Injectable({
@@ -28,6 +28,10 @@ export class DesignacionesService {
   postDesignaciones(obj: any): Observable<DesignacionesPost> {
     const url = environment.DBBaseURl +  `designaciones/InsertOrUpdate`;
     return this.http.post<DesignacionesPost>(url, obj);
+  }
+  postDesignacionesScore(obj: any): Observable<DesignacionesScore> {
+    const url = environment.DBBaseURl +  `designaciones/UpdateResultado`;
+    return this.http.post<DesignacionesScore>(url, obj);
   }
   postDesignacionesConfirmar(obj: any): Observable<DesignacionesConfirmar> {
     const url = environment.DBBaseURl +  `designaciones/confirmar`;

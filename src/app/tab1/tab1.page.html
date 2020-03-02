@@ -1,17 +1,14 @@
 <app-header></app-header>
 
 <ion-content>
-    <ion-card class="animacion-entrada" *ngIf="user?.admin">
+    <ion-card class="animacion-entrada">
         <ion-card-content>
-            <ion-item>
-                <ion-label>Elegir Categoría</ion-label>
-                <ion-select placeholder="Categoria" ok-text="Elegir" cancel-text="Cancelar"
-                    (ionChange)="filtradoPorCategoria($event)">
-                    <ion-select-option value="todas">Todas las Categorías</ion-select-option>
-                    <ion-select-option value="{{category.nombre}}" *ngFor="let category of categoriasList">
-                        {{category.nombre}}</ion-select-option>
-                </ion-select>
-            </ion-item>
+            <ion-select placeholder="Categoria" ok-text="Elegir" cancel-text="Cancelar"
+                (ionChange)="filtradoPorCategoria($event)">
+                <ion-select-option value="todas">Todas las Categorías</ion-select-option>
+                <ion-select-option value="{{category.nombre}}" *ngFor="let category of categoriasList">
+                    {{category.nombre}}</ion-select-option>
+            </ion-select>
             <ion-item *ngIf="showBtnPosiciones">
                 <ion-label>Posiciones</ion-label>
                 <ion-toggle slot="end" name="posiciones" (ionChange)="mostrarTabla()"></ion-toggle>
@@ -45,22 +42,36 @@
         <ion-card-content>
             <section class="grid-partido">
                 <div>{{designacion.cancha}}</div>
-                <div>{{designacion.fecha}} | </div>
-                <div>{{designacion.hora}}hs</div>
+                <div>{{designacion.fecha}} |</div>
+                <div> {{designacion.hora}}hs</div>
             </section>
             <section class="grid-partido-data">
-                <div>{{designacion.equipoA}} <small>vs.</small> </div>
-                <div>{{designacion.equipoB}}</div>
+                <div class="grid-partido-data__teamName">
+                    {{designacion.equipoA}}
+                </div>
                 <div>
+                    <input type="number" onfocus="this.value=''" class="grid-partido-data__score-input"
+                        (change)="updateMyValueEquipoA($event.target.value, designacion)" [formControl]="equipoA" />
+                </div>
+                <div class="grid-partido-data__teamName">
+                    {{designacion.equipoB}}
+                </div>
+                <div>
+                    <input type="number" onfocus="this.value=''" class="grid-partido-data__score-input"
+                        (change)="updateMyValueEquipoB($event.target.value)" [formControl]="equipoB" />
+                </div>
+                <div class="grid-partido-data__category">
                     <div>{{designacion.categoria}}</div>
                 </div>
             </section>
             <section *ngIf="user?.usuarioId !== 'invitado'">
                 <section class="grid-card-title" (click)="showJueces(i)">
-                    <div>Jueces</div>
                     <div>
+                        Jueces
                         <span
                             *ngIf="designacion.arbitro1_confirmado || designacion.arbitro2_confirmado || designacion.arbitro3_confirmado">*</span>
+                    </div>
+                    <div>
                         <span
                             *ngIf="designacion.arbitro1_confirmado && designacion.arbitro2_confirmado && designacion.arbitro3_confirmado">
                             <ion-icon name="checkmark"></ion-icon>
@@ -73,15 +84,15 @@
                 </section>
 
                 <section class="grid-oficiales" *ngIf="showJuecesIndex === i">
-                    <div>
+                    <div class="grid-oficiales__header">
                         1er Juez <ion-icon name="checkbox" *ngIf="designacion.arbitro1_confirmado">
                         </ion-icon>
                     </div>
-                    <div>
+                    <div class="grid-oficiales__header">
                         2do Juez <ion-icon name="checkbox" *ngIf="designacion.arbitro2_confirmado">
                         </ion-icon>
                     </div>
-                    <div>
+                    <div class="grid-oficiales__header">
                         3er Juez <ion-icon name="checkbox" *ngIf="designacion.arbitro3_confirmado">
                         </ion-icon>
                     </div>
@@ -97,10 +108,13 @@
                 </section>
 
                 <section class="grid-card-title" (click)="showOfMesa(i)">
-                    <div>Oficiales de Mesa</div>
                     <div>
+                        Oficiales de Mesa
                         <span
                             *ngIf="(designacion.anotador_confirmado || designacion.cronometro_confirmado) && !(designacion.anotador_confirmado && designacion.cronometro_confirmado)">*</span>
+                    </div>
+                    <div>
+                        
                         <span *ngIf="designacion.anotador_confirmado && designacion.cronometro_confirmado">
                             <ion-icon name="checkmark"></ion-icon>
                         </span>
@@ -112,15 +126,15 @@
                     </div>
                 </section>
                 <section class="grid-oficiales" *ngIf="showOfMesaIndex === i">
-                    <div>
+                    <div class="grid-oficiales__header">
                         Anotador <ion-icon name="checkbox" *ngIf="designacion.anotador_confirmado">
                         </ion-icon>
                     </div>
-                    <div>
+                    <div class="grid-oficiales__header">
                         Tablero <ion-icon name="checkbox" *ngIf="designacion.cronometro_confirmado">
                         </ion-icon>
                     </div>
-                    <div>
+                    <div class="grid-oficiales__header">
                         24" <ion-icon name="checkbox" *ngIf="designacion.cronometro2_confirmado">
                         </ion-icon>
                     </div>

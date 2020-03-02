@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Storage } from '@ionic/storage'
+import { Storage } from '@ionic/storage';
 
 import { FormBuilder, FormGroup , Validators , FormControl } from '@angular/forms';
 
@@ -21,27 +21,28 @@ import { NotificacionesService } from './../services/notificaciones.service';
   styleUrls: ['./carga.page.scss'],
 })
 export class CargaPage implements OnInit {
-  user:any;
+  user: any;
   canchasList: Array<Comun>;
   categoriasList: Array<Comun>;
   equiposList: Array<Comun>;
   usuariosArbitrosList: Array<Usuario>;
   usuariosMesaList: Array<Usuario>;
-  result:any;
-  token:string;
+  result: any;
+  token: string;
+
 
   designationForm = new FormGroup({
-    cancha: new FormControl('',[ Validators.required ]),
-    dia: new FormControl('',[ Validators.required ]),
-    hora: new FormControl('',[ Validators.required ]),
-    equipoA: new FormControl('',[ Validators.required ]),
-    equipoB: new FormControl('',[ Validators.required ]),
-    categoria: new FormControl('',[ Validators.required ]),
-    arbitro1: new FormControl('',[ Validators.required ]),
-    arbitro2: new FormControl('',[ Validators.required ]),
+    cancha: new FormControl('', [ Validators.required ]),
+    dia: new FormControl('', [ Validators.required ]),
+    hora: new FormControl('', [ Validators.required ]),
+    equipoA: new FormControl('', [ Validators.required ]),
+    equipoB: new FormControl('', [ Validators.required ]),
+    categoria: new FormControl('', [ Validators.required ]),
+    arbitro1: new FormControl('', [ Validators.required ]),
+    arbitro2: new FormControl('', [ Validators.required ]),
     arbitro3: new FormControl(''),
-    anotador: new FormControl('',[ Validators.required ]),
-    cronometro: new FormControl('',[ Validators.required ]),
+    anotador: new FormControl('', [ Validators.required ]),
+    cronometro: new FormControl('', [ Validators.required ]),
     cronometro2: new FormControl('')
   });
   constructor(
@@ -58,77 +59,77 @@ export class CargaPage implements OnInit {
   ngOnInit() {
 
   }
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.init();
-    this.storage.get('tokenFirebase').then( token => { this.token = token})
+    this.storage.get('tokenFirebase').then( token => { this.token = token; });
   }
-  loadUser(){
+  loadUser() {
     this.storage.get('user').then((user) => {
       this.user = user;
     });
   }
 
-  init(){
+  init() {
     this.getCanchasList();
     this.loadUser();
   }
-  getCanchasList(){
+  getCanchasList() {
     this.canchaService.getCanchas().subscribe( canchasList => {
       this.canchasList = canchasList.msg;
       this.getCategoriasList();
-    })
+    });
   }
-  getCategoriasList(){
+  getCategoriasList() {
     this.categoriaService.getCategorias().subscribe( categoriasList => {
       this.categoriasList = categoriasList.msg;
       this.getEquiposList();
-    })
+    });
   }
-  getEquiposList(){
+  getEquiposList() {
     this.equipoService.getEquipos().subscribe( equipoList => {
       this.equiposList = equipoList.msg;
       this.getUsuariosList();
-    })
+    });
   }
 
-  getUsuariosList(){
+  getUsuariosList() {
     this.usuService.getUsuarios().subscribe( usuariosList => {
-     
+
       this.usuariosArbitrosList = usuariosList.msg.filter(a => {
-        let arbitros =  a['tipo'] === 'arbitro';
+        const arbitros =  a.tipo === 'arbitro';
         return arbitros;
       });
 
       this.usuariosMesaList = usuariosList.msg.filter(a => {
-        let mesa =  a['tipo'] === 'mesa';
+        const mesa =  a.tipo === 'mesa';
         return mesa;
       });
-    })
+    });
   }
   formatDate(form) {
-    let hora = new Date(form.value.hora);
-    let dia =  new Date(form.value.dia);
-    let minutos = hora.getMinutes() === 0? '00': hora.getMinutes();
+    const hora = new Date(form.value.hora);
+    const dia =  new Date(form.value.dia);
+    const minutos = hora.getMinutes() === 0 ? '00' : hora.getMinutes();
     return `${(dia.getMonth() + 1)}/${dia.getDate()}/${dia.getFullYear()} ${hora.getHours()}:${minutos}` ;
   }
 
-  designar(form){
-    let obj = {
-      "Des_Id": 0,
-      "Can_Id": parseInt(form.value.cancha),
-      "Equ_A_Id":parseInt(form.value.equipoA),
-      "Equ_B_Id":parseInt(form.value.equipoB),
-      "Des_FechaHora":this.formatDate(form),
-      "Cate_Id":parseInt(form.value.categoria),
-      "Usu_Arb1_Id":parseInt(form.value.arbitro1),
-      "Usu_Arb2_Id":parseInt(form.value.arbitro2),
-      "Usu_Arb3_Id":parseInt(form.value.arbitro3) || '',
-      "Usu_Anot_Id":parseInt(form.value.anotador),
-      "Usu_Crono_Id":parseInt(form.value.cronometro),
-      "Usu_Crono2_Id":parseInt(form.value.cronometro2)
-    }
-    this.designacionService.postDesignaciones(obj).subscribe(()=>{
+  designar(form) {
+    const obj = {
+      Des_Id: 0,
+      Can_Id: parseInt(form.value.cancha, 10),
+      Equ_A_Id: parseInt(form.value.equipoA, 10),
+      Equ_B_Id: parseInt(form.value.equipoB, 10),
+      Des_FechaHora: this.formatDate(form),
+      Cate_Id: parseInt(form.value.categoria, 10),
+      Usu_Arb1_Id: parseInt(form.value.arbitro1, 10),
+      Usu_Arb2_Id: parseInt(form.value.arbitro2, 10),
+      Usu_Arb3_Id: parseInt(form.value.arbitro3, 10) || '',
+      Usu_Anot_Id: parseInt(form.value.anotador, 10),
+      Usu_Crono_Id: parseInt(form.value.cronometro, 10),
+      Usu_Crono2_Id: parseInt(form.value.cronometro2, 10)
+    };
+    this.designacionService.postDesignaciones(obj).subscribe(() => {
 
-    }); 
+    });
   }
 }

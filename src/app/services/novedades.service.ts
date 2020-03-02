@@ -13,16 +13,16 @@ export class NovedadesService {
     private http: HttpClient
   ) { }
 
-  getNovedad(id:number): Observable<Novedades>{
-    let url = environment.DBBaseURl +  `novedades/get/${id}`;
+  getNovedad(id: number): Observable<Novedades> {
+    const url = environment.DBBaseURl +  `novedades/get/${id}`;
     return this.http.get<Novedades>(url);
   }
-  getNovedades(): Observable<NovedadesList>{
-    let url = environment.DBBaseURl +  `novedades/getList`;
+  getNovedades(): Observable<NovedadesList> {
+    const url = environment.DBBaseURl +  `novedades/getList`;
     return this.http.get<NovedadesList>(url);
   }
-  postNovedades(obj): Observable<NovedadesPost>{
-    let url = environment.DBBaseURl +  `novedades/InsertOrUpdate`;
+  postNovedades(obj): Observable<NovedadesPost> {
+    const url = environment.DBBaseURl +  `novedades/InsertOrUpdate`;
     return this.http.post<NovedadesPost>(url, obj);
   }
 }

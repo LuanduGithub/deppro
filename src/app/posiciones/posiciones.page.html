@@ -1,0 +1,62 @@
+<app-header></app-header>
+
+<ion-content>
+  <ion-card class="animacion-entrada">
+    <ion-card-content>
+      <ion-select placeholder="Categoria" ok-text="Elegir" cancel-text="Cancelar"
+        (ionChange)="filtradoPorCategoria($event)">
+        <ion-select-option value="{{category.id}}" *ngFor="let category of categoriasList">
+          {{category.nombre}}</ion-select-option>
+      </ion-select>
+
+    </ion-card-content>
+  </ion-card>
+  <ion-card class="animacion-entrada" *ngIf="categoriaSelectedView">
+    <ion-card-content>
+      <section class="grid-positionList grid-positionList-header">
+        <div>
+          <button class="btn-positions" (click)="showTeamToList()" *ngIf="userAdmin">
+            <ion-icon name="add"></ion-icon>
+          </button>
+          Equipo
+        </div>
+        <div>PJ</div>
+        <div>PG</div>
+        <div>PP</div>
+        <div>P</div>
+      </section>
+      <section class="grid-positionList" *ngFor="let position of positionList">
+        <div>
+          <button (click)="add2(position)" *ngIf="userAdmin">
+            +2
+          </button>
+          <button (click)="add1(position)" *ngIf="userAdmin">
+            +1
+          </button>
+          <span [ngStyle]="{'padding-left': userAdmin ? '10px' : '0' }">{{position.equipo}}</span>
+        </div>
+        <div>{{position.jugados}}</div>
+        <div>{{position.ganados}}</div>
+        <div>{{position.perdidos}}</div>
+        <div>{{position.puntos}}</div>
+      </section>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="animacion-entrada" *ngIf="showAddTeam">
+    <ion-card-content>
+      <section class="grid-parametros">
+        <ion-select placeholder="Equipo" [formControl]="equipo" ok-text="Elegir" cancel-text="Cancelar">
+          <ion-select-option value="{{team.id}}" *ngFor="let team of equiposList">{{team.nombre}}
+          </ion-select-option>
+        </ion-select>
+      </section>
+      <section class="grid-parametros">
+        <ion-button (click)="addTeamToList()" expand="block" class="primary" size="small" type="submit"
+          [disabled]="!equipo.valid">
+          Agregar
+        </ion-button>
+      </section>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

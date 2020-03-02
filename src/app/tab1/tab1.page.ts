@@ -6,7 +6,7 @@ import { ModalPage } from './modal/modal.page';
 import { Storage } from '@ionic/storage';
 import { Designaciones, Comun } from './../models/modelsComunes';
 import { CategoriaService } from './../services/categoria.service';
-
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import * as moment from 'moment';
 
@@ -33,6 +33,9 @@ export class Tab1Page {
   showBtnPosiciones = false;
   avisoEstado = true;
   categorias: any;
+
+  equipoA = new FormControl(0);
+  equipoB = new FormControl(0);
   constructor(
     private storage: Storage,
     public modalController: ModalController,
@@ -120,7 +123,7 @@ export class Tab1Page {
   }
 
   getCategoriasList() {
-   this.categorias =  this.categoriaService.getCategorias().subscribe(categoriasList => {
+    this.categorias = this.categoriaService.getCategorias().subscribe(categoriasList => {
       this.categoriasList = categoriasList.msg;
       this.mostrarDesignacionesSegunRol();
     });
@@ -181,6 +184,28 @@ export class Tab1Page {
 
   toggleAviso() {
     this.avisoEstado = !this.avisoEstado;
+  }
+
+  updateMyValueEquipoA(score, designacion) {
+    const obj = {
+      Des_Id: designacion.id,
+      Des_Res_Eq_A: score,
+      Des_Res_Eq_B: this.equipoB.value,
+    };
+    console.log(obj);
+/*     this.designacionesService.postDesignacionesScore(obj).subscribe(scoreA => {
+    }); */
+  }
+
+  updateMyValueEquipoB(score, designacion) {
+    const obj = {
+      Des_Id: designacion.id,
+      Des_Res_Eq_B: score,
+      Des_Res_Eq_A: this.equipoA.value,
+    };
+    console.log(obj);
+    /* this.designacionesService.postDesignacionesScore(obj).subscribe(scoreA => {
+    }); */
   }
 
 }
