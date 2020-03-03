@@ -18,6 +18,12 @@ import { LoginComponent } from './login/login.component';
 import { LoginPage } from './ionicLogin/login/login.page';
 import { InterceptorService } from './services/interceptor.service';
 
+import { Base64 } from '@ionic-native/base64/ngx';
+
+import { FilePath } from '@ionic-native/file-path/ngx';
+import { FileChooser} from '@ionic-native/file-chooser/ngx';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +44,9 @@ import { InterceptorService } from './services/interceptor.service';
     FCM,
     StatusBar,
     SplashScreen,
+    FilePath,
+    FileChooser,
+    Base64,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     ,
     {

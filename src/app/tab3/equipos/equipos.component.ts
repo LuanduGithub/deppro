@@ -3,6 +3,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Comun } from './../../models/modelsComunes';
 import { EquipoService } from './../../services/equipo.service';
 
+import { Base64 } from '@ionic-native/base64/ngx';
+
+import { FilePath } from '@ionic-native/file-path/ngx';
+import { FileChooser} from '@ionic-native/file-chooser/ngx';
+
 @Component({
   selector: 'app-equipos',
   templateUrl: './equipos.component.html',
@@ -17,8 +22,13 @@ export class EquiposComponent implements OnInit {
   @Input() agregar = false;
   @Input() editar = false;
   equipos: any;
+  imgUpload: string;
   constructor(
-    private equipoService: EquipoService
+    private equipoService: EquipoService,
+    private base64: Base64,
+    private fileChooser: FileChooser,
+    private filePath: FilePath
+
   ) {
 
 
@@ -26,14 +36,14 @@ export class EquiposComponent implements OnInit {
   ngOnInit() {
     this.getEquipoList();
     this.agregarEquipoFormGroup = new FormGroup({
-      equipoNombre: new FormControl('', [ Validators.required ]),
+      equipoNombre: new FormControl('', [Validators.required]),
     });
     this.editarEquipoFormGroup = new FormGroup({
-      editarEquipoNombre: new FormControl('', [ Validators.required ]),
-      editarEquipoNombreNuevo: new FormControl({value : '', disabled: true}, Validators.required),
+      editarEquipoNombre: new FormControl('', [Validators.required]),
+      editarEquipoNombreNuevo: new FormControl({ value: '', disabled: true }, Validators.required),
     });
 
- }
+  }
   getEquipoList() {
     this.equipos = this.equipoService.getEquipos().subscribe(equipo => {
       const equiposList = equipo.msg;
@@ -44,18 +54,18 @@ export class EquiposComponent implements OnInit {
     this.equipos.unsubscribe();
   }
 
-/**
- * fn: ordenar alfabeticamente el arreglo
- * @param prop --> es el nombre por el cual queremos ordenar el arreglo
- */
+  /**
+   * fn: ordenar alfabeticamente el arreglo
+   * @param prop --> es el nombre por el cual queremos ordenar el arreglo
+   */
   getSortOrder(prop) {
     return (a, b) => {
-        if (a[prop] > b[prop]) {
-            return 1;
-        } else if (a[prop] < b[prop]) {
-            return -1;
-        }
-        return 0;
+      if (a[prop] > b[prop]) {
+        return 1;
+      } else if (a[prop] < b[prop]) {
+        return -1;
+      }
+      return 0;
     };
   }
 
@@ -102,5 +112,24 @@ export class EquiposComponent implements OnInit {
       this.editarEquipoFormGroup.controls.editarEquipoNombreNuevo.setValue('');
       this.editarEquipoFormGroup.controls.editarEquipoNombreNuevo.disable();
     }
+  }
+
+  pickFile() {
+    this.fileChooser.open().then((fileURL) => {
+      this.filePath.resolveNativePath(fileURL).then((nativePath) => {
+        this.base64.encodeFile(nativePath).then((base64string) => {
+          alert(base64string);
+          this.imgUpload = 'base64string';
+        });
+      });
+    });
+  }
+
+  convertToBase64(filePath) {
+    this.base64.encodeFile(filePath).then((base64File: string) => {
+      console.log(base64File);
+    }, (err) => {
+      console.log(err);
+    });
   }
 }

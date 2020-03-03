@@ -6,6 +6,10 @@
         <ion-label position="floating">Agregar Nombre</ion-label>
         <ion-input clearInput formControlName="equipoNombre"></ion-input>
       </div>
+      <div class="custom-form">
+        <ion-button (click)="pickFile()"> Seleccionar Imagen</ion-button>
+        <img src="data:image/png;base64, {{imgUpload}}" *ngIf="imgUpload" />
+      </div>
       <div class="custom-form-button">
         <ion-button color="primary" style="margin: 0;" type="submit" expand="block" size="small"
           class="ion-text-uppercase" [disabled]="agregarEquipoFormGroup.controls.equipoNombre.invalid">Agregar

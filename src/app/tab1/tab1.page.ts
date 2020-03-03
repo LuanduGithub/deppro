@@ -8,7 +8,10 @@ import { Designaciones, Comun } from './../models/modelsComunes';
 import { CategoriaService } from './../services/categoria.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+import { PopoverController } from '@ionic/angular';
+
 import * as moment from 'moment';
+import { PopoverComponent } from '../shared/components/popover/popover.component';
 
 @Component({
   selector: 'app-tab1',
@@ -41,6 +44,7 @@ export class Tab1Page {
     public modalController: ModalController,
     private designacionesService: DesignacionesService,
     private categoriaService: CategoriaService,
+    private popoverController: PopoverController
   ) {
 
   }
@@ -58,6 +62,7 @@ export class Tab1Page {
       } else {
         this.getDesignacionesList();
       }
+      console.log(this.designaciones);
     });
   }
 
@@ -189,23 +194,44 @@ export class Tab1Page {
   updateMyValueEquipoA(score, designacion) {
     const obj = {
       Des_Id: designacion.id,
-      Des_Res_Eq_A: score,
-      Des_Res_Eq_B: this.equipoB.value,
+      Des_Res_Eq_A: parseInt(score, 10),
+      Des_Res_Cuarto: designacion.cuarto,
+      Des_Res_Eq_B: designacion.resultadoB,
     };
-    console.log(obj);
-/*     this.designacionesService.postDesignacionesScore(obj).subscribe(scoreA => {
-    }); */
+
+    this.designacionesService.postDesignacionesScore(obj).subscribe(scoreA => {
+      this.mostrarDesignacionesSegunRol();
+    });
   }
 
   updateMyValueEquipoB(score, designacion) {
     const obj = {
       Des_Id: designacion.id,
-      Des_Res_Eq_B: score,
-      Des_Res_Eq_A: this.equipoA.value,
+      Des_Res_Eq_A: designacion.resultadoA,
+      Des_Res_Cuarto: designacion.cuarto,
+      Des_Res_Eq_B: parseInt(score, 10),
     };
-    console.log(obj);
-    /* this.designacionesService.postDesignacionesScore(obj).subscribe(scoreA => {
-    }); */
+    this.designacionesService.postDesignacionesScore(obj).subscribe(scoreA => {
+      this.mostrarDesignacionesSegunRol();
+    });
+  }
+  async presentPopover(ev: any, designacion) {
+    const popover = await this.popoverController.create({
+      component: PopoverComponent,
+      event: ev,
+      translucent: true
+    });
+    await popover.present();
+
+    await popover.onDidDismiss().then(dataTime => {
+      const obj = {
+        Des_Id: designacion.id,
+        Des_Res_Cuarto: dataTime.data.time
+      };
+      this.designacionesService.postDesignacionesScore(obj).subscribe(scoreA => {
+        this.mostrarDesignacionesSegunRol();
+      });
+    });
   }
 
 }

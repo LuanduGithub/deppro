@@ -123,10 +123,13 @@ export class CargaPage implements OnInit {
       Cate_Id: parseInt(form.value.categoria, 10),
       Usu_Arb1_Id: parseInt(form.value.arbitro1, 10),
       Usu_Arb2_Id: parseInt(form.value.arbitro2, 10),
-      Usu_Arb3_Id: parseInt(form.value.arbitro3, 10) || '',
+      /* Usu_Arb3_Id: parseInt(form.value.arbitro3, 10) || '', */
       Usu_Anot_Id: parseInt(form.value.anotador, 10),
       Usu_Crono_Id: parseInt(form.value.cronometro, 10),
-      Usu_Crono2_Id: parseInt(form.value.cronometro2, 10)
+     /*  Usu_Crono2_Id: parseInt(form.value.cronometro2, 10), */
+      Des_Res_Cuarto: 'No Iniciado',
+      Des_Res_Equ_A: 0,
+      Des_Res_Equ_B: 0,
     };
     this.designacionService.postDesignaciones(obj).subscribe(() => {
 

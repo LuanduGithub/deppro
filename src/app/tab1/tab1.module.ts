@@ -7,6 +7,8 @@ import { Tab1Page } from './tab1.page';
 import { ModalPage } from './modal/modal.page';
 import { ModalPageModule } from './modal/modal.module';
 import { ComponentsModule } from './../shared/components/components.module';
+import { PopoverComponent } from '../shared/components/popover/popover.component';
+
 
 @NgModule({
   imports: [
@@ -19,6 +21,6 @@ import { ComponentsModule } from './../shared/components/components.module';
     ComponentsModule
   ],
   declarations: [Tab1Page],
-  entryComponents: [ModalPage],
+  entryComponents: [ModalPage, PopoverComponent],
 })
 export class Tab1PageModule {}

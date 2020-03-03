@@ -45,7 +45,7 @@ ion-card-content{
   top:0;
   width: 3px;
   height: 100%;
-  background-color: #4c8dff;
+  background-color: var(--ion-color-primary);
   z-index: 2;
 }
 
@@ -206,7 +206,7 @@ ion-item{
 .grid-partido-data{
   margin-top: 5px;
   display: grid;
-  grid-template-columns: 4fr 3fr 2fr;
+  grid-template-columns: 4fr 2fr 3fr 2fr;
   border:1px solid #edf4ff;
   border-bottom-color:#d9e8ff;
   background-color: #fff;
@@ -215,37 +215,46 @@ ion-item{
   &__teamName{
     text-transform: uppercase;
   }
-  &__category{
+  &__time{
     grid-row-start: 1;
     grid-row-end: 3;
-    grid-column: 3;
+    grid-column:4;
     justify-self: right;
     align-self: center;
     div{
       font-size: .7rem;
-      background-color: #a5bbe6;
+      background-color: var(--ion-color-primary);
       border-radius: 50px;
       padding: 10px;
       color: #fff;
       text-shadow: 1px 1px 2px rgba(60, 60, 60, 0.8);
     }
   }
-  &__score{
-    font-weight: bold;
-    color:#000;
-    font-size: .9rem;
-    color:#214d9b
+  &__category{
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column: 3;
+    justify-self: right;
+    align-self: center;
+    button{
+      font-size: .7rem;
+      background-color: var(--ion-color-primary);
+      border-radius: 50px;
+      padding: 10px;
+      color: #fff;
+      text-shadow: 1px 1px 2px rgba(223, 227, 236, 0.8);
+    }
   }
-  &__score-input{
+  &__score-input, &__score-div{
     width:35px;
     background: none;
     border:none;
     padding:3px;
     font-weight: bold;
-    color:#000;
     font-size: .9rem;
-    color:#214d9b;
+    color: var(--ion-color-primary);
     text-align: right;
+    text-shadow: 1px 1px 2px rgba(223, 227, 236, 0.8);
   }
 }
 

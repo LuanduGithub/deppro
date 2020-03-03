@@ -8,27 +8,27 @@ import { DesignacionesService } from './../../services/designaciones.service';
 })
 export class ModalPage implements OnInit {
 
-  @Input() data:any;
-  @Input() user:any;
+  @Input() data: any;
+  @Input() user: any;
   constructor(
     public modalController: ModalController,
     private designacionesService: DesignacionesService
   ) { }
 
   ngOnInit() {
-    console.log(this.data)
+    console.log(this.data);
   }
-  cancelar(){
+  cancelar() {
     this.modalController.dismiss();
   }
-  onSubmitAceptar(){
-    let obj = {
+  onSubmitAceptar() {
+    const obj = {
       designacionId: this.data.id,
       usuarioId: this.user.usuarioId
-    }
+    };
     console.log(obj);
-    this.designacionesService.postDesignacionesConfirmar(obj).subscribe(()=>{
+    this.designacionesService.postDesignacionesConfirmar(obj).subscribe(() => {
       this.modalController.dismiss();
-    })
+    });
   }
 }

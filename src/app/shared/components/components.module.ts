@@ -5,6 +5,8 @@ import { IonicModule } from '@ionic/angular';
 
 
 import { HeaderComponent } from './header/header.component';
+import { PopoverComponent } from './popover/popover.component';
+
 
 
 @NgModule({
@@ -13,8 +15,9 @@ import { HeaderComponent } from './header/header.component';
         FormsModule,
         IonicModule
     ],
-    declarations: [HeaderComponent],
-    exports: [HeaderComponent]
+    declarations: [HeaderComponent, PopoverComponent],
+    exports: [HeaderComponent, PopoverComponent],
+    entryComponents: [],
 })
 export class ComponentsModule {
 }
