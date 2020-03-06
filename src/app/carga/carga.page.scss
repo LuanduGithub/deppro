@@ -30,7 +30,7 @@
   }
 
   ion-content{
-    --ion-background-color:#214d9b;;
+    --ion-background-color:var(--ion-color-light);
   }
   ion-card{
     -webkit-animation: fadein 0.8s;
@@ -54,23 +54,30 @@ ion-list{
   }
 }
 
+.animacion-entrada{
+  -webkit-animation: card-animation .5s;
+  animation: card-animation .5s;
+  animation-fill-mode: forwards; 
+}
+
+
 @keyframes card-animation {
-  from { 
-    transform: translateY(-200px);
-      transition-timing-function: ease-in;
-  }
-  to   { 
-    transform: translateY(0);
-  }
+from { 
+    transform: translateX(-200px);
+    transition-timing-function: ease-in;
+}
+to   { 
+  transform: translateX(0);
+}
 }
 @-webkit-keyframes card-animation {
-  from { 
-    transform: translateY(-200px);
-      transition-timing-function: ease-in;
-  }
-  to   { 
-    transform: translateY(0);
-  }
+from { 
+  transform: translateX(-200px);
+    transition-timing-function: ease-in;
+}
+to   { 
+  transform: translateX(0);
+}
 }
 
 .grid-parametros{

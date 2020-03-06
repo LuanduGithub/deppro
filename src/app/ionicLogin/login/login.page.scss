@@ -1,5 +1,5 @@
 ion-content{
-    --ion-background-color:#214d9b;
+    --ion-background-color:var(--ion-color-light);
     position: relative;
 }
 .card{
@@ -19,13 +19,17 @@ ion-content{
         margin: 15px 0;
     }
     input{
-        border:1px solid #747782;
-        color:#fbfcff;
+        outline: none;
+        border:2px solid #a5b5e2;
+        color:#ffffff;
         padding: 15px;
         font-size: 1rem;
         width: 100%;
         border-radius: 12px;
         background:none;
+        &::placeholder{
+            color:#a5b5e2;
+        }
     }
 }
 
@@ -51,9 +55,24 @@ ion-content{
         text-align: center;
     }
     &__img{
-        width: 8rem;
+        width: 7rem;
         height: 3rem;
         display: inline-block;
+    }
+    &__container{
+        height: 75px;
+        width:75px;
+        border-radius: 50px;
+        background-color: #fff;
+        overflow: hidden;
+       /*  border: 2px solid var(--ion-color-primary); */
+        -webkit-box-shadow: 0px 0px 15px 4px rgba(55,110,207,1);
+        -moz-box-shadow: 0px 0px 15px 4px rgba(55,110,207,1);
+        box-shadow: 0px 0px 15px 4px rgba(55,110,207,1);
+        display: inline-flex;
+        justify-self: center;
+        margin-bottom: 2rem;
+        
     }
 }
   

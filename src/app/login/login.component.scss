@@ -1,5 +1,5 @@
 ion-content{
-    --ion-background-color:#222428;
+    --ion-background-color:var(--ion-color-light);
 }
 ion-card{
     -webkit-animation: fadein 0.8s;

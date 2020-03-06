@@ -16,7 +16,7 @@
 
 
 ion-content{
-  --ion-background-color:#214d9b;
+  --ion-background-color:var(--ion-color-light);
 }
 ion-card-content{
  background-color: #fbfcff;

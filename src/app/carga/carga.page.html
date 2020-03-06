@@ -2,7 +2,7 @@
 
 <ion-content>
   <form [formGroup]="designationForm" (ngSubmit)="designar(designationForm)">
-    <section class="grid-parametros">
+    <section class="grid-parametros animacion-entrada" >
       <div>
         <ion-select placeholder="Cancha" formControlName="cancha" ok-text="Elegir" cancel-text="Cancelar">
           <ion-select-option value="{{team.id}}" *ngFor="let team of canchasList">{{team.nombre}}</ion-select-option>

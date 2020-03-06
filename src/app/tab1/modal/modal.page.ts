@@ -16,7 +16,6 @@ export class ModalPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log(this.data);
   }
   cancelar() {
     this.modalController.dismiss();
@@ -26,7 +25,6 @@ export class ModalPage implements OnInit {
       designacionId: this.data.id,
       usuarioId: this.user.usuarioId
     };
-    console.log(obj);
     this.designacionesService.postDesignacionesConfirmar(obj).subscribe(() => {
       this.modalController.dismiss();
     });

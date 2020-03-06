@@ -3,7 +3,6 @@ import { IonInfiniteScroll } from '@ionic/angular';
 import { NovedadesService } from '../services/novedades.service';
 import { Novedades } from '../models/modelsComunes';
 import { Storage } from '@ionic/storage';
-import { HeaderComponent } from './../shared/components/header/header.component';
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -60,7 +59,6 @@ export class Tab2Page {
     setTimeout(() => {
       event.target.complete();
       if (this.novedadesList.length === this.data.length) {
-        console.log('disabled');
         event.target.disabled = true;
       }
     }, 500);

@@ -9,7 +9,7 @@ ion-card{
    position: relative;
 }
 ion-content{
-  --ion-background-color:#214d9b;
+  --ion-background-color:var(--ion-color-light);
 
 }
 ion-card-content{
@@ -183,16 +183,28 @@ ion-item{
 }
 .grid-partido{
   display: grid;
-  grid-template-columns: 4fr 3fr 1fr;
+  grid-template-columns: 5fr 3fr 1fr;
   align-items: baseline;
   border:1px solid #edf4ff;
   background-color: #fff;
   border-bottom-color:#d9e8ff;
   padding: .8rem;
   font-size: .75rem;
+  &__inprogress{
+    text-transform: lowercase;
+    font-style: italic;
+    color: var(--ion-color-danger);
+    padding: 0 10px;
+  }
+  &__pin{
+    position: relative;
+    top:1px;
+    color: var(--ion-color-primary)
+  }
   div:first-child{
     font-weight: bold;
     text-transform: uppercase;
+    
   }
   div:nth-child(2){
     justify-self: right;
@@ -206,19 +218,39 @@ ion-item{
 .grid-partido-data{
   margin-top: 5px;
   display: grid;
-  grid-template-columns: 4fr 2fr 3fr 2fr;
+  grid-template-columns: 4fr 1fr 1fr 3fr 2fr;
   border:1px solid #edf4ff;
   border-bottom-color:#d9e8ff;
   background-color: #fff;
   font-size: .75rem;
   padding: .8rem;
+
   &__teamName{
     text-transform: uppercase;
+    justify-self: left;
+    align-self: center;
+  }
+  &__btn-refresh{
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column:3;
+    justify-self: left;
+    align-self: center;
+    button{
+      outline:none;
+      font-size: .9rem;
+      background-color: var(--ion-color-secondary);
+      border-radius: 50px;
+      height: 30px;
+      width: 30px;
+      color: #fff;
+      text-shadow: 1px 1px 2px rgba(60, 60, 60, 0.8);
+    }
   }
   &__time{
     grid-row-start: 1;
     grid-row-end: 3;
-    grid-column:4;
+    grid-column:5;
     justify-self: right;
     align-self: center;
     div{
@@ -233,16 +265,17 @@ ion-item{
   &__category{
     grid-row-start: 1;
     grid-row-end: 3;
-    grid-column: 3;
+    grid-column: 4;
     justify-self: right;
     align-self: center;
     button{
+      outline:none;
       font-size: .7rem;
       background-color: var(--ion-color-primary);
       border-radius: 50px;
       padding: 10px;
       color: #fff;
-      text-shadow: 1px 1px 2px rgba(223, 227, 236, 0.8);
+      text-shadow: 1px 1px 2px rgba(60, 60, 60, 0.8);
     }
   }
   &__score-input, &__score-div{
@@ -253,8 +286,9 @@ ion-item{
     font-weight: bold;
     font-size: .9rem;
     color: var(--ion-color-primary);
-    text-align: right;
     text-shadow: 1px 1px 2px rgba(223, 227, 236, 0.8);
+    justify-self: left;
+    align-self: center;
   }
 }
 

@@ -119,7 +119,7 @@ export class EquiposComponent implements OnInit {
       this.filePath.resolveNativePath(fileURL).then((nativePath) => {
         this.base64.encodeFile(nativePath).then((base64string) => {
           alert(base64string);
-          this.imgUpload = 'base64string';
+          this.imgUpload = base64string;
         });
       });
     });

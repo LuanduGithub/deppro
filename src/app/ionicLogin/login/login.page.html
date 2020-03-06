@@ -3,18 +3,27 @@
     <ion-grid class="ion-padding" style="margin-top: 20px;">
       <ion-row class="header">
         <ion-col>
+          <div class="header__container">
+            <img src="../assets/img/logoABCC.jpg"/>
+          </div>
+
+        </ion-col>
+      </ion-row>
+      <ion-row class="header">
+        <ion-col>
           <ion-img class="header__img" src="../assets/img/deppro_blanco.png"></ion-img>
         </ion-col>
       </ion-row>
+      
     </ion-grid>
   </section>
   <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmitLogin(loginFormGroup)">
     <div class="card">
       <div>
-        <input type="text" placeholder="Usuario" formControlName="usuarioLogin"/>
+        <input type="text" placeholder="Usuario" formControlName="usuarioLogin" />
       </div>
       <div>
-        <input type="password" placeholder="Password" formControlName="passwordLogin"/>
+        <input type="password" placeholder="Password" formControlName="passwordLogin" />
       </div>
       <div *ngIf="mostrarMensajeError">
         <ion-label>Usuario o Contraseña inexistente</ion-label>

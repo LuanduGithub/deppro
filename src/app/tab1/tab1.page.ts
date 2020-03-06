@@ -37,8 +37,9 @@ export class Tab1Page {
   avisoEstado = true;
   categorias: any;
 
-  equipoA = new FormControl(0);
-  equipoB = new FormControl(0);
+  equipoA = new FormControl();
+  equipoB = new FormControl();
+  hotHour: any;
   constructor(
     private storage: Storage,
     public modalController: ModalController,
@@ -49,6 +50,7 @@ export class Tab1Page {
 
   }
   ionViewWillEnter() {
+    this.getHotHour();
     this.loadUser();
     this.getCategoriasList();
   }
@@ -62,7 +64,6 @@ export class Tab1Page {
       } else {
         this.getDesignacionesList();
       }
-      console.log(this.designaciones);
     });
   }
 
@@ -184,32 +185,23 @@ export class Tab1Page {
       componentProps: { data: d, user: this.user },
 
     });
-    return await modal.present();
+    await modal.present();
+    await modal.onDidDismiss().then(dataTime => {
+      this.mostrarDesignacionesSegunRol();
+    });
   }
+
 
   toggleAviso() {
     this.avisoEstado = !this.avisoEstado;
   }
 
-  updateMyValueEquipoA(score, designacion) {
+  updateScoreTime(designacion) {
     const obj = {
       Des_Id: designacion.id,
-      Des_Res_Eq_A: parseInt(score, 10),
+      Des_Res_Eq_A: this.equipoA.value || designacion.resultadoB,
       Des_Res_Cuarto: designacion.cuarto,
-      Des_Res_Eq_B: designacion.resultadoB,
-    };
-
-    this.designacionesService.postDesignacionesScore(obj).subscribe(scoreA => {
-      this.mostrarDesignacionesSegunRol();
-    });
-  }
-
-  updateMyValueEquipoB(score, designacion) {
-    const obj = {
-      Des_Id: designacion.id,
-      Des_Res_Eq_A: designacion.resultadoA,
-      Des_Res_Cuarto: designacion.cuarto,
-      Des_Res_Eq_B: parseInt(score, 10),
+      Des_Res_Eq_B: this.equipoB.value || designacion.resultadoB,
     };
     this.designacionesService.postDesignacionesScore(obj).subscribe(scoreA => {
       this.mostrarDesignacionesSegunRol();
@@ -226,12 +218,36 @@ export class Tab1Page {
     await popover.onDidDismiss().then(dataTime => {
       const obj = {
         Des_Id: designacion.id,
+        Des_Res_Eq_A: designacion.resultadoA,
+        Des_Res_Eq_B: designacion.resultadoB,
         Des_Res_Cuarto: dataTime.data.time
       };
       this.designacionesService.postDesignacionesScore(obj).subscribe(scoreA => {
         this.mostrarDesignacionesSegunRol();
       });
     });
+  }
+
+  getHotHour() {
+    const date = new Date();
+    this.hotHour = date.getHours();
+    this.hotHour = this.hotHour.toString();
+   /*  this.designaciones.forEach(d => {
+      const hour = d.hora;
+      let horaString = hour.toString();
+      horaString = horaString.slice(0, 2);
+      const obj = {
+        Des_Id: d.id,
+        Des_Res_Eq_A: d.resultadoA,
+        Des_Res_Eq_B: d.resultadoB,
+        Des_Res_Cuarto: '1er C'
+      };
+      if (this.hotHour === horaString) {
+        this.designacionesService.postDesignacionesScore(obj).subscribe(scoreA => {
+        });
+      }
+
+    }); */
   }
 
 }

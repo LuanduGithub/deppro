@@ -67,6 +67,9 @@ export class Designaciones {
     arbitro1_confirmado: boolean;
     arbitro2_confirmado: boolean;
     arbitro3_confirmado: boolean;
+    resultadoA: number;
+    resultadoB: number;
+    cuarto: string;
 
 }
 
@@ -127,6 +130,9 @@ export class DesignacionesPost {
     Usu_Arb3_Id: number;
     Usu_Anot_Id: number;
     Usu_Crono_Id: number;
+    Des_Res_Eq_A: number;
+    Des_Res_Eq_B: number;
+    Des_Res_Cuarto: string;
 }
 
 export class DesignacionesScore {

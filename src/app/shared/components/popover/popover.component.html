@@ -1,8 +1,18 @@
-<ion-button size="small" (click)="sendTime('1er C')">1<sup>er</sup> C</ion-button>
-<ion-button size="small" (click)="sendTime('2do C')">2<sup>do</sup> C</ion-button>
-<ion-button size="small" (click)="sendTime('3er C')">3<sup>er</sup> C</ion-button>
-<ion-button size="small" (click)="sendTime('4to C')">4<sup>to</sup> C</ion-button>
-<ion-button size="small" (click)="sendTime('T.S.')">T.S.</ion-button>
-<ion-button size="small" (click)="sendTime('Suspendido')">Suspendido</ion-button>
-<ion-button size="small" (click)="sendTime('Finalizado')">Finalizado</ion-button>
+<ion-grid>
+    <ion-row>
+        <ion-button size="small" (click)="sendTime('1er C')">1<sup>er</sup> C</ion-button>
+        <ion-button size="small" (click)="sendTime('2do C')">2<sup>do</sup> C</ion-button>
+        <ion-button size="small" (click)="sendTime('3er C')">3<sup>er</sup> C</ion-button>
+        <ion-button size="small" (click)="sendTime('4to C')">4<sup>to</sup> C</ion-button>
+    </ion-row>
+    <ion-row>
+        <ion-button size="small" class="popover-button-width" (click)="sendTime('T.S.')">Tiempo suplementario</ion-button>
+    </ion-row>
+    <ion-row>
+        <ion-button size="small" class="popover-button-width" (click)="sendTime('Suspendido')">Suspendido</ion-button>
+    </ion-row>
+    <ion-row>
+        <ion-button size="small" class="popover-button-width" (click)="sendTime('Finalizado')">Finalizado</ion-button>
+    </ion-row>
 
+</ion-grid>
