@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { urlBase } from './../constants/url';
 import { Observable } from 'rxjs';
-import { Comun, ComunList, CategoriaPost } from '../models/modelsComunes';
+import { CategoriaPost, Categoria, CategoriaList } from '../models/modelsComunes';
 import { environment } from './../../environments/environment';
 @Injectable({
   providedIn: 'root'
@@ -13,13 +13,13 @@ export class CategoriaService {
     private http: HttpClient
   ) { }
 
-  getCategoria(id: number): Observable<Comun> {
+  getCategoria(id: number): Observable<CategoriaList> {
     const url = environment.DBBaseURl +  `categorias/get/${id}`;
-    return this.http.get<Comun>(url);
+    return this.http.get<CategoriaList>(url);
   }
-  getCategorias(): Observable<ComunList> {
+  getCategorias(): Observable<CategoriaList> {
     const url = environment.DBBaseURl +  `categorias/getList`;
-    return this.http.get<ComunList>(url);
+    return this.http.get<CategoriaList>(url);
   }
   postCategoria(id: number, nombre: string): Observable<CategoriaPost> {
     const url = environment.DBBaseURl +  `categorias/InsertOrUpdate`;

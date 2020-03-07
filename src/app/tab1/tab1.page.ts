@@ -12,6 +12,7 @@ import { PopoverController } from '@ionic/angular';
 
 import * as moment from 'moment';
 import { PopoverComponent } from '../shared/components/popover/popover.component';
+import { promise } from 'protractor';
 
 @Component({
   selector: 'app-tab1',
@@ -54,6 +55,8 @@ export class Tab1Page {
     this.loadUser();
     this.getCategoriasList();
   }
+
+
 
   mostrarDesignacionesSegunRol() {
     this.storage.get('user').then(user => {
@@ -129,14 +132,10 @@ export class Tab1Page {
   }
 
   getCategoriasList() {
-    this.categorias = this.categoriaService.getCategorias().subscribe(categoriasList => {
+    this.categoriaService.getCategorias().subscribe(categoriasList => {
       this.categoriasList = categoriasList.msg;
       this.mostrarDesignacionesSegunRol();
     });
-  }
-
-  ionViewWillLeave() {
-    this.categorias.unsubscribe();
   }
 
   loadUser() {
@@ -232,22 +231,22 @@ export class Tab1Page {
     const date = new Date();
     this.hotHour = date.getHours();
     this.hotHour = this.hotHour.toString();
-   /*  this.designaciones.forEach(d => {
-      const hour = d.hora;
-      let horaString = hour.toString();
-      horaString = horaString.slice(0, 2);
-      const obj = {
-        Des_Id: d.id,
-        Des_Res_Eq_A: d.resultadoA,
-        Des_Res_Eq_B: d.resultadoB,
-        Des_Res_Cuarto: '1er C'
-      };
-      if (this.hotHour === horaString) {
-        this.designacionesService.postDesignacionesScore(obj).subscribe(scoreA => {
-        });
-      }
+    /*  this.designaciones.forEach(d => {
+       const hour = d.hora;
+       let horaString = hour.toString();
+       horaString = horaString.slice(0, 2);
+       const obj = {
+         Des_Id: d.id,
+         Des_Res_Eq_A: d.resultadoA,
+         Des_Res_Eq_B: d.resultadoB,
+         Des_Res_Cuarto: '1er C'
+       };
+       if (this.hotHour === horaString) {
+         this.designacionesService.postDesignacionesScore(obj).subscribe(scoreA => {
+         });
+       }
 
-    }); */
+     }); */
   }
 
 }

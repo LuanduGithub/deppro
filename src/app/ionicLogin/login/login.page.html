@@ -1,24 +1,32 @@
 <ion-content>
   <section>
     <ion-grid class="ion-padding" style="margin-top: 20px;">
+     
+      <ion-row class="header">
+        <ion-col>
+          
+        </ion-col>
+      </ion-row>
       <ion-row class="header">
         <ion-col>
           <div class="header__container">
-            <img src="../assets/img/logoABCC.jpg"/>
+            
           </div>
-
         </ion-col>
       </ion-row>
-      <ion-row class="header">
-        <ion-col>
-          <ion-img class="header__img" src="../assets/img/deppro_blanco.png"></ion-img>
-        </ion-col>
-      </ion-row>
-      
     </ion-grid>
   </section>
   <form [formGroup]="loginFormGroup" (ngSubmit)="onSubmitLogin(loginFormGroup)">
     <div class="card">
+      <div class="img-container">
+        <img class="img-container__img" src="../assets/img/deppro_blanco.png" />
+      </div>
+      <!-- <div class="img-container__img">
+        <img src="../assets/img/logoABCC.jpg"/>
+      </div> -->
+      <div class="card__tilte">
+        Iniciar Sesión
+      </div>
       <div>
         <input type="text" placeholder="Usuario" formControlName="usuarioLogin" />
       </div>

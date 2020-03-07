@@ -1,3 +1,14 @@
+export class CategoriaList {
+    success: boolean;
+    msg: Array<Categoria>;
+}
+export class Categoria {
+    nombre: string;
+    id: number;
+    activo: string;
+}
+
+
 export class ComunList {
     success: boolean;
     msg: Array<Comun>;

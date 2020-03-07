@@ -11,30 +11,40 @@ export class InterceptorService implements HttpInterceptor {
   loading: any;
   constructor(
     public loadingController: LoadingController
-  ) {}
+  ) { }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let message;
     // let nombreApi = req.url.search('Login');
 
     const nombreApi = req.url.split('/');
-    req.method === 'POST' && nombreApi[4] === 'Login' ? message = 'Accediendo' : message = 'Enviando';
-    req.method === 'GET' ? message = `Cargando ${nombreApi[4]}` : message = '';
-    this.presentLoading(message);
+    if (req.method === 'POST' && nombreApi[5] === 'Login') {
+      message = 'Accediendo';
+      this.presentLoading(message);
+    } else {
+      message = 'Enviando';
+    }
+    // req.method === 'GET' ? message = `Cargando ${nombreApi[4]}` : message = '';
+
     return next.handle(req).pipe(
-        finalize(() => this.dismissLoading())
+      finalize(() => {
+        if (req.method === 'POST' && nombreApi[5] === 'Login') {
+          this.dismissLoading();
+        }
+      })
     );
   }
 
-  async presentLoading(message) {
+  async presentLoading(message = '') {
+    this.loading.dismiss();
     this.loading = await this.loadingController.create({
       message,
       translucent: true,
       cssClass: 'custom-class custom-loading text-capitalize'
     });
-    return await this.loading.present();
+    await this.loading.present();
   }
-  dismissLoading() {
-    return this.loading.dismiss();
+  async dismissLoading() {
+    await this.loading.dismiss();
   }
 }
