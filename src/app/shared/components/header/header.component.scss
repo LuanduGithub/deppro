@@ -1,32 +1,42 @@
-ion-header{
-    .custom-header-color{
-      color: #fff;
-      height: 3rem;
-      display:flex;
-      align-items: center;
-      .header{
-        text-align: center;
-        &__first-p{
-          padding-bottom: 0;
-          margin-bottom: 3px;
+ion-header {
+  .custom-header-color {
+    color: #fff;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    .header {
+      text-align: center;
+      &__first-p {
+        padding-bottom: 0;
+        margin-bottom: 3px;
+        text-transform: uppercase;
+        margin-top: 5px;
+      }
+      &__second-p {
+        padding-top: 0;
+        margin-top: 3px;
+        margin-bottom: 0;
+        small span {
           text-transform: uppercase;
-          margin-top: 5px;
         }
-        &__second-p{
-          padding-top: 0;
-          margin-top: 3px;
-          margin-bottom: 0;
-          small span{
-            text-transform: uppercase;
-          }
-        }
-        &__img{
-          width:4.5rem;
-          height: 2rem;
-          display: inline-block;
-          position: relative;
-          top:5px;
-        }
+      }
+      &__img {
+        width: 4.5rem;
+        height: 2rem;
+        display: inline-block;
+        position: relative;
+        top: 5px;
+      }
+      &__logout {
+        background-color: var(--ion-color-light-shade);
+        color: var(--ion-color-primary-contrast);
+        /*           border:1px solid #cacaca; */
+        border-radius: 15px;
+        position: absolute;
+        right: 10px;
+        top: 2px;
+        font-size: 0.9rem;
       }
     }
   }
+}

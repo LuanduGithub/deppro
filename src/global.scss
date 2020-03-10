@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -25,6 +25,35 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-body{
-    font-family: 'Lato', ;  
+body {
+  font-family: "Lato";
+}
+
+.animacion-entrada {
+  -webkit-animation: card-animation 0.5s;
+  animation: card-animation 0.5s;
+  animation-fill-mode: both;
+}
+
+@keyframes card-animation {
+  from {
+    opacity: .5;
+    transform: translateY(100px);
+    transition-timing-function: ease-in;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@-webkit-keyframes card-animation {
+  from {
+    opacity: .5;
+    transform: translateY(100px);
+    transition-timing-function: ease-in;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -65,19 +65,19 @@ export class Tab1Page {
 
 
 
-  mostrarDesignacionesSegunRol() {
+  mostrarDesignacionesSegunRol(event = null) {
     this.storage.get('user').then(user => {
       if (user.admin) {
-        this.getDesignacionesList();
+        this.getDesignacionesList(event);
       } else if (user.usuarioId !== 'invitado') {
-        this.getDesignacionesListPorUsuario(user.usuarioId);
+        this.getDesignacionesListPorUsuario(user.usuarioId, event);
       } else {
-        this.getDesignacionesList();
+        this.getDesignacionesList(event);
       }
     });
   }
 
-  getDesignacionesList() {
+  getDesignacionesList(event) {
     this.designacionesService.getDesignaciones().subscribe(designaciones => {
       if (designaciones) {
         this.designaciones = this.filtradoPorFecha(designaciones.msg);
@@ -86,16 +86,18 @@ export class Tab1Page {
         this.noTieneDesignaciones = true;
         this.noHayPartidos = true;
       }
+      if (event) {event.target.complete(); }
     });
   }
 
-  getDesignacionesListPorUsuario(id) {
+  getDesignacionesListPorUsuario(id, event = null) {
     this.designacionesService.getDesignacionesPorUsuario(id).subscribe(designaciones => {
       if (designaciones) {
         this.designaciones = this.filtradoPorFecha(designaciones.msg);
       } else {
         this.noTieneDesignaciones = true;
         this.noHayDesignacion = true;
+        if (event) {event.target.complete(); }
       }
     });
   }
@@ -235,22 +237,11 @@ export class Tab1Page {
     const date = new Date();
     this.hotHour = date.getHours();
     this.hotHour = this.hotHour.toString();
-    /*  this.designaciones.forEach(d => {
-       const hour = d.hora;
-       let horaString = hour.toString();
-       horaString = horaString.slice(0, 2);
-       const obj = {
-         Des_Id: d.id,
-         Des_Res_Eq_A: d.resultadoA,
-         Des_Res_Eq_B: d.resultadoB,
-         Des_Res_Cuarto: '1er C'
-       };
-       if (this.hotHour === horaString) {
-         this.designacionesService.postDesignacionesScore(obj).subscribe(scoreA => {
-         });
-       }
+  }
 
-     }); */
+  doRefresh(event) {
+    this.mostrarDesignacionesSegunRol(event);
+
   }
 
 }
