@@ -61,7 +61,7 @@ ion-card-content{
 
 
 
-.animacion-entrada{
+.animacion-entrada-tab1{
     -webkit-animation: card-animation .5s;
     animation: card-animation .5s;
     animation-fill-mode: forwards; 
@@ -193,7 +193,7 @@ ion-item{
   &__inprogress{
     text-transform: lowercase;
     font-style: italic;
-    color: var(--ion-color-danger);
+    color: var(--ion-color-primary);
     padding: 0 10px;
   }
   &__pin{
@@ -240,10 +240,10 @@ ion-item{
       outline:none;
       font-size: .9rem;
       background-color: var(--ion-color-secondary);
+      color: var(--ion-color-primary-contrast);
       border-radius: 50px;
       height: 30px;
       width: 30px;
-      color: #fff;
       text-shadow: 1px 1px 2px rgba(60, 60, 60, 0.8);
     }
   }
@@ -271,7 +271,7 @@ ion-item{
     button{
       outline:none;
       font-size: .7rem;
-      background-color: var(--ion-color-primary);
+      /* background-color: var(--ion-color-primary); */
       border-radius: 50px;
       padding: 10px;
       color: #fff;
@@ -285,7 +285,6 @@ ion-item{
     padding:3px;
     font-weight: bold;
     font-size: .9rem;
-    color: var(--ion-color-primary);
     text-shadow: 1px 1px 2px rgba(223, 227, 236, 0.8);
     justify-self: left;
     align-self: center;

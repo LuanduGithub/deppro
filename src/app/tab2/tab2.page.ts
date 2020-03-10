@@ -23,6 +23,7 @@ export class Tab2Page {
     private storage: Storage,
   ) {}
   ionViewWillEnter() {
+    this.novedadesList = [];
     this.getNovedades();
     this.loadUser();
   }

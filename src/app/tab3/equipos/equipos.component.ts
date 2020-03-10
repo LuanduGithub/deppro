@@ -23,6 +23,7 @@ export class EquiposComponent implements OnInit {
   @Input() editar = false;
   equipos: any;
   imgUpload: string;
+  img: HTMLElement;
   constructor(
     private equipoService: EquipoService,
     private base64: Base64,
@@ -42,7 +43,6 @@ export class EquiposComponent implements OnInit {
       editarEquipoNombre: new FormControl('', [Validators.required]),
       editarEquipoNombreNuevo: new FormControl({ value: '', disabled: true }, Validators.required),
     });
-
   }
   getEquipoList() {
     this.equipos = this.equipoService.getEquipos().subscribe(equipo => {
@@ -114,22 +114,15 @@ export class EquiposComponent implements OnInit {
     }
   }
 
-  pickFile() {
+  convertToBase64() {
     this.fileChooser.open().then((fileURL) => {
       this.filePath.resolveNativePath(fileURL).then((nativePath) => {
         this.base64.encodeFile(nativePath).then((base64string) => {
-          alert(base64string);
           this.imgUpload = base64string;
+          this.img = document.getElementById('imgPlaceholder');
+          this.img.setAttribute('src', base64string);
         });
       });
-    });
-  }
-
-  convertToBase64(filePath) {
-    this.base64.encodeFile(filePath).then((base64File: string) => {
-      console.log(base64File);
-    }, (err) => {
-      console.log(err);
     });
   }
 }

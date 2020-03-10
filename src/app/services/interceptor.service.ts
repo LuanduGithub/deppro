@@ -20,7 +20,7 @@ export class InterceptorService implements HttpInterceptor {
     const nombreApi = req.url.split('/');
     if (req.method === 'POST' && nombreApi[5] === 'Login') {
       message = 'Accediendo';
-      this.presentLoading(message);
+      // this.presentLoading(message);
     } else {
       message = 'Enviando';
     }
@@ -29,7 +29,7 @@ export class InterceptorService implements HttpInterceptor {
     return next.handle(req).pipe(
       finalize(() => {
         if (req.method === 'POST' && nombreApi[5] === 'Login') {
-          this.dismissLoading();
+          // this.dismissLoading();
         }
       })
     );

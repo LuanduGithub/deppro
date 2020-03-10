@@ -1,7 +1,7 @@
 <app-header></app-header>
 
 <ion-content>
-    <ion-card class="animacion-entrada">
+    <ion-card class="animacion-entrada-tab1">
         <ion-card-content>
             <ion-select placeholder="Categoria" ok-text="Elegir" cancel-text="Cancelar"
                 (ionChange)="filtradoPorCategoria($event)">
@@ -9,13 +9,9 @@
                 <ion-select-option value="{{category.nombre}}" *ngFor="let category of categoriasList">
                     {{category.nombre}}</ion-select-option>
             </ion-select>
-            <ion-item *ngIf="showBtnPosiciones">
-                <ion-label>Posiciones</ion-label>
-                <ion-toggle slot="end" name="posiciones" (ionChange)="mostrarTabla()"></ion-toggle>
-            </ion-item>
-
         </ion-card-content>
     </ion-card>
+    <!-- <em>{{error | json}}</em> -->
     <ion-row *ngIf="noTieneDesignaciones">
         <ion-col size="12">
             <section class="warning-alert">
@@ -25,11 +21,19 @@
             </section>
         </ion-col>
     </ion-row>
-    <ion-card class="animacion-entrada" *ngFor="let designacion of designaciones; let i = index" >
-        <section class="custom-border" [ngStyle]="{'background-color' : (designacion?.hora | slice:0:2) === hotHour ? 'var(--ion-color-danger)' : 'var(--ion-color-primary)'}"></section>
+    <ion-card class="animacion-entrada-tab1" *ngFor="let designacion of designaciones; let i = index">
+        <section class="custom-border"
+            [ngStyle]="{'background-color' : designacion?.cuarto === 'Finalizado' ? 'var(--ion-color-danger)' : 'var(--ion-color-primary)'}">
+        </section>
         <ion-card-content>
             <section class="grid-partido">
-                <div><ion-icon class="grid-partido__pin" name="pin"></ion-icon>{{designacion.cancha}}<small class="grid-partido__inprogress" *ngIf="(designacion?.hora | slice:0:2) === hotHour">en horario de juego</small> </div>
+                <div>
+                    <ion-icon class="grid-partido__pin" name="pin"
+                    [ngStyle]="{'color': designacion?.cuarto === 'Finalizado' ? 'var(--ion-color-danger)': 'var(--ion-color-primary)'}"
+                    ></ion-icon>{{designacion.cancha}}<small
+                        class="grid-partido__inprogress" *ngIf="(designacion?.hora | slice:0:2) === hotHour">en horario
+                        de juego</small>
+                </div>
                 <div>{{designacion.fecha}} |</div>
                 <div> {{designacion.hora}}hs</div>
             </section>
@@ -38,26 +42,50 @@
                     {{designacion.equipoA}}
                 </div>
                 <div>
-                    <div class="grid-partido-data__score-div"  *ngIf="user?.usuarioId === 'invitado'">{{designacion.resultadoA || 0}}</div>
-                    <input type="number" [value]="designacion.resultadoA || 0"  class="grid-partido-data__score-input"
-                         [formControl]="equipoA" *ngIf="user?.usuarioId !== 'invitado'"/>
+                    <div class="grid-partido-data__score-div" *ngIf="user?.usuarioId === 'invitado'">
+                        {{designacion.resultadoA || 0}}</div>
+                    <input 
+                    type="number"
+                    [value]="designacion.resultadoA || 0"
+                    class="grid-partido-data__score-input"
+                    [formControl]="equipoA"
+                    *ngIf="user?.usuarioId !== 'invitado'"
+                    [ngStyle]="{'color': designacion?.cuarto === 'Finalizado' ? 'var(--ion-color-danger)': 'var(--ion-color-primary)'}"
+                    />
                 </div>
                 <div class="grid-partido-data__teamName">
                     {{designacion.equipoB}}
                 </div>
-                <div  class="grid-partido-data__btn-refresh">
-                    <button  (click)="updateScoreTime(designacion , i)" [disabled]="user?.usuarioId === 'invitado'"><ion-icon name="refresh"></ion-icon></button>
+                <div class="grid-partido-data__btn-refresh">
+                    <button 
+                    (click)="updateScoreTime(designacion , i)"
+                    [disabled]="user?.usuarioId === 'invitado'"
+                    *ngIf="designacion?.cuarto !== 'Finalizado'"
+                    >
+                        <ion-icon name="refresh"></ion-icon>
+                    </button>
                 </div>
                 <div>
-                    <div class="grid-partido-data__score-div"  *ngIf="user?.usuarioId === 'invitado'">{{designacion.resultadoB || 0}}</div>
-                    <input type="number"  [value]="designacion.resultadoB || 0" class="grid-partido-data__score-input"
-                         [formControl]="equipoB" *ngIf="user?.usuarioId !== 'invitado'"/>
+                    <div class="grid-partido-data__score-div" *ngIf="user?.usuarioId === 'invitado'">
+                        {{designacion.resultadoB || 0}}</div>
+                    <input
+                    type="number"
+                    [value]="designacion.resultadoB || 0"
+                    class="grid-partido-data__score-input"
+                    [formControl]="equipoB"
+                    *ngIf="user?.usuarioId !== 'invitado'"
+                    [ngStyle]="{'color': designacion?.cuarto === 'Finalizado' ? 'var(--ion-color-danger)': 'var(--ion-color-primary)'}"
+                    />
                 </div>
-                <div class="grid-partido-data__category" >
-                    <button (click)="presentPopover($event, designacion)" [disabled]="user?.usuarioId === 'invitado'">{{designacion.cuarto}}</button>
+                <div class="grid-partido-data__category">
+                    <button
+                    (click)="presentPopover($event, designacion)"
+                    [disabled]="user?.usuarioId === 'invitado'"
+                    [ngStyle]="{'background': designacion?.cuarto === 'Finalizado' ? 'var(--ion-color-danger)': 'var(--ion-color-primary)'}"
+                    >{{designacion.cuarto}}</button>
                 </div>
                 <div class="grid-partido-data__time">
-                    <div>{{designacion.categoria}}</div>
+                    <div [ngStyle]="{'background': designacion?.cuarto === 'Finalizado' ? 'var(--ion-color-danger)': 'var(--ion-color-primary)'}">{{designacion.categoria}}</div>
                 </div>
             </section>
             <section *ngIf="user?.usuarioId !== 'invitado'">
@@ -110,7 +138,7 @@
                             *ngIf="(designacion.anotador_confirmado || designacion.cronometro_confirmado) && !(designacion.anotador_confirmado && designacion.cronometro_confirmado)">*</span>
                     </div>
                     <div>
-                        
+
                         <span *ngIf="designacion.anotador_confirmado && designacion.cronometro_confirmado">
                             <ion-icon name="checkmark"></ion-icon>
                         </span>

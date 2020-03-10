@@ -29,4 +29,8 @@ export class CategoriaService {
     };
     return this.http.post<CategoriaPost>(url, obj);
   }
+  testgetinfo(): Observable<any> {
+    const url = 'http://designaciones.elemsoft.net/api/canchas/getList';
+    return this.http.get<any>(url);
+  }
 }

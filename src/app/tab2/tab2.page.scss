@@ -12,30 +12,7 @@ ion-card{
    margin: 5px;
    position: relative;
 }
-.animacion-entrada-fadeIn{
-  -webkit-animation: card-fadeIn 2s;
-  animation: card-fadeIn 2s;
-  animation-fill-mode: forwards; 
-}
-
-
-@keyframes card-fadeIn {
-  from { 
-      opacity: 0;
-  }
-  to   { 
-    opacity: 1;
-  }
-}
-@-webkit-keyframes card-fadeIn {
-  from { 
-    opacity: 0;
-    }
-    to   { 
-      opacity: 1;
-    }
-}
-.animacion-entrada{
+.animacion-entrada-novedades{
   -webkit-animation: card-animation .5s;
   animation: card-animation .5s;
   animation-fill-mode: forwards; 
@@ -68,14 +45,14 @@ to   {
   top:0;
   width: 3px;
   height: 100%;
-  background-color: #10dc60;
+  background-color: var(--ion-color-primary);
   z-index: 2;
 }
 .novedad{
   
   font-size: .8rem;
   div:first-child{
-    color:#4c8dff;
+    color:var(--ion-color-primary);
     padding: .8rem;
     border:1px solid #edf4ff;
     background-color: #f5f9ff;
@@ -87,7 +64,7 @@ to   {
     margin: 10px 5px;
   }
   div:last-child{
-    color:#4c8dff;
+    color:var(--ion-color-primary);
     padding: .8rem;
     border:1px solid #edf4ff;
     background-color: #f5f9ff;

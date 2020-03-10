@@ -34,13 +34,13 @@ export class Tab1Page {
   noHayDesignacion = false;
 
   categoriasList: Array<Comun>;
-  showBtnPosiciones = false;
   avisoEstado = true;
   categorias: any;
 
   equipoA = new FormControl();
   equipoB = new FormControl();
   hotHour: any;
+  error: any;
   constructor(
     private storage: Storage,
     public modalController: ModalController,
@@ -51,6 +51,13 @@ export class Tab1Page {
 
   }
   ionViewWillEnter() {
+    this.categoriaService.testgetinfo().subscribe(emp => {
+      this.error = emp;
+    }, error => {
+      this.error = error;
+    });
+    this.designaciones = [];
+    this.categoriasList = [];
     this.getHotHour();
     this.loadUser();
     this.getCategoriasList();
@@ -95,10 +102,7 @@ export class Tab1Page {
   filtradoPorCategoria(e) {
     if (e.detail.value === 'todas') {
       this.designaciones = this.designacionesTodas;
-      this.showBtnPosiciones = false;
       return;
-    } else {
-      this.showBtnPosiciones = true;
     }
 
     const arr = this.designacionesTodas;
