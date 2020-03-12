@@ -45,6 +45,7 @@ export class Novedades {
     titulo: string;
     fecha: string;
     cuerpo: string;
+    fechaDate: Date;
 }
 
 export class DesignacionesList {

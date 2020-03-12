@@ -61,10 +61,10 @@ export class CargaPage implements OnInit {
   }
   ionViewWillEnter() {
     this.init();
-    this.storage.get('tokenFirebase').then( token => { this.token = token; });
+    this.storage.get('setting:tokenFirebase').then( token => { this.token = token; });
   }
   loadUser() {
-    this.storage.get('user').then((user) => {
+    this.storage.get('setting:user').then((user) => {
       this.user = user;
     });
   }

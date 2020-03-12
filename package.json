@@ -34,6 +34,7 @@
     "cordova-plugin-fcm-with-dependecy-updated": "^4.1.0",
     "cordova-plugin-filechooser": "^1.2.0",
     "cordova-plugin-filepath": "^1.5.7",
+    "cordova-sqlite-storage": "^4.0.0",
     "core-js": "^2.5.4",
     "ionic": "^5.4.5",
     "moment": "^2.24.0",
@@ -93,7 +94,8 @@
       },
       "com-badrit-base64": {},
       "cordova-plugin-filechooser": {},
-      "cordova-plugin-filepath": {}
+      "cordova-plugin-filepath": {},
+      "cordova-sqlite-storage": {}
     },
     "platforms": [
       "android"

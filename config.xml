@@ -5,6 +5,7 @@
     <author email="luis.dubrez@gmail.com">Luis Dubrez</author>
     <content src="index.html" />
     <access origin="*" />
+    <access launch-external="yes" origin="whatsapp://*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />

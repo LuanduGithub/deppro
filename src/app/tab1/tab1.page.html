@@ -3,8 +3,8 @@
 <ion-content slot="fixed" (ionRefresh)="doRefresh($event)">
 
     <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200">
-        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Tirá para Refrescar" refreshingSpinner="circles"
-            refreshingText="Refrescando...">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Tirá para Refrescar"
+            refreshingSpinner="circles" refreshingText="Refrescando...">
         </ion-refresher-content>
     </ion-refresher>
     <ion-card class="animacion-entrada">
@@ -58,10 +58,12 @@
                     {{designacion.equipoB}}
                 </div>
                 <div class="grid-partido-data__btn-refresh">
-                    <button (click)="updateScoreTime(designacion , i)" [disabled]="user?.usuarioId === 'invitado'"
-                        *ngIf="designacion?.cuarto !== 'Finalizado'">
-                        <ion-icon name="refresh"></ion-icon>
-                    </button>
+                    <div *ngIf="user?.usuarioId !== 'invitado'">
+                        <button (click)="updateScoreTime(designacion , i)" [disabled]="user?.usuarioId === 'invitado'"
+                            *ngIf="designacion?.cuarto !== 'Finalizado'">
+                            <ion-icon name="refresh"></ion-icon>
+                        </button>
+                    </div>
                 </div>
                 <div>
                     <div class="grid-partido-data__score-div" *ngIf="user?.usuarioId === 'invitado'">

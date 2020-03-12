@@ -14,7 +14,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import { LoginComponent } from './login/login.component';
 import { LoginPage } from './ionicLogin/login/login.page';
 import { InterceptorService } from './services/interceptor.service';
 
@@ -27,7 +26,6 @@ import { FileChooser} from '@ionic-native/file-chooser/ngx';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     LoginPage
   ],
   entryComponents: [],

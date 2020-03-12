@@ -26,7 +26,7 @@ export class LoginPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.storage.set('user', '');
+    this.loadUser();
     this.mostrarMensajeError = false;
     this.loginFormGroup = new FormGroup({
       usuarioLogin: new FormControl('', [Validators.required]),
@@ -55,7 +55,7 @@ export class LoginPage implements OnInit {
     });
   }
   successTrue(user) {
-    this.storage.set('user', user);
+    this.storage.set(`setting:user`, user);
     this.router.navigate(['tabs']);
   }
   successFalse() {
@@ -71,8 +71,16 @@ export class LoginPage implements OnInit {
       nombre: 'Invitado',
       usuarioId: 'invitado'
     };
-    this.storage.set('user', user);
+
+    this.storage.set(`setting:user`, user);
     this.router.navigate(['tabs']);
   }
 
+  loadUser() {
+    this.storage.get(`setting:user`).then((user) => {
+      if (user) {
+        this.router.navigate(['tabs']);
+      }
+    });
+  }
 }

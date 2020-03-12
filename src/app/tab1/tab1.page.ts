@@ -12,7 +12,7 @@ import { PopoverController } from '@ionic/angular';
 
 import * as moment from 'moment';
 import { PopoverComponent } from '../shared/components/popover/popover.component';
-import { promise } from 'protractor';
+import { NewDataService } from './../services/new-data.service';
 
 @Component({
   selector: 'app-tab1',
@@ -46,7 +46,8 @@ export class Tab1Page {
     public modalController: ModalController,
     private designacionesService: DesignacionesService,
     private categoriaService: CategoriaService,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private newDataService: NewDataService
   ) {
 
   }
@@ -63,10 +64,12 @@ export class Tab1Page {
     this.getCategoriasList();
   }
 
-
+  ionViewDidLeave() {
+    this.newDataService.storeDesignacionesStorage(this.designaciones.length);
+  }
 
   mostrarDesignacionesSegunRol(event = null) {
-    this.storage.get('user').then(user => {
+    this.storage.get(`setting:user`).then(user => {
       if (user.admin) {
         this.getDesignacionesList(event);
       } else if (user.usuarioId !== 'invitado') {
@@ -86,7 +89,7 @@ export class Tab1Page {
         this.noTieneDesignaciones = true;
         this.noHayPartidos = true;
       }
-      if (event) {event.target.complete(); }
+      if (event) { event.target.complete(); }
     });
   }
 
@@ -97,7 +100,7 @@ export class Tab1Page {
       } else {
         this.noTieneDesignaciones = true;
         this.noHayDesignacion = true;
-        if (event) {event.target.complete(); }
+        if (event) { event.target.complete(); }
       }
     });
   }
@@ -145,7 +148,7 @@ export class Tab1Page {
   }
 
   loadUser() {
-    this.storage.get('user').then((user) => {
+    this.storage.get(`setting:user`).then((user) => {
       this.user = user;
     });
   }

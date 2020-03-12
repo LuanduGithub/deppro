@@ -1,22 +1,20 @@
-<ion-tabs >
-  <ion-tab-bar slot="bottom" color="light">
-    <ion-tab-button tab="tab1" *ngIf="userAdmin">
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="tab1" (click)="cleanBadgeN()">
       <ion-icon name="man"></ion-icon>
-      <ion-label>Designaciones</ion-label>
-    </ion-tab-button>
-    <ion-tab-button tab="tab1" *ngIf="!userAdmin">
-      <ion-icon name="calendar"></ion-icon>
       <ion-label>Programación</ion-label>
+      <ion-badge color="danger"  *ngIf="progBadge !== 0">{{progBadge}}</ion-badge>
     </ion-tab-button>
-    <ion-tab-button tab="tab2">
+    <ion-tab-button tab="tab2" (click)="cleanBadgeD()">
       <ion-icon name="folder-open"></ion-icon>
       <ion-label>Novedades</ion-label>
+      <ion-badge  color="danger" *ngIf="noveBadge !== 0">{{noveBadge}}</ion-badge>
     </ion-tab-button>
-    <ion-tab-button tab="tab5">
+    <ion-tab-button tab="tab5" (click)="cleanBoth()">
       <ion-icon name="list"></ion-icon>
       <ion-label>Posiciones</ion-label>
     </ion-tab-button>
-    <ion-tab-button tab="tab3" *ngIf="userAdmin">
+    <ion-tab-button  tab="tab3" *ngIf="userAdmin">
       <ion-icon name="add-circle"></ion-icon>
       <ion-label>Alta</ion-label>
     </ion-tab-button>

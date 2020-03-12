@@ -2,7 +2,21 @@
   <ion-toolbar class="custom-header-color" color="light">
     <ion-title class="header animacion-entrada-fadeIn">
       <ion-img class="header__img" src="../assets/img/deppro_blanco.png"></ion-img>
-      <button class="header__logout" (click)="logout()"><ion-icon name="log-out"></ion-icon></button>
+      <!--  <button class="header__logout" (click)="logout()"><ion-icon name="log-out"></ion-icon></button> -->
     </ion-title>
   </ion-toolbar>
+
+  <ion-fab horizontal="end" vertical="top" slot="fixed" class="menu-button">
+    <ion-fab-button size="small">
+      <ion-icon name="more"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list>
+      <ion-fab-button color="secondary" (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="secondary" href="whatsapp://send?phone=5493794990412">
+        <ion-icon name="at"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-header>

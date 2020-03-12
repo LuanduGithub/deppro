@@ -3,6 +3,7 @@ import { IonInfiniteScroll } from '@ionic/angular';
 import { NovedadesService } from '../services/novedades.service';
 import { Novedades } from '../models/modelsComunes';
 import { Storage } from '@ionic/storage';
+import { NewDataService } from '../services/new-data.service';
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -10,6 +11,7 @@ import { Storage } from '@ionic/storage';
 })
 export class Tab2Page {
   novedadesList: Array<Novedades>;
+  novedadesListTotal: number;
   data: Array<Novedades>;
   user: any;
   cantNovedades = 4;
@@ -21,26 +23,33 @@ export class Tab2Page {
   constructor(
     private noveService: NovedadesService,
     private storage: Storage,
-  ) {}
+    private newDataService: NewDataService
+  ) { }
   ionViewWillEnter() {
     this.novedadesList = [];
     this.getNovedades();
     this.loadUser();
   }
+
+  ionViewDidLeave() {
+    this.newDataService.storeNovedadesStorage(this.novedadesListTotal);
+  }
+
   loadUser() {
-    this.storage.get('user').then((user) => {
+    this.storage.get(`setting:user`).then((user) => {
       this.user = user;
     });
   }
   getNovedades() {
     this.noveService.getNovedades().subscribe(novedades => {
-      let dateArray = novedades.msg;
-      dateArray = dateArray.sort(this.getSortOrder('fecha'));
-      dateArray = dateArray.reverse();
-      this.data = dateArray;
-      this.novedadesList = dateArray.slice(this.cantNovedadesInicial, this.cantNovedadesFinal).map( n => {
-          return n;
+      this.novedadesListTotal = novedades.msg.length;
+      const dataArray = novedades.msg;
+      dataArray.reverse();
+      this.data = dataArray;
+      this.novedadesList = dataArray.slice(this.cantNovedadesInicial, this.cantNovedadesFinal).map(n => {
+        return n;
       });
+      console.log(this.novedadesList );
     });
   }
 
@@ -51,8 +60,8 @@ export class Tab2Page {
 
     console.log(this.cantNovedadesInicial + ' ' + this.cantNovedadesFinal);
 
-    dateArray = dateArray.slice(this.cantNovedadesInicial, this.cantNovedadesFinal).map( n => {
-        return n;
+    dateArray = dateArray.slice(this.cantNovedadesInicial, this.cantNovedadesFinal).map(n => {
+      return n;
     });
 
     this.novedadesList.push(...dateArray);
@@ -71,12 +80,12 @@ export class Tab2Page {
 
   getSortOrder(prop) {
     return (a, b) => {
-        if (a[prop] > b[prop]) {
-            return 1;
-        } else if (a[prop] < b[prop]) {
-            return -1;
-        }
-        return 0;
+      if (a[prop] > b[prop]) {
+        return 1;
+      } else if (a[prop] < b[prop]) {
+        return -1;
+      }
+      return 0;
     };
   }
 }

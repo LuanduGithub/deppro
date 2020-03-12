@@ -42,7 +42,7 @@ export class PosicionesPage implements OnInit {
 
 
   loadUser() {
-    this.storage.get('user').then(user => {
+    this.storage.get('setting:user').then(user => {
       this.userAdmin = user.admin;
     });
   }
@@ -115,4 +115,6 @@ export class PosicionesPage implements OnInit {
     };
     this.updateTable(obj);
   }
+
+
 }

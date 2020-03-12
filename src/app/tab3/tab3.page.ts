@@ -19,7 +19,7 @@ export class Tab3Page {
   }
 
   loadUser() {
-    this.storage.get('user').then((user) => {
+    this.storage.get(`setting:user`).then((user) => {
       this.user = user;
     });
   }
