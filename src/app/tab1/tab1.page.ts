@@ -14,6 +14,8 @@ import * as moment from 'moment';
 import { PopoverComponent } from '../shared/components/popover/popover.component';
 import { NewDataService } from './../services/new-data.service';
 
+import { LoadingController } from '@ionic/angular';
+
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -41,13 +43,15 @@ export class Tab1Page {
   equipoB = new FormControl();
   hotHour: any;
   error: any;
+  loading: any;
   constructor(
     private storage: Storage,
     public modalController: ModalController,
     private designacionesService: DesignacionesService,
     private categoriaService: CategoriaService,
     private popoverController: PopoverController,
-    private newDataService: NewDataService
+    private newDataService: NewDataService,
+    private loadingController: LoadingController
   ) {
 
   }
@@ -83,8 +87,9 @@ export class Tab1Page {
   getDesignacionesList(event) {
     this.designacionesService.getDesignaciones().subscribe(designaciones => {
       if (designaciones) {
-        this.designaciones = this.filtradoPorFecha(designaciones.msg);
-        this.designacionesTodas = this.designaciones;
+        const designacionesFiltradasFecha = this.filtradoPorFecha(designaciones.msg);
+        designacionesFiltradasFecha.reverse();
+        this.designaciones = designacionesFiltradasFecha;
       } else {
         this.noTieneDesignaciones = true;
         this.noHayPartidos = true;
@@ -96,7 +101,9 @@ export class Tab1Page {
   getDesignacionesListPorUsuario(id, event = null) {
     this.designacionesService.getDesignacionesPorUsuario(id).subscribe(designaciones => {
       if (designaciones) {
-        this.designaciones = this.filtradoPorFecha(designaciones.msg);
+        const designacionesFiltradasFecha = this.filtradoPorFecha(designaciones.msg);
+        designacionesFiltradasFecha.reverse();
+        this.designaciones = designacionesFiltradasFecha;
       } else {
         this.noTieneDesignaciones = true;
         this.noHayDesignacion = true;
@@ -205,6 +212,7 @@ export class Tab1Page {
   }
 
   updateScoreTime(designacion) {
+    this.presentLoading('Actualizando Resultado');
     const obj = {
       Des_Id: designacion.id,
       Des_Res_Eq_A: this.equipoA.value || designacion.resultadoB,
@@ -213,9 +221,11 @@ export class Tab1Page {
     };
     this.designacionesService.postDesignacionesScore(obj).subscribe(scoreA => {
       this.mostrarDesignacionesSegunRol();
+      this.dismissLoading();
     });
   }
   async presentPopover(ev: any, designacion) {
+
     const popover = await this.popoverController.create({
       component: PopoverComponent,
       event: ev,
@@ -230,8 +240,10 @@ export class Tab1Page {
         Des_Res_Eq_B: designacion.resultadoB,
         Des_Res_Cuarto: dataTime.data.time
       };
+      this.presentLoading('Actualizando Estado');
       this.designacionesService.postDesignacionesScore(obj).subscribe(scoreA => {
         this.mostrarDesignacionesSegunRol();
+        this.dismissLoading();
       });
     });
   }
@@ -244,7 +256,18 @@ export class Tab1Page {
 
   doRefresh(event) {
     this.mostrarDesignacionesSegunRol(event);
-
   }
 
+  async presentLoading(message = '') {
+    this.loading = await this.loadingController.create({
+      message,
+      translucent: true,
+      cssClass: 'custom-class custom-loading text-capitalize',
+      spinner: 'dots'
+    });
+    await this.loading.present();
+  }
+  async dismissLoading() {
+    await this.loading.dismiss();
+  }
 }

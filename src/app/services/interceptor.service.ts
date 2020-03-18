@@ -14,23 +14,23 @@ export class InterceptorService implements HttpInterceptor {
   ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let message;
+    // let message;
     // let nombreApi = req.url.search('Login');
 
-    const nombreApi = req.url.split('/');
-    if (req.method === 'POST' && nombreApi[5] === 'Login') {
-      message = 'Accediendo';
+   // const nombreApi = req.url.split('/');
+    // if (req.method === 'POST' && nombreApi[5] === 'Login') {
+    //  message = 'Accediendo';
       // this.presentLoading(message);
-    } else {
-      message = 'Enviando';
-    }
+    // } else {
+    //  message = 'Enviando';
+   // }
     // req.method === 'GET' ? message = `Cargando ${nombreApi[4]}` : message = '';
 
     return next.handle(req).pipe(
       finalize(() => {
-        if (req.method === 'POST' && nombreApi[5] === 'Login') {
+       // if (req.method === 'POST' && nombreApi[5] === 'Login') {
           // this.dismissLoading();
-        }
+        // }
       })
     );
   }

@@ -2,8 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup , Validators , FormControl } from '@angular/forms';
 import { CanchasService } from './../../services/canchas.service';
 import { Comun, ComunList } from '../../models/modelsComunes';
-import { FCM } from '@ionic-native/fcm/ngx';
-
+import { LoadingController } from '@ionic/angular';
 @Component({
   selector: 'app-canchas',
   templateUrl: './canchas.component.html',
@@ -21,9 +20,10 @@ export class CanchasComponent implements OnInit {
   @Input() agregar: boolean;
   @Input() editar: boolean;
   canchas: any;
+  loading: any;
   constructor(
-    private fcm: FCM,
-    private canchasService: CanchasService
+    private canchasService: CanchasService,
+    private loadingController: LoadingController
   ) {
 
 
@@ -36,11 +36,6 @@ export class CanchasComponent implements OnInit {
     this.editarCanchaFormGroup = new FormGroup({
       editarCanchaNombre: new FormControl('', [ Validators.required ]),
       editarCanchaNombreNuevo: new FormControl({value : '', disabled: true}, Validators.required),
-    });
-    this.fcm.getToken().then(token => {
-      console.log(token);
-      this.token = token;
-      // backend.registerToken(token);
     });
  }
 
@@ -73,21 +68,25 @@ export class CanchasComponent implements OnInit {
 
 
   onSubmitAgregar(formGroup) {
+    this.presentLoading('Agregando Cancha');
     const id = 0;
     const nombre = this.agregarCanchaFormGroup.value.canchaNombre;
     this.canchasService.postCancha(id, nombre).subscribe(() => {
       this.getCanchas();
       this.setValueVacio();
+      this.dismissLoading();
     });
   }
 
   onSubmitEditar(formGroup) {
+    this.presentLoading('Editando Cancha');
     const id = this.canchaSeleccionada[0].id;
     const nombre = this.editarCanchaFormGroup.value.editarCanchaNombreNuevo;
     this.canchasService.postCancha(id, nombre).subscribe(() => {
       this.getCanchas();
       this.setValueVacio();
       this.canchaSeleccionada = undefined;
+      this.dismissLoading();
     });
   }
 
@@ -114,5 +113,18 @@ export class CanchasComponent implements OnInit {
       this.editarCanchaFormGroup.controls.editarCanchaNombreNuevo.setValue('');
       this.editarCanchaFormGroup.controls.editarCanchaNombreNuevo.disable();
     }
+  }
+
+  async presentLoading(message = '') {
+    this.loading = await this.loadingController.create({
+      message,
+      translucent: true,
+      cssClass: 'custom-class custom-loading text-capitalize',
+      spinner: 'dots'
+    });
+    await this.loading.present();
+  }
+  async dismissLoading() {
+    await this.loading.dismiss();
   }
 }

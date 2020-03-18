@@ -2,7 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Usuario } from './../../models/modelsComunes';
 import { UsuariosService } from './../../services/usuarios.service';
+import { LoadingController } from '@ionic/angular';
 
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @Component({
   selector: 'app-usuario',
@@ -18,9 +20,12 @@ export class UsuarioComponent implements OnInit {
   @Input() agregar = false;
   @Input() editar = false;
   usuarios: any;
+  loading: HTMLIonLoadingElement;
 
   constructor(
-    private usuService: UsuariosService
+    private usuService: UsuariosService,
+    private loadingController: LoadingController,
+    private fcm: FCM
   ) {}
 
   ngOnInit() {
@@ -85,6 +90,7 @@ export class UsuarioComponent implements OnInit {
   }
 
   onSubmitEditar(formGroup) {
+    this.presentLoading('Agregando Usuario');
     const id = this.usuarioSeleccionado[0].id;
     const nombreApellido = this.editarUsuarioFormGroup.value.editarUsuarioNombre;
     const tel = this.editarUsuarioFormGroup.value.editarUsuarioTelefono;
@@ -110,6 +116,7 @@ export class UsuarioComponent implements OnInit {
       this.getUsuarios();
       this.setValueVacio();
       this.usuarioSeleccionado = undefined;
+      this.dismissLoading();
     });
   }
 
@@ -151,6 +158,17 @@ editUsuarioNombreSelected(val) {
       this.editarUsuarioFormGroup.controls.editarSeleccionarUsuarioNombre.setValue('');
     }
   }
-
+  async presentLoading(message = '') {
+    this.loading = await this.loadingController.create({
+      message,
+      translucent: true,
+      cssClass: 'custom-class custom-loading text-capitalize',
+      spinner: 'dots'
+    });
+    await this.loading.present();
+  }
+  async dismissLoading() {
+    await this.loading.dismiss();
+  }
 
 }

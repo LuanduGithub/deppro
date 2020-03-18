@@ -4,17 +4,27 @@
   <form [formGroup]="designationForm" (ngSubmit)="designar(designationForm)">
     <section class="grid-parametros animacion-entrada" >
       <div>
+        <label for="file" class="file-label">
+          <ion-icon name="cloud-upload"></ion-icon>
+          {{archivoElegido || elegirArchivo }}</label>
+        <input type="file" id="file" (change)="onFileChange($event)" class="inputfile"/>
+        <ion-button expand="block" color="secondary" size="small" *ngIf="dataXLS" (click)="uploadProgramacion(dataXLS)">Cargar Programación</ion-button>
+      </div>
+<!--       <div>
+        {{dataXLS | json}}
+      </div> -->
+      <div>
         <ion-select placeholder="Cancha" formControlName="cancha" ok-text="Elegir" cancel-text="Cancelar">
           <ion-select-option value="{{team.id}}" *ngFor="let team of canchasList">{{team.nombre}}</ion-select-option>
         </ion-select>
       </div>
       <div>
-        <ion-datetime displayFormat="DD/MM" placeholder="Día" formControlName="dia" ok-text="Elegir"
+        <ion-datetime displayFormat="DD/MM" placeholder="Día" formControlName="dia" done-text="Elegir"
           cancel-text="Cancelar"></ion-datetime>
       </div>
       <div>
         <ion-datetime displayFormat="h:mm A" minuteValues="0,15,30,45" formControlName="hora" placeholder="Hora"
-          ok-text="Elegir" cancel-text="Cancelar"></ion-datetime>
+        done-text="Elegir" cancel-text="Cancelar"></ion-datetime>
       </div>
       <div>
         <ion-select placeholder="Equipo A" formControlName="equipoA" ok-text="Elegir" cancel-text="Cancelar">
@@ -46,12 +56,12 @@
             {{official.nombre}}</ion-select-option>
         </ion-select>
       </div>
-      <div>
+<!--       <div>
         <ion-select placeholder="Arbitro 3" formControlName="arbitro3" ok-text="Elegir" cancel-text="Cancelar">
           <ion-select-option value="{{official.id}}" *ngFor="let official of usuariosArbitrosList">
             {{official.nombre}}</ion-select-option>
         </ion-select>
-      </div>
+      </div> -->
       <div>
         <ion-select placeholder="Anotador" formControlName="anotador" ok-text="Elegir" cancel-text="Cancelar">
           <ion-select-option value="{{official.id}}" *ngFor="let official of usuariosMesaList">{{official.nombre}}
@@ -64,15 +74,21 @@
           </ion-select-option>
         </ion-select>
       </div>
-      <div>
+
+<!--       <div>
         <ion-select placeholder="Cronometro 2" formControlName="cronometro2" ok-text="Elegir" cancel-text="Cancelar">
           <ion-select-option value="{{official.id}}" *ngFor="let official of usuariosMesaList">{{official.nombre}}
           </ion-select-option>
         </ion-select>
+      </div> -->
+      <div *ngIf="cleanButton">
+        <ion-button expand="block" color="secondary" size="small" type="button" (click)="clearFields()">
+          Programación Realizada   <ion-icon name="arrow-forward"></ion-icon> Limpiar Campos
+        </ion-button>
       </div>
       <div>
-        <ion-button expand="block" class="primary" size="small" type="submit" [disabled]="!designationForm.valid">
-          Designar
+        <ion-button expand="block" size="small" type="submit" [disabled]="!designationForm.valid">
+          Programar
         </ion-button>
       </div>
     </section>

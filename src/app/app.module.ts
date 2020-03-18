@@ -21,6 +21,8 @@ import { Base64 } from '@ionic-native/base64/ngx';
 
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { FileChooser} from '@ionic-native/file-chooser/ngx';
+import { ComponentsModule } from './shared/components/components.module';
+import { PapaParseModule } from 'ngx-papaparse';
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { FileChooser} from '@ionic-native/file-chooser/ngx';
     FormsModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    ComponentsModule,
+    PapaParseModule
   ],
   providers: [
     FCM,

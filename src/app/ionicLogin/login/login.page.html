@@ -27,6 +27,8 @@
       <div class="card__tilte">
         Iniciar Sesión
       </div>
+      <em>{{token}}</em>
+      <em>{{obj | json}}</em>
       <div>
         <input type="text" placeholder="Usuario" formControlName="usuarioLogin" />
       </div>
@@ -45,6 +47,7 @@
         <ion-button type="button" expand="block" color="secondary" (click)="accesoNoUsario()">
           <ion-icon name="redo" style="margin-right: 10px;"></ion-icon> Acceder Sin Usuario
         </ion-button>
+        
       </div>
     </div>
   </form>

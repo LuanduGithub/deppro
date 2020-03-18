@@ -4,21 +4,25 @@ import { urlBase } from './../constants/url';
 import { Observable } from 'rxjs';
 import { Comun, ComunList, CategoriaPost } from '../models/modelsComunes';
 import { environment } from './../../environments/environment';
+import { Storage } from '@ionic/storage';
 @Injectable({
   providedIn: 'root'
 })
 export class NotificacionesService {
-
+  user: any;
   constructor(
-    private http: HttpClient
-  ) { }
-  sendNotificaciones(obj): Observable<any> {
+    private http: HttpClient,
+    private storage: Storage
+  ) {
+    this.storage.get(`setting:user`).then((user) => {
+    });
+  }
+  sendNotificaciones(): Observable<any> {
     // tslint:disable-next-line: max-line-length
-    const key = 'key=AAAAO1V0ZHA:APA91bGChdzg344aCjNApM4c49FZEyAPkN_J26VnqnMxQezwWxmcYCw9Jm_JJzx1LXZR1sEEbII0_Xiv65YCc6KyVg94PvFU31ht8raQpZoGEKFo6VSNPLQa5dydx6CKMbKTfLnwbaCZ';
+    const key = 'key=' + this.user.token;
     const url = 'https://fcm.googleapis.com/fcm/send';
     return this.http.post<any>(
       url,
-      obj,
       {
         headers: new HttpHeaders({
         'content-type': 'application/json',

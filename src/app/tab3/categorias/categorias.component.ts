@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Comun } from './../../models/modelsComunes';
 import { CategoriaService } from './../../services/categoria.service';
-
+import { LoadingController } from '@ionic/angular';
 @Component({
   selector: 'app-categorias',
   templateUrl: './categorias.component.html',
@@ -17,8 +17,10 @@ export class CategoriasComponent implements OnInit {
   @Input() agregar = false;
   @Input() editar = false;
   categorias: any;
+  loading: any;
   constructor(
-    private categoriaService: CategoriaService
+    private categoriaService: CategoriaService,
+    private loadingController: LoadingController
   ) {
 
 
@@ -62,21 +64,25 @@ export class CategoriasComponent implements OnInit {
 
 
   onSubmitAgregar(formGroup) {
+    this.presentLoading('Agregando Categoria');
     const id = 0;
     const nombre = this.agregarCategoriaFormGroup.value.categoriaNombre;
     this.categoriaService.postCategoria(id, nombre).subscribe(() => {
       this.getCategoriaList();
       this.setValueVacio();
+      this.dismissLoading();
     });
   }
 
   onSubmitEditar(formGroup) {
+    this.presentLoading('Editando Categoria');
     const id = this.categoriaSeleccionada[0].id;
     const nombre = this.editarCategoriaFormGroup.value.editarCategoriaNombreNuevo;
     this.categoriaService.postCategoria(id, nombre).subscribe(() => {
       this.getCategoriaList();
       this.setValueVacio();
       this.categoriaSeleccionada = undefined;
+      this.dismissLoading();
     });
   }
 
@@ -103,6 +109,19 @@ export class CategoriasComponent implements OnInit {
       this.editarCategoriaFormGroup.controls.editarCategoriaNombreNuevo.setValue('');
       this.editarCategoriaFormGroup.controls.editarCategoriaNombreNuevo.disable();
     }
+  }
+
+  async presentLoading(message = '') {
+    this.loading = await this.loadingController.create({
+      message,
+      translucent: true,
+      cssClass: 'custom-class custom-loading text-capitalize',
+      spinner: 'dots'
+    });
+    await this.loading.present();
+  }
+  async dismissLoading() {
+    await this.loading.dismiss();
   }
 
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Novedades } from './../../models/modelsComunes';
 import { NovedadesService } from './../../services/novedades.service';
-
+import { LoadingController } from '@ionic/angular';
 @Component({
   selector: 'app-novedades',
   templateUrl: './novedades.component.html',
@@ -18,8 +18,10 @@ export class NovedadesComponent implements OnInit {
   @Input() editar = false;
   fecha: string;
   novedades: any;
+  loading: HTMLIonLoadingElement;
   constructor(
-    private noveService: NovedadesService
+    private noveService: NovedadesService,
+    private loadingController: LoadingController
   ) { }
 
   ngOnInit() {
@@ -50,6 +52,7 @@ export class NovedadesComponent implements OnInit {
     this.novedades.unsubscribe();
   }
   onSubmitAgregar(formGroup) {
+    this.presentLoading('Agregando Novedad');
     const id = 0;
     const titulo = this.agregarNovedadFormGroup.value.novedadTitulo;
     const fecha = this.fecha;
@@ -63,6 +66,7 @@ export class NovedadesComponent implements OnInit {
     this.noveService.postNovedades(obj).subscribe(() => {
       this.getNovedades();
       this.setValueVacio();
+      this.dismissLoading();
     });
   }
 
@@ -120,6 +124,19 @@ export class NovedadesComponent implements OnInit {
     if (this.editar) {
       this.editarNovedadFormGroup.controls.editarSeleccionarNovedad.setValue('');
     }
+  }
+
+  async presentLoading(message = '') {
+    this.loading = await this.loadingController.create({
+      message,
+      translucent: true,
+      cssClass: 'custom-class custom-loading text-capitalize',
+      spinner: 'dots'
+    });
+    await this.loading.present();
+  }
+  async dismissLoading() {
+    await this.loading.dismiss();
   }
 
 }

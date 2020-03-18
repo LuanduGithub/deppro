@@ -5,7 +5,7 @@ import { Comun, Posiciones } from '../models/modelsComunes';
 import { PosicionesService } from './../services/posiciones.service';
 import { EquipoService } from '../services/equipo.service';
 import { FormControl, Validators } from '@angular/forms';
-
+import { LoadingController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 @Component({
   selector: 'app-posiciones',
@@ -19,20 +19,26 @@ export class PosicionesPage implements OnInit {
   categoriaSelected: number;
   categoriaSelectedView: boolean;
   equiposList: Array<Comun>;
-  equipo = new FormControl('', [ Validators.required ]);
+  equipo = new FormControl('', [Validators.required]);
+  FormControlCategoria: FormControl;
   showAddTeam = false;
   userAdmin: any;
+  loading: any;
+  preselectedCategoria: number;
 
   constructor(
     private categoriaService: CategoriaService,
     private posicionesService: PosicionesService,
     private equipoService: EquipoService,
-    private storage: Storage
+    private storage: Storage,
+    private loadingController: LoadingController
   ) { }
 
   ngOnInit() {
   }
   ionViewWillEnter() {
+    this.positionList = [];
+    this.showLatestTable();
     this.getCategoriasList();
     this.loadUser();
   }
@@ -52,21 +58,34 @@ export class PosicionesPage implements OnInit {
       this.categoriasList = categoriasList.msg;
     });
   }
+  showLatestTable() {
+    this.storage.get('setting:categoriaPosiciones').then(tp => {
+      if (tp) {
+        this.preselectedCategoria = tp;
+        this.categoriaSelected = tp;
+        this.getPositionList(tp, 'Obteniendo Tabla de Posiciones');
+      }
+    });
+  }
 
   filtradoPorCategoria(e) {
+    this.categoriaSelectedView = false;
     this.categoriaSelected = parseInt(e.detail.value, 10);
-    this.categoriaSelectedView = true;
-    this.getPositionList(this.categoriaSelected);
+    this.storage.set('setting:categoriaPosiciones', this.categoriaSelected);
+    this.getPositionList(this.categoriaSelected, 'Obteniendo Tabla de Posiciones');
   }
-  getPositionList(categoria) {
+  getPositionList(categoria, msn) {
+    this.presentLoading(msn);
     this.posicionesService.getPosicionesList(categoria).subscribe(tp => {
       this.positionList = tp.msg;
+      this.categoriaSelectedView = true;
+      this.dismissLoading();
     });
   }
   updateTable(obj) {
     this.posicionesService.postPosiciones(obj).subscribe(p => {
       this.showAddTeam = false;
-      this.getPositionList(this.categoriaSelected);
+      this.getPositionList(this.categoriaSelected, 'Actualizando Posiciones');
     });
   }
 
@@ -114,6 +133,19 @@ export class PosicionesPage implements OnInit {
       Pos_Jug: position.jugados + 1
     };
     this.updateTable(obj);
+  }
+
+  async presentLoading(message = '') {
+    this.loading = await this.loadingController.create({
+      message,
+      translucent: true,
+      cssClass: 'custom-class custom-loading text-capitalize',
+      spinner: 'dots'
+    });
+    await this.loading.present();
+  }
+  async dismissLoading() {
+    await this.loading.dismiss();
   }
 
 

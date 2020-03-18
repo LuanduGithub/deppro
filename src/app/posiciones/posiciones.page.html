@@ -1,17 +1,17 @@
 <app-header></app-header>
 
 <ion-content>
-  <ion-card class="animacion-entrada">
+  <ion-card class="animacion-entrada" *ngIf="categoriasList">
     <ion-card-content>
       <ion-select placeholder="Categoria" ok-text="Elegir" cancel-text="Cancelar"
-        (ionChange)="filtradoPorCategoria($event)">
+        (ionChange)="filtradoPorCategoria($event)" value="{{preselectedCategoria}}">
         <ion-select-option value="{{category.id}}" *ngFor="let category of categoriasList">
           {{category.nombre}}</ion-select-option>
       </ion-select>
 
     </ion-card-content>
   </ion-card>
-  <ion-card class="animacion-entrada" *ngIf="categoriaSelectedView">
+  <ion-card class="animacion-entrada" *ngIf="categoriaSelectedView && positionList">
     <ion-card-content>
       <section class="grid-positionList grid-positionList-header">
         <div>

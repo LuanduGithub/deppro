@@ -7,7 +7,7 @@ import { Base64 } from '@ionic-native/base64/ngx';
 
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { FileChooser} from '@ionic-native/file-chooser/ngx';
-
+import { LoadingController } from '@ionic/angular';
 @Component({
   selector: 'app-equipos',
   templateUrl: './equipos.component.html',
@@ -24,11 +24,14 @@ export class EquiposComponent implements OnInit {
   equipos: any;
   imgUpload: string;
   img: HTMLElement;
+  loading: HTMLIonLoadingElement;
+  nativePath: string;
   constructor(
     private equipoService: EquipoService,
     private base64: Base64,
     private fileChooser: FileChooser,
-    private filePath: FilePath
+    private filePath: FilePath,
+    private loadingController: LoadingController
 
   ) {
 
@@ -71,21 +74,25 @@ export class EquiposComponent implements OnInit {
 
 
   onSubmitAgregar(formGroup) {
+    this.presentLoading('Agregando Equipo');
     const id = 0;
     const nombre = this.agregarEquipoFormGroup.value.equipoNombre;
     this.equipoService.postEquipo(id, nombre).subscribe(() => {
       this.getEquipoList();
       this.setValueVacio();
+      this.dismissLoading();
     });
   }
 
   onSubmitEditar(formGroup) {
+    this.presentLoading('Editando Equipo');
     const id = this.equipoSeleccionado[0].id;
     const nombre = this.editarEquipoFormGroup.value.editarEquipoNombreNuevo;
     this.equipoService.postEquipo(id, nombre).subscribe(() => {
       this.getEquipoList();
       this.setValueVacio();
       this.equipoSeleccionado = undefined;
+      this.dismissLoading();
     });
   }
 
@@ -117,6 +124,7 @@ export class EquiposComponent implements OnInit {
   convertToBase64() {
     this.fileChooser.open().then((fileURL) => {
       this.filePath.resolveNativePath(fileURL).then((nativePath) => {
+        this.nativePath = nativePath;
         this.base64.encodeFile(nativePath).then((base64string) => {
           this.imgUpload = base64string;
           this.img = document.getElementById('imgPlaceholder');
@@ -124,5 +132,18 @@ export class EquiposComponent implements OnInit {
         });
       });
     });
+  }
+
+  async presentLoading(message = '') {
+    this.loading = await this.loadingController.create({
+      message,
+      translucent: true,
+      cssClass: 'custom-class custom-loading text-capitalize',
+      spinner: 'dots'
+    });
+    await this.loading.present();
+  }
+  async dismissLoading() {
+    await this.loading.dismiss();
   }
 }

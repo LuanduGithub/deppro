@@ -16,6 +16,7 @@ export class LoginPage implements OnInit {
   mostrarMensajeError = false;
   userJson: string;
   token: any;
+  obj: { username: any; password: any; token: any; };
 
   constructor(
     public loadingController: LoadingController,
@@ -33,10 +34,7 @@ export class LoginPage implements OnInit {
       passwordLogin: new FormControl('', [Validators.required])
     });
 
-    this.fcm.getToken().then(token => {
-      const tokenFirebase = token;
-      this.token = tokenFirebase.toString();
-    });
+
 
   }
 
@@ -47,7 +45,6 @@ export class LoginPage implements OnInit {
       password: form.value.usuarioLogin,
       token: this.token
     };
-
     this.usuariosService.postUsuarioLogin(obj).subscribe((user) => {
       this.userJson = JSON.stringify(user);
       user.success ? this.successTrue(user.msg) : this.successFalse();
@@ -80,6 +77,11 @@ export class LoginPage implements OnInit {
     this.storage.get(`setting:user`).then((user) => {
       if (user) {
         this.router.navigate(['tabs']);
+      } else {
+        this.fcm.getToken().then(token => {
+          const tokenFirebase = token;
+          this.token = tokenFirebase.toString();
+        });
       }
     });
   }
