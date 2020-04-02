@@ -57,3 +57,11 @@ body {
     transform: translateY(0);
   }
 }
+.loading-wrapper{
+  background: var(--ion-color-primary)!important;
+  color: var(--ion-color-primary-contrast)!important;
+  text-transform: uppercase;
+}
+.spinner-dots.sc-ion-loading-md{
+  color: var(--ion-color-primary-contrast)!important;
+}

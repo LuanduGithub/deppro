@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content  *ngIf="aceptarPartido">
     <ion-card >
       <ion-card-content>
         <ion-grid>
@@ -40,4 +40,39 @@
         </ion-grid>
       </ion-card-content>
     </ion-card>
+</ion-content>
+
+<ion-content *ngIf="eliminarPartido">
+  <ion-card >
+    <ion-card-content>
+      <ion-grid>
+        <ion-row style="border-bottom: 1px dashed #cecece;">
+          <ion-col size="12" class="text-align-center ion-text-uppercase">
+              Elminar Programación
+          </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col size="12" class="text-align-center ion-text-uppercase">
+                  {{data.equipoA}} vs {{data.equipoB}}
+            </ion-col>
+          </ion-row>
+        <ion-row class="text-align-center">
+            <ion-col size="12" style="margin:20px 0">
+               ¿<strong class="ion-text-capitalize">{{user.nombre}}</strong> estas seguro de borrar el partido?
+
+            </ion-col>
+          </ion-row>
+         
+        <ion-row>
+            <ion-col>
+                <ion-button color="secondary" expand="block" (click)="cancelar()" size="small">Cancelar</ion-button>
+            </ion-col>
+            <ion-col>
+                <ion-button (click)="onSubmitAceptar()" expand="block" size="small">{{eliminarPartido ? 'ELIMINAR' : 'ACEPTAR'}}</ion-button>
+            </ion-col>
+            
+          </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

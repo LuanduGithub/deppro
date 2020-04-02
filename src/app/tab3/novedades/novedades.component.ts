@@ -3,6 +3,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Novedades } from './../../models/modelsComunes';
 import { NovedadesService } from './../../services/novedades.service';
 import { LoadingController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { NewDataService } from './../../services/new-data.service';
+import { timingSafeEqual } from 'crypto';
 @Component({
   selector: 'app-novedades',
   templateUrl: './novedades.component.html',
@@ -10,7 +13,6 @@ import { LoadingController } from '@ionic/angular';
 })
 export class NovedadesComponent implements OnInit {
   novedadesList: Array<Novedades>;
-  novedadSeleccionado: Novedades[];
   agregarNovedadFormGroup: FormGroup;
   editarNovedadFormGroup: FormGroup;
 
@@ -19,79 +21,64 @@ export class NovedadesComponent implements OnInit {
   fecha: string;
   novedades: any;
   loading: HTMLIonLoadingElement;
+  editNovedades: any;
   constructor(
     private noveService: NovedadesService,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private route: Router,
+    private newDataService: NewDataService,
   ) { }
 
   ngOnInit() {
-
-    this.getNovedades();
     this.agregarNovedadFormGroup = new FormGroup({
       novedadTitulo: new FormControl('', [Validators.required]),
       novedadCuerpo: new FormControl('', [Validators.required]),
       novedadFecha: new FormControl(new Date()),
     });
-    this.editarNovedadFormGroup = new FormGroup({
-      editarSeleccionarNovedadNombre: new FormControl('', [Validators.required]),
-      editarNovedadTitulo: new FormControl('', [Validators.required]),
-      editarNovedadCuerpo: new FormControl('', [Validators.required]),
-      editarNovedadFecha: new FormControl(new Date()),
-    });
-    this.fecha = this.formatDate();
+    this.editNovedades = this.newDataService.getNovedad();
+    if (this.editNovedades) {
+      this.editar = true;
+      this.editarNovedadFormGroup = new FormGroup({
+        editarNovedadTitulo: new FormControl(this.editNovedades.titulo, [Validators.required]),
+        editarNovedadCuerpo: new FormControl(this.editNovedades.cuerpo, [Validators.required]),
+        editarNovedadFecha: new FormControl(new Date()),
+      });
+    }
+
   }
 
-  getNovedades() {
-    this.novedades = this.noveService.getNovedades().subscribe(novedades => {
-      const novedadesList = novedades.msg;
-      this.novedadesList = novedadesList.sort(this.getSortOrder('nombre'));
-    });
-  }
-
-  ionViewWillLeave() {
-    this.novedades.unsubscribe();
-  }
   onSubmitAgregar(formGroup) {
     this.presentLoading('Agregando Novedad');
-    const id = 0;
-    const titulo = this.agregarNovedadFormGroup.value.novedadTitulo;
-    const fecha = this.fecha;
-    const cuerpo = this.agregarNovedadFormGroup.value.novedadCuerpo;
     const obj = {
-      Nove_Id: id,
-      Nove_Titulo: titulo,
-      Nove_Fecha: fecha,
-      Nove_Cuerpo: cuerpo,
+      Nove_Id: 0,
+      Nove_Titulo: formGroup.value.novedadTitulo,
+      Nove_Fecha: this.formatDate(this.agregarNovedadFormGroup.value.novedadFecha),
+      Nove_Cuerpo: formGroup.value.novedadCuerpo,
     };
     this.noveService.postNovedades(obj).subscribe(() => {
-      this.getNovedades();
       this.setValueVacio();
       this.dismissLoading();
     });
   }
 
-  formatDate() {
-    const dia = this.agregarNovedadFormGroup.value.novedadFecha.getDate();
-    const mes = this.agregarNovedadFormGroup.value.novedadFecha.getMonth();
-    const ano = this.agregarNovedadFormGroup.value.novedadFecha.getFullYear();
-    return (mes + 1) + '/' + dia + '/' + ano;
+  formatDate(date) {
+    return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
   }
 
   onSubmitEditar(formGroup) {
-    const id = 0;
-    const titulo = this.agregarNovedadFormGroup.value.novedadesTitulo;
-    const fecha = this.agregarNovedadFormGroup.value.novedadesFecha;
-    const cuerpo = this.agregarNovedadFormGroup.value.novedadesCuerpo;
+    this.presentLoading('Editando Novedad');
     const obj = {
-      Nove_Id: id,
-      Nove_Titulo: titulo,
-      Nove_Fecha: fecha,
-      Nove_Cuerpo: cuerpo,
+      Nove_Id: this.editNovedades.id,
+      Nove_Titulo: formGroup.value.editarNovedadTitulo,
+      Nove_Cuerpo: formGroup.value.editarNovedadCuerpo,
+      Nove_Fecha: this.formatDate(this.editarNovedadFormGroup.value.editarNovedadFecha)
     };
+
     this.noveService.postNovedades(obj).subscribe(() => {
-      this.getNovedades();
       this.setValueVacio();
-      this.novedadSeleccionado = undefined;
+      this.dismissLoading();
+      this.editar =  false;
+      this.route.navigate(['tabs/tab2']);
     });
   }
 
@@ -110,20 +97,16 @@ export class NovedadesComponent implements OnInit {
     };
   }
 
-  editNovedadNombreSelected(val) {
-    if (val) {
-      this.novedadSeleccionado = this.novedadesList.filter(novedad => novedad.id === val);
-    }
-  }
-
   setValueVacio() {
     if (this.agregar) {
       this.agregarNovedadFormGroup.controls.novedadTitulo.setValue('');
       this.agregarNovedadFormGroup.controls.novedadCuerpo.setValue('');
     }
     if (this.editar) {
-      this.editarNovedadFormGroup.controls.editarSeleccionarNovedad.setValue('');
+      this.editarNovedadFormGroup.controls.editarNovedadTitulo.setValue('');
+      this.editarNovedadFormGroup.controls.editarNovedadCuerpo.setValue('');
     }
+
   }
 
   async presentLoading(message = '') {

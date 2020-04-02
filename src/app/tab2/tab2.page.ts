@@ -1,9 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonInfiniteScroll } from '@ionic/angular';
 import { NovedadesService } from '../services/novedades.service';
 import { Novedades } from '../models/modelsComunes';
 import { Storage } from '@ionic/storage';
 import { NewDataService } from '../services/new-data.service';
+import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { ModalTab2Page } from './modal/modal/modal.page';
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
@@ -14,16 +16,13 @@ export class Tab2Page {
   novedadesListTotal: number;
   data: Array<Novedades>;
   user: any;
-  cantNovedades = 4;
-  cantNovedadesInicial = 0;
-  cantNovedadesFinal: number = this.cantNovedades;
-
-  @ViewChild(IonInfiniteScroll, null) infiniteScroll: IonInfiniteScroll;
 
   constructor(
     private noveService: NovedadesService,
     private storage: Storage,
-    private newDataService: NewDataService
+    private newDataService: NewDataService,
+    private route: Router,
+    public modalController: ModalController,
   ) { }
   ionViewWillEnter() {
     this.novedadesList = [];
@@ -45,47 +44,29 @@ export class Tab2Page {
       this.novedadesListTotal = novedades.msg.length;
       const dataArray = novedades.msg;
       dataArray.reverse();
-      this.data = dataArray;
-      this.novedadesList = dataArray.slice(this.cantNovedadesInicial, this.cantNovedadesFinal).map(n => {
-        return n;
-      });
-      console.log(this.novedadesList );
+      this.novedadesList = dataArray;
+      console.log(this.novedadesList);
     });
   }
 
-  loadData(event) {
-    let dateArray = this.data;
-    this.cantNovedadesInicial = this.cantNovedadesFinal;
-    this.cantNovedadesFinal = this.cantNovedadesFinal + this.cantNovedades;
+  editNovedad(novedad) {
+    this.newDataService.setNovedad(novedad);
+    this.route.navigate(['tabs/tab3']);
+  }
 
-    console.log(this.cantNovedadesInicial + ' ' + this.cantNovedadesFinal);
+  deleteNovedad(data) {
+    this.modal(data);
+  }
 
-    dateArray = dateArray.slice(this.cantNovedadesInicial, this.cantNovedadesFinal).map(n => {
-      return n;
+  async modal(data) {
+    const modal = await this.modalController.create({
+      component: ModalTab2Page,
+      componentProps: { data },
+
     });
+    await modal.present();
+    await modal.onDidDismiss().then(dataTime => {
 
-    this.novedadesList.push(...dateArray);
-
-    setTimeout(() => {
-      event.target.complete();
-      if (this.novedadesList.length === this.data.length) {
-        event.target.disabled = true;
-      }
-    }, 500);
-  }
-
-  toggleInfiniteScroll() {
-    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
-  }
-
-  getSortOrder(prop) {
-    return (a, b) => {
-      if (a[prop] > b[prop]) {
-        return 1;
-      } else if (a[prop] < b[prop]) {
-        return -1;
-      }
-      return 0;
-    };
+    });
   }
 }

@@ -1,7 +1,15 @@
 <app-header></app-header>
 
 <ion-content>
-
+  <div class="input-upload-container" *ngIf="type !== 'editar'">
+    <label for="file" class="file-label">
+      <ion-icon name="cloud-upload"></ion-icon>
+      {{archivoElegido || elegirArchivo }}
+    </label>
+    <input type="file" id="file" (change)="onFileChange($event)" class="inputfile" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+    <ion-button expand="block" color="secondary" size="small" *ngIf="dataXLS" (click)="uploadProgramacion()">Cargar
+      Programación</ion-button>
+  </div>
   <section class="grid-parametros animacion-entrada">
     <div>Usuario</div>
     <div>
@@ -15,7 +23,7 @@
       </ion-button>
     </div>
   </section>
-  <section class="grid-parametros animacion-entrada">
+  <!-- <section class="grid-parametros animacion-entrada">
     <div>Cancha</div>
     <div>
       <ion-button color="primary" size="small" (click)="editarCancha()">
@@ -27,8 +35,8 @@
         <ion-icon name="add-circle-outline"></ion-icon>
       </ion-button>
     </div>
-  </section>
-  <section class="grid-parametros animacion-entrada">
+  </section> -->
+  <!--   <section class="grid-parametros animacion-entrada">
     <div>Equipo</div>
     <div>
       <ion-button color="primary" size="small" (click)="editarEquipo()">
@@ -40,8 +48,8 @@
         <ion-icon name="add-circle-outline"></ion-icon>
       </ion-button>
     </div>
-  </section>
-  <section class="grid-parametros animacion-entrada">
+  </section> -->
+  <!--   <section class="grid-parametros animacion-entrada">
     <div>Categorías</div>
     <div>
       <ion-button color="primary" size="small" (click)="editarCategoria()">
@@ -53,7 +61,7 @@
         <ion-icon name="add-circle-outline"></ion-icon>
       </ion-button>
     </div>
-  </section>
+  </section> -->
   <section class="grid-parametros animacion-entrada">
     <div>Novedades</div>
     <div>

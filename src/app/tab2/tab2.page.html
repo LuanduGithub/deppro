@@ -1,16 +1,19 @@
 <app-header></app-header>
 
 <ion-content>
-  <!-- <ion-button (click)="toggleInfiniteScroll()" expand="block">
-      Toggle Infinite Scroll
-    </ion-button> -->
   <ion-card class="animacion-entrada" *ngFor="let novedad of novedadesList">
     <section class="custom-border"></section>
     <ion-card-content>
       <section class="novedad">
-        <div>
+        <div >
           <ion-icon name="chatbubbles"></ion-icon><span> {{novedad.titulo}}</span>
-        </div>
+          <ion-button *ngIf="user.admin" (click)="deleteNovedad(novedad)" color="primary" size="small">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+          <ion-button *ngIf="user.admin"  (click)="editNovedad(novedad)" color="secondary" size="small">
+            <ion-icon name="create"></ion-icon>
+          </ion-button>
+         </div>
         <div>
           <p class="ion-text-capitalize item__cuerpo">{{novedad.cuerpo}}</p>
         </div>
@@ -20,9 +23,4 @@
       </section>
     </ion-card-content>
   </ion-card>
-
-  <ion-infinite-scroll threshold="150px" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content loadingSpinner="crecent" loadingText="cargando...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
 </ion-content>

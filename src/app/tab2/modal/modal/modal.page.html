@@ -1,0 +1,35 @@
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row style="border-bottom: 1px dashed #cecece;">
+          <ion-col size="12" class="text-align-center ion-text-uppercase">
+            Elminar Novedad
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12" class="text-align-center ion-text-uppercase">
+            {{data.titulo}} - {{data.fecha}}
+          </ion-col>
+        </ion-row>
+        <ion-row class="text-align-center">
+          <ion-col size="12" style="margin:20px 0">
+            ¿estas seguro de borrar la Novedad?
+
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-button color="secondary" expand="block" (click)="cancelar()" size="small">Cancelar</ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-button (click)="onSubmitAceptar()" expand="block" size="small">
+              Borrar</ion-button>
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

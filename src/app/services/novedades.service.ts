@@ -25,4 +25,8 @@ export class NovedadesService {
     const url = environment.DBBaseURl +  `novedades/InsertOrUpdate`;
     return this.http.post<NovedadesPost>(url, obj);
   }
+  deleteNovedades(obj): Observable<NovedadesPost> {
+    const url = environment.DBBaseURl +  `novedades/Delete`;
+    return this.http.post<NovedadesPost>(url, obj);
+  }
 }

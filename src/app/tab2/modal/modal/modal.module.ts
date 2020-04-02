@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { ModalPage } from './modal.page';
-
+import { ModalTab2Page } from './modal.page';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
+    IonicModule,
     FormsModule,
-    IonicModule
   ],
-  declarations: [ModalPage]
+  declarations: [ModalTab2Page]
 })
-export class ModalPageModule {}
+export class ModalTab2PageModule {}

@@ -2,93 +2,107 @@
 
 <ion-content>
   <form [formGroup]="designationForm" (ngSubmit)="designar(designationForm)">
-    <section class="grid-parametros animacion-entrada" >
-      <div>
-        <label for="file" class="file-label">
-          <ion-icon name="cloud-upload"></ion-icon>
-          {{archivoElegido || elegirArchivo }}</label>
-        <input type="file" id="file" (change)="onFileChange($event)" class="inputfile"/>
-        <ion-button expand="block" color="secondary" size="small" *ngIf="dataXLS" (click)="uploadProgramacion(dataXLS)">Cargar Programación</ion-button>
+    <section class="grid-parametros animacion-entrada">
+      <div *ngIf="type === 'editar'">
+        <ion-item lines="none">
+          <ion-label position="floating" color="medium">Cancha</ion-label>
+          <ion-input type="text" clearInput="true" color="primary" formControlName="cancha"></ion-input>
+        </ion-item>
+        <!-- <ion-select [placeholder]="programacion?.cancha || 'Cancha'" formControlName="cancha" ok-text="Elegir"
+          cancel-text="Cancelar">
+          <ion-select-option value="{{team.nombre}}" *ngFor="let team of canchasList">{{team.nombre}}
+          </ion-select-option>
+        </ion-select> -->
       </div>
-<!--       <div>
-        {{dataXLS | json}}
-      </div> -->
-      <div>
-        <ion-select placeholder="Cancha" formControlName="cancha" ok-text="Elegir" cancel-text="Cancelar">
-          <ion-select-option value="{{team.id}}" *ngFor="let team of canchasList">{{team.nombre}}</ion-select-option>
-        </ion-select>
+      <div *ngIf="type === 'editar'">
+        <ion-item lines="none">
+          <ion-label position="floating" color="medium">Fecha</ion-label>
+          <ion-input type="text" clearInput="true" color="primary"  formControlName="dia"></ion-input>
+        </ion-item>
+        <!-- <ion-datetime displayFormat="DD/MM" placeholder="Día" formControlName="dia" done-text="Elegir"
+          cancel-text="Cancelar"></ion-datetime> -->
       </div>
-      <div>
-        <ion-datetime displayFormat="DD/MM" placeholder="Día" formControlName="dia" done-text="Elegir"
-          cancel-text="Cancelar"></ion-datetime>
+      <div *ngIf="type === 'editar'">
+        <ion-item lines="none">
+          <ion-label position="floating" color="medium">Hora</ion-label>
+          <ion-input type="text" clearInput="true" color="primary" formControlName="hora"></ion-input>
+        </ion-item>
+        <!-- <ion-datetime displayFormat="h:mm A" minuteValues="0,15,30,45" formControlName="hora" placeholder="Hora"
+          done-text="Elegir" cancel-text="Cancelar"></ion-datetime> -->
       </div>
-      <div>
-        <ion-datetime displayFormat="h:mm A" minuteValues="0,15,30,45" formControlName="hora" placeholder="Hora"
-        done-text="Elegir" cancel-text="Cancelar"></ion-datetime>
-      </div>
-      <div>
-        <ion-select placeholder="Equipo A" formControlName="equipoA" ok-text="Elegir" cancel-text="Cancelar">
+      <div *ngIf="type === 'editar'">
+        <ion-item lines="none">
+          <ion-label position="floating" color="medium">Equipo A</ion-label>
+          <ion-input type="text" clearInput="true" color="primary" formControlName="equipoA"></ion-input>
+        </ion-item>
+        <!-- <ion-select placeholder="Equipo A" formControlName="equipoA" ok-text="Elegir" cancel-text="Cancelar">
           <ion-select-option value="{{team.id}}" *ngFor="let team of equiposList">{{team.nombre}}
           </ion-select-option>
-        </ion-select>
+        </ion-select> -->
       </div>
-      <div>
-        <ion-select placeholder="Equipo B" formControlName="equipoB" ok-text="Elegir" cancel-text="Cancelar">
+      <div *ngIf="type === 'editar'">
+        <ion-item lines="none">
+          <ion-label position="floating" color="medium">Equipo B</ion-label>
+          <ion-input type="text" clearInput="true" color="primary" formControlName="equipoB"></ion-input>
+        </ion-item>
+        <!-- <ion-select placeholder="Equipo B" formControlName="equipoB" ok-text="Elegir" cancel-text="Cancelar">
           <ion-select-option value="{{team.id}}" *ngFor="let team of equiposList">{{team.nombre}}
           </ion-select-option>
-        </ion-select>
+        </ion-select> -->
       </div>
-      <div>
-        <ion-select placeholder="Categoria" formControlName="categoria" ok-text="Elegir" cancel-text="Cancelar">
+      <div *ngIf="type === 'editar'">
+        <ion-item lines="none">
+          <ion-label position="floating" color="medium">Categoria</ion-label>
+          <ion-input type="text" clearInput="true" color="primary" formControlName="categoria"></ion-input>
+        </ion-item>
+        <!-- <ion-select placeholder="Categoria" formControlName="categoria" ok-text="Elegir" cancel-text="Cancelar">
           <ion-select-option value="{{category.id}}" *ngFor="let category of categoriasList">{{category.nombre}}
           </ion-select-option>
-        </ion-select>
+        </ion-select> -->
       </div>
       <div>
-        <ion-select placeholder="Arbitro 1" formControlName="arbitro1" ok-text="Elegir" cancel-text="Cancelar">
-          <ion-select-option value="{{official.id}}" *ngFor="let official of usuariosArbitrosList">
-            {{official.nombre}}</ion-select-option>
-        </ion-select>
+        <ion-item lines="none" *ngIf="(usuariosArbitrosList && arbitro1Edit) || type === 'agregar'">
+          <ion-label color="medium">Arbitros</ion-label>
+          <ion-select [value]="arbitro1Edit" formControlName="arbitro1" ok-text="Elegir" cancel-text="Cancelar">
+            <ion-select-option value="{{official.id}}" *ngFor="let official of usuariosArbitrosList">
+              {{official.nombre}}</ion-select-option>
+          </ion-select>
+        </ion-item>
       </div>
       <div>
-        <ion-select placeholder="Arbitro 2" formControlName="arbitro2" ok-text="Elegir" cancel-text="Cancelar">
-          <ion-select-option value="{{official.id}}" *ngFor="let official of usuariosArbitrosList">
-            {{official.nombre}}</ion-select-option>
-        </ion-select>
-      </div>
-<!--       <div>
-        <ion-select placeholder="Arbitro 3" formControlName="arbitro3" ok-text="Elegir" cancel-text="Cancelar">
-          <ion-select-option value="{{official.id}}" *ngFor="let official of usuariosArbitrosList">
-            {{official.nombre}}</ion-select-option>
-        </ion-select>
-      </div> -->
-      <div>
-        <ion-select placeholder="Anotador" formControlName="anotador" ok-text="Elegir" cancel-text="Cancelar">
-          <ion-select-option value="{{official.id}}" *ngFor="let official of usuariosMesaList">{{official.nombre}}
-          </ion-select-option>
-        </ion-select>
+        <ion-item lines="none"  *ngIf="(usuariosArbitrosList && arbitro1Edit) || type === 'agregar'">
+          <ion-label color="medium">Arbitro 2</ion-label>
+          <ion-select [value]="arbitro2Edit" formControlName="arbitro2" ok-text="Elegir" cancel-text="Cancelar">
+            <ion-select-option value="{{official.id}}" *ngFor="let official of usuariosArbitrosList">{{official.nombre}}</ion-select-option>
+          </ion-select>
+        </ion-item>
       </div>
       <div>
-        <ion-select placeholder="Cronometro" formControlName="cronometro" ok-text="Elegir" cancel-text="Cancelar">
-          <ion-select-option value="{{official.id}}" *ngFor="let official of usuariosMesaList">{{official.nombre}}
-          </ion-select-option>
-        </ion-select>
+        <ion-item lines="none"  *ngIf="(usuariosArbitrosList && arbitro1Edit) || type === 'agregar'">
+          <ion-label color="medium">Anotador 1</ion-label>
+          <ion-select [value]="anotadorEdit" formControlName="anotador" ok-text="Elegir" cancel-text="Cancelar">
+            <ion-select-option value="{{official.id}}" *ngFor="let official of usuariosMesaList">{{official.nombre}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
       </div>
-
-<!--       <div>
-        <ion-select placeholder="Cronometro 2" formControlName="cronometro2" ok-text="Elegir" cancel-text="Cancelar">
-          <ion-select-option value="{{official.id}}" *ngFor="let official of usuariosMesaList">{{official.nombre}}
-          </ion-select-option>
-        </ion-select>
-      </div> -->
-      <div *ngIf="cleanButton">
-        <ion-button expand="block" color="secondary" size="small" type="button" (click)="clearFields()">
-          Programación Realizada   <ion-icon name="arrow-forward"></ion-icon> Limpiar Campos
+      <div>
+        <ion-item lines="none"  *ngIf="(usuariosArbitrosList && arbitro1Edit) || type === 'agregar'">
+          <ion-label color="medium">Anotador 2</ion-label>
+          <ion-select [value]="cronometroEdit" formControlName="cronometro" ok-text="Elegir" cancel-text="Cancelar">
+            <ion-select-option value="{{official.id}}" *ngFor="let official of usuariosMesaList">{{official.nombre}}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+      <div>
+        <ion-button *ngIf="type === 'agregar'" expand="block" size="small" type="submit"
+          [disabled]="!designationForm.controls.arbitro1.valid && !designationForm.controls.arbitro2.valid && !designationForm.controls.anotador.valid && !designationForm.controls.cronometro.valid">
+          Programar Oficiales
         </ion-button>
-      </div>
-      <div>
-        <ion-button expand="block" size="small" type="submit" [disabled]="!designationForm.valid">
-          Programar
+        <ion-button *ngIf="type === 'editar'" expand="block" size="small" type="submit"
+          [disabled]="!designationForm.valid">
+          Editar Programación
         </ion-button>
       </div>
     </section>

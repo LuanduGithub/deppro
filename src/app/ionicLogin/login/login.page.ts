@@ -34,8 +34,6 @@ export class LoginPage implements OnInit {
       passwordLogin: new FormControl('', [Validators.required])
     });
 
-
-
   }
 
   onSubmitLogin(form) {
@@ -52,8 +50,12 @@ export class LoginPage implements OnInit {
     });
   }
   successTrue(user) {
-    this.storage.set(`setting:user`, user);
-    this.router.navigate(['tabs']);
+    this.storage.set('user', user);
+
+    this.storage.get('user').then((userStorage) => {
+      console.log(userStorage);
+    });
+    // this.router.navigate(['tabs']);
   }
   successFalse() {
     this.mostrarMensajeError = true;
@@ -74,7 +76,7 @@ export class LoginPage implements OnInit {
   }
 
   loadUser() {
-    this.storage.get(`setting:user`).then((user) => {
+    this.storage.get('user').then((user) => {
       if (user) {
         this.router.navigate(['tabs']);
       } else {

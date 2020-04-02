@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { CanchasService } from './../services/canchas.service';
 import { CategoriaService } from './../services/categoria.service';
@@ -10,13 +10,12 @@ import { UsuariosService } from '../services/usuarios.service';
 
 import { Comun, Usuario } from './../models/modelsComunes';
 import { DesignacionesService } from '../services/designaciones.service';
-
-import { NotificacionesService } from './../services/notificaciones.service';
+import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
-import { FilePath } from '@ionic-native/file-path/ngx';
-import { FileChooser } from '@ionic-native/file-chooser/ngx';
-import * as XLSX from 'xlsx';
-import { HttpClient } from '@angular/common/http';
+
+
+import { NewDataService } from './../services/new-data.service';
+
 @Component({
   selector: 'app-carga',
   templateUrl: './carga.page.html',
@@ -51,56 +50,100 @@ export class CargaPage implements OnInit {
   dataXLS: any;
   elegirArchivo = 'Elegir Archivo';
   archivoElegido: string;
+  programacion: any;
+  type: string;
+  arbitro1Edit: string;
+  arbitro2Edit: string;
+  anotadorEdit: string;
+  cronometroEdit: string;
   constructor(
-    private http: HttpClient,
     private storage: Storage,
-    private canchaService: CanchasService,
-    private categoriaService: CategoriaService,
-    private equipoService: EquipoService,
+    /*     private canchaService: CanchasService,
+        private categoriaService: CategoriaService,
+        private equipoService: EquipoService, */
     private usuService: UsuariosService,
     private designacionService: DesignacionesService,
-    private notService: NotificacionesService,
+    private newDataService: NewDataService,
     private loadingController: LoadingController,
-    private fileChooser: FileChooser,
-    private filePath: FilePath,
+    private route: Router,
+
   ) { }
 
   ngOnInit() {
 
   }
   ionViewWillEnter() {
-    this.init();
+    this.editProgramacion();
+    this.getUsuariosList();
+    this.loadUser();
     this.storage.get('setting:tokenFirebase').then(token => { this.token = token; });
   }
+
+  // load user
   loadUser() {
     this.storage.get('setting:user').then((user) => {
       this.user = user;
     });
   }
 
-  init() {
-    this.getCanchasList();
-    this.loadUser();
-  }
-  getCanchasList() {
-    this.canchaService.getCanchas().subscribe(canchasList => {
-      this.canchasList = canchasList.msg;
-      this.getCategoriasList();
-    });
-  }
-  getCategoriasList() {
-    this.categoriaService.getCategorias().subscribe(categoriasList => {
-      this.categoriasList = categoriasList.msg;
-      this.getEquiposList();
-    });
-  }
-  getEquiposList() {
-    this.equipoService.getEquipos().subscribe(equipoList => {
-      this.equiposList = equipoList.msg;
-      this.getUsuariosList();
-    });
+  editProgramacion() {
+    this.programacion = this.newDataService.getProgramacion();
+    if (this.programacion.prog === undefined) {
+      this.route.navigate(['tabs/tab1']);
+      return;
+    } else {
+      this.type = this.programacion.type;
+      this.designationForm.controls.cancha.setValue(this.programacion.prog.cancha);
+      this.designationForm.controls.dia.setValue(this.programacion.prog.fecha);
+      this.designationForm.controls.hora.setValue(this.programacion.prog.hora);
+      this.designationForm.controls.equipoA.setValue(this.programacion.prog.equipoA);
+      this.designationForm.controls.equipoB.setValue(this.programacion.prog.equipoB);
+      this.designationForm.controls.categoria.setValue(this.programacion.prog.categoria);
+      this.usuService.getUsuarios().subscribe(usuariosList => {
+        usuariosList.msg.filter(u => {
+          if (u.nombre === this.programacion.prog.arbitro1) {
+            this.designationForm.controls.arbitro1.setValue(u.id);
+            this.arbitro1Edit = u.id.toString();
+          }
+          if (u.nombre === this.programacion.prog.arbitro2) {
+            this.designationForm.controls.arbitro2.setValue(u.id);
+            this.arbitro2Edit = u.id.toString();
+          }
+          if (u.nombre === this.programacion.prog.anotador) {
+            this.designationForm.controls.anotador.setValue(u.id);
+            this.anotadorEdit = u.id.toString();
+          }
+          if (u.nombre === this.programacion.prog.cronometro) {
+            this.designationForm.controls.cronometro.setValue(u.id);
+            this.cronometroEdit = u.id.toString();
+          }
+
+        });
+      });
+      console.log(this.programacion);
+    }
   }
 
+
+  /*   getCanchasList() {
+      this.canchaService.getCanchas().subscribe(canchasList => {
+        this.canchasList = canchasList.msg;
+        this.getCategoriasList();
+      });
+    }
+    getCategoriasList() {
+      this.categoriaService.getCategorias().subscribe(categoriasList => {
+        this.categoriasList = categoriasList.msg;
+        this.getEquiposList();
+      });
+    }
+    getEquiposList() {
+      this.equipoService.getEquipos().subscribe(equipoList => {
+        this.equiposList = equipoList.msg;
+        this.getUsuariosList();
+      });
+    }
+   */
   getUsuariosList() {
     this.usuService.getUsuarios().subscribe(usuariosList => {
 
@@ -123,48 +166,53 @@ export class CargaPage implements OnInit {
   }
 
   designar(form) {
+
     this.presentLoading('Enviando Designación');
-    const obj = {
-      Des_Id: 0,
-      Can_Id: parseInt(form.value.cancha, 10),
-      Equ_A_Id: parseInt(form.value.equipoA, 10),
-      Equ_B_Id: parseInt(form.value.equipoB, 10),
-      Des_FechaHora: this.formatDate(form),
-      Cate_Id: parseInt(form.value.categoria, 10),
-      Usu_Arb1_Id: parseInt(form.value.arbitro1, 10),
-      Usu_Arb2_Id: parseInt(form.value.arbitro2, 10),
-      /* Usu_Arb3_Id: parseInt(form.value.arbitro3, 10) || '', */
-      Usu_Anot_Id: parseInt(form.value.anotador, 10),
-      Usu_Crono_Id: parseInt(form.value.cronometro, 10),
-      /*  Usu_Crono2_Id: parseInt(form.value.cronometro2, 10), */
-      Des_Res_Cuarto: 'No Iniciado',
-      Des_Res_Equ_A: 0,
-      Des_Res_Equ_B: 0,
-    };
-    this.designacionService.postDesignaciones(obj).subscribe(() => {
+    let obj;
+    if (this.type === 'agregar') {
+      obj = {
+        Des_Id: this.programacion.prog.id,
+        cancha: this.programacion.prog.cancha,
+        equipoA: this.programacion.prog.equipoA,
+        equipoB: this.programacion.prog.equipoB,
+        Des_FechaHora: this.formatDateXLS(this.programacion.prog.fecha) + ' ' + this.programacion.prog.hora,
+        categoria: this.programacion.prog.categoria,
+        Usu_Arb1_Id: parseInt(form.value.arbitro1, 10),
+        Usu_Arb2_Id: parseInt(form.value.arbitro2, 10),
+        /* Usu_Arb3_Id: parseInt(form.value.arbitro3, 10) || '', */
+        Usu_Anot_Id: parseInt(form.value.anotador, 10),
+        Usu_Crono_Id: parseInt(form.value.cronometro, 10),
+        /*  Usu_Crono2_Id: parseInt(form.value.cronometro2, 10), */
+        Des_Res_Cuarto: this.programacion.prog.cuarto,
+        Des_Res_Equ_A: this.programacion.prog.resultadoA,
+        Des_Res_Equ_B: this.programacion.prog.resultadoB,
+      };
+    }
+
+    if (this.type === 'editar') {
+      obj = {
+        Des_Id: this.programacion.prog.id,
+        cancha: form.value.cancha,
+        equipoA: form.value.equipoA,
+        equipoB: form.value.equipoB,
+        Des_FechaHora: this.formatDateXLS(form.value.dia) + ' ' + form.value.hora,
+        categoria: form.value.categoria,
+        Usu_Arb1_Id: parseInt(form.value.arbitro1, 10),
+        Usu_Arb2_Id: parseInt(form.value.arbitro2, 10),
+        /* Usu_Arb3_Id: parseInt(form.value.arbitro3, 10) || '', */
+        Usu_Anot_Id: parseInt(form.value.anotador, 10),
+        Usu_Crono_Id: parseInt(form.value.cronometro, 10),
+        /*  Usu_Crono2_Id: parseInt(form.value.cronometro2, 10), */
+        Des_Res_Cuarto: this.programacion.prog.cuarto,
+        Des_Res_Equ_A: this.programacion.prog.resultadoA,
+        Des_Res_Equ_B: this.programacion.prog.resultadoB,
+      };
+    }
+    this.designacionService.postDesignacionesUpdate(obj).subscribe(() => {
       this.dismissLoading();
-      this.cleanButton = true;
+      this.route.navigate(['tabs/tab1']);
     });
   }
-
-  clearFields() {
-    this.designationForm.setValue({
-      cancha: '',
-      dia: '',
-      hora: '',
-      equipoA: '',
-      equipoB: '',
-      categoria: '',
-      arbitro1: '',
-      arbitro2: '',
-      arbitro3: '',
-      anotador: '',
-      cronometro: '',
-      cronometro2: '',
-    });
-    this.cleanButton = false;
-  }
-
   async presentLoading(message = '') {
     this.loading = await this.loadingController.create({
       message,
@@ -179,44 +227,8 @@ export class CargaPage implements OnInit {
   }
 
 
-  // carga de xls a json
-
-
-  onFileChange(ev) {
-    let workBook = null;
-    const reader = new FileReader();
-    const file = ev.target.files[0];
-    reader.onload = (event) => {
-      const data = reader.result;
-      workBook = XLSX.read(data, { type: 'binary' });
-      this.dataXLS = workBook.SheetNames.reduce((initial, name) => {
-        const sheet = workBook.Sheets[name];
-        this.archivoElegido = name + '.xls';
-        initial = XLSX.utils.sheet_to_json(sheet);
-        return initial;
-      }, {});
-    };
-    reader.readAsBinaryString(file);
-  }
-
-
-  uploadProgramacion( data) {
-      const objXLS = data;
-      const arrProgramacion = [];
-      objXLS.forEach(element => {
-        const programacion = {
-          Des_Id: 0,
-          Can_Id: element.lugar,
-          Equ_A_Id: element.equipoA,
-          Equ_B_Id: element.equipoB,
-          Des_FechaHora: element.dia + element.hora,
-          Cate_Id: element.categoria,
-          Des_Res_Cuarto: 'No Iniciado',
-          Des_Res_Equ_A: 0,
-          Des_Res_Equ_B: 0,
-        };
-        arrProgramacion.push(programacion);
-      });
-      console.log(arrProgramacion);
+  formatDateXLS(dateXLS) {
+    const date = dateXLS.split('/');
+    return `${date[1]}/${date[0]}/${date[2]}`;
   }
 }

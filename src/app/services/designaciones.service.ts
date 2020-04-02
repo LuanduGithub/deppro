@@ -25,8 +25,12 @@ export class DesignacionesService {
     const url = environment.DBBaseURl +  `designaciones/getListByUsuario/${id}`;
     return this.http.get<DesignacionesList>(url);
   }
-  postDesignaciones(obj: any): Observable<DesignacionesPost> {
-    const url = environment.DBBaseURl +  `designaciones/InsertOrUpdate`;
+  postDesignacionesInsert(obj: any): Observable<DesignacionesPost> {
+    const url = environment.DBBaseURl +  `designaciones/Insert`;
+    return this.http.post<DesignacionesPost>(url, obj);
+  }
+  postDesignacionesUpdate(obj: any): Observable<DesignacionesPost> {
+    const url = environment.DBBaseURl +  `designaciones/Update`;
     return this.http.post<DesignacionesPost>(url, obj);
   }
   postDesignacionesScore(obj: any): Observable<DesignacionesScore> {
@@ -34,7 +38,12 @@ export class DesignacionesService {
     return this.http.post<DesignacionesScore>(url, obj);
   }
   postDesignacionesConfirmar(obj: any): Observable<DesignacionesConfirmar> {
-    const url = environment.DBBaseURl +  `designaciones/confirmar`;
+    const url = environment.DBBaseURl +  `designaciones/Confirmar`;
     return this.http.post<DesignacionesConfirmar>(url, obj);
+  }
+
+  deleteDesignaciones(obj: any): Observable<DesignacionesPost> {
+    const url = environment.DBBaseURl +  `designaciones/Delete`;
+    return this.http.post<DesignacionesPost>(url, obj);
   }
 }

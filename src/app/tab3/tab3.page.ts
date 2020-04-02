@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
-
+import { DesignacionesService } from '../services/designaciones.service';
+import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
+import { NewDataService } from '../services/new-data.service';
+import * as XLSX from 'xlsx';
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
@@ -9,13 +13,24 @@ import { Storage } from '@ionic/storage';
 export class Tab3Page {
   user: any;
   views: any;
+  loading: any;
+  dataXLS: any;
+  archivoElegido: string;
   constructor(
-    private storage: Storage
+    private storage: Storage,
+    private designacionService: DesignacionesService,
+    private loadingController: LoadingController,
+    private route: Router,
+    private newDataService: NewDataService,
   ) { }
 
   ionViewWillEnter() {
     this.viewsEstadoFalse();
     this.loadUser();
+    const editNovedades = this.newDataService.getNovedad();
+    if (editNovedades) {
+      this.editarNovedades();
+    }
   }
 
   loadUser() {
@@ -144,5 +159,70 @@ export class Tab3Page {
       this.views.novedadView.status = true;
       this.views.novedadView.editar = true;
     });
+  }
+
+
+  onFileChange(ev) {
+    let workBook = null;
+    const reader = new FileReader();
+    const file = ev.target.files[0];
+    console.log(file.name);
+    const namefile = file.name.split('.');
+    this.archivoElegido = namefile[0] + '.xls';
+    reader.onload = (event) => {
+      const data = reader.result;
+      workBook = XLSX.read(data, { type: 'binary' });
+      this.dataXLS = workBook.SheetNames.reduce((initial, name) => {
+        const sheet = workBook.Sheets[name];
+        /* this.archivoElegido = name + '.xls'; */
+        initial = XLSX.utils.sheet_to_json(sheet);
+        return initial;
+      }, {});
+    };
+    reader.readAsBinaryString(file);
+  }
+
+  formatDateXLS(dateXLS) {
+    const date = dateXLS.split('/');
+    return `${date[1]}/${date[0]}/${date[2]}`;
+  }
+  uploadProgramacion() {
+    this.presentLoading('Enviando Designación');
+    const arrProgramacion = [];
+
+    this.dataXLS.forEach(element => {
+      const programacion = {
+        Des_Id: 0,
+        Cancha: element.lugar,
+        EquipoA: element.equipoA,
+        EquipoB: element.equipoB,
+        Des_FechaHora: this.formatDateXLS(element.dia) + ' ' + element.hora,
+        Categoria: element.categoria,
+        Des_Res_Cuarto: 'No Iniciado',
+        Des_Res_Equ_A: 0,
+        Des_Res_Equ_B: 0,
+      };
+      arrProgramacion.push(programacion);
+    });
+
+    this.designacionService.postDesignacionesInsert(arrProgramacion).subscribe(() => {
+      this.dismissLoading();
+      this.dataXLS = undefined;
+      this.archivoElegido = '';
+      this.route.navigate(['tabs/tab1']);
+    }, error => { console.log(error); });
+  }
+
+  async presentLoading(message = '') {
+    this.loading = await this.loadingController.create({
+      message,
+      translucent: true,
+      cssClass: 'custom-class custom-loading text-capitalize',
+      spinner: 'dots'
+    });
+    await this.loading.present();
+  }
+  async dismissLoading() {
+    await this.loading.dismiss();
   }
 }

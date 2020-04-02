@@ -18,32 +18,22 @@
   </ion-card-content>
 </ion-card>
 
-<ion-card *ngIf="editar">
-  <ion-card-header>
-    <ion-card-subtitle>Editar Novedad de la lista</ion-card-subtitle>
-  </ion-card-header>
+<ion-card *ngIf="editNovedades && editar">
   <ion-card-content>
+    <div class="custom-form-title">Editar una Novedad</div>
     <form [formGroup]="editarNovedadFormGroup" (ngSubmit)="onSubmitEditar(editarNovedadFormGroup)">
-      <section>
-        <ion-label>Nombre a editar</ion-label>
-        <ion-select placeholder="Novedad" formControlName="editarSeleccionarNovedadNombre"
-          (ionChange)="editNovedadNombreSelected($event.detail.value)">
-          <ion-select-option value="{{novedad.id}}" *ngFor="let novedad of novedadList">{{novedad.nombre}}
-          </ion-select-option>
-        </ion-select>
-      </section>
-      <section *ngIf="editarNovedadFormGroup.controls.editarSeleccionarNovedadNombre.valid">
-        <section>
-          <ion-input placeholder="Titulo" clearInput formControlName="editarNovedadTitulo"></ion-input>
-        </section>
+      <div class="custom-form">
+        <ion-label position="floating">Novedad</ion-label>
+        <ion-input clearInput formControlName="editarNovedadTitulo"></ion-input>
+      </div>
+      <div class="custom-form">
+        <ion-textarea rows="6" cols="20" placeholder="Cuerpo Novedad..." formControlName="editarNovedadCuerpo"></ion-textarea>
+      </div>
+      <div class="custom-form-button">
+        <ion-button color="primary" style="margin: 0;" type="submit" expand="block" size="small"
+          class="ion-text-uppercase" [disabled]="editarNovedadFormGroup.invalid">Editar</ion-button>
+      </div>
 
-        <section>
-          <ion-textarea rows="6" cols="20" placeholder="Cuerpo novedad..." formControlName="editarNovedadCuerpo">
-          </ion-textarea>
-        </section>
-      </section>
-      <ion-button color="danger" style="margin: 0;" type="submit" expand="block" size="small" class="ion-text-uppercase"
-        [disabled]="editarNovedadFormGroup.invalid">editar</ion-button>
     </form>
   </ion-card-content>
 </ion-card>
